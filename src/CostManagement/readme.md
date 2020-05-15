@@ -1,10 +1,10 @@
 <!-- region Generated -->
-# Az.CostManagement
-This directory contains the PowerShell module for the CostManagement service.
+# Az.Cost
+This directory contains the PowerShell module for the Cost service.
 
 ---
 ## Status
-[![Az.CostManagement](https://img.shields.io/powershellgallery/v/Az.CostManagement.svg?style=flat-square&label=Az.CostManagement "Az.CostManagement")](https://www.powershellgallery.com/packages/Az.CostManagement/)
+[![Az.Cost](https://img.shields.io/powershellgallery/v/Az.Cost.svg?style=flat-square&label=Az.Cost "Az.Cost")](https://www.powershellgallery.com/packages/Az.Cost/)
 
 ## Info
 - Modifiable: yes
@@ -23,7 +23,7 @@ This module was primarily generated via [AutoRest](https://github.com/Azure/auto
 AutoRest does not generate authentication code for the module. Authentication is handled via Az.Accounts by altering the HTTP payload before it is sent.
 
 ## Development
-For information on how to develop for `Az.CostManagement`, see [how-to.md](how-to.md).
+For information on how to develop for `Az.Cost`, see [how-to.md](how-to.md).
 <!-- endregion -->
 
 ---
@@ -48,7 +48,8 @@ In this directory, run AutoRest:
 require:
   - $(this-folder)/../readme.azure.noprofile.md
 input-file:
-  - $(repo)/specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2019-11-01/costmanagement.json
+  # - $(repo)/specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2019-11-01/costmanagement.json
+  - $(this-folder)/resources/costmanagement.json
 title: CostManagement
 module-version: 0.1.0
 subject-prefix: ''
