@@ -57,6 +57,13 @@ directive:
   - where:
       variant: ^Create$|^CreateViaIdentity$|^CreateViaIdentityExpanded$|^Update$|^UpdateViaIdentity$
     remove: true
+  - from: source-file-csharp
+    where: $
+    transform: $ = $.replace(/AlertCategory System/, 'AlertCategory System1');
+  - from: source-file-csharp
+    where: $
+    transform: $ = $.replace(/internal partial interface/, 'public partial interface');
   - no-inline:
     - QueryFilter
+    - ReportConfigFilter
 ```
