@@ -106,6 +106,15 @@ namespace Microsoft.Azure.Commands.Synapse.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Creating a run of a pipeline in workspace &apos;{0}&apos; with name &apos;{1}&apos;..
+        /// </summary>
+        internal static string CreatingSynapsePipelineRun {
+            get {
+                return ResourceManager.GetString("CreatingSynapsePipelineRun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Creating a new role assignment in workspace &apos;{0}&apos; with RoleDefinitionId &apos;{1}&apos; and ObjectId &apos;{2}&apos;..
         /// </summary>
         internal static string CreatingSynapseRoleAssignment {
@@ -331,6 +340,15 @@ namespace Microsoft.Azure.Commands.Synapse.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All keys in the parameters hashtable must be of type string since they represent pipeline parameter names..
+        /// </summary>
+        internal static string InvalidCastParameterKeyExceptionMessage {
+            get {
+                return ResourceManager.GetString("InvalidCastParameterKeyExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No default subscription has been designated. Use Select-AzSubscription -Default &lt;subscriptionName&gt; to set the default subscription..
         /// </summary>
         internal static string InvalidDefaultSubscription {
@@ -399,6 +417,15 @@ namespace Microsoft.Azure.Commands.Synapse.Properties {
         internal static string RemovingFirewallRule {
             get {
                 return ResourceManager.GetString("RemovingFirewallRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleting pipeline &apos;{0}&apos; in workspace &apos;{1}&apos;..
+        /// </summary>
+        internal static string RemovingSynapsePipeline {
+            get {
+                return ResourceManager.GetString("RemovingSynapsePipeline", resourceCulture);
             }
         }
         
@@ -484,6 +511,15 @@ namespace Microsoft.Azure.Commands.Synapse.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Setting pipeline &apos;{1}&apos; in workspace &apos;{0}&apos;..
+        /// </summary>
+        internal static string SettingSynapsePipeline {
+            get {
+                return ResourceManager.GetString("SettingSynapsePipeline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot perform the requested operation because the specified Spark pool &apos;{0}&apos; does not exist..
         /// </summary>
         internal static string SparkPoolDoesNotExist {
@@ -516,6 +552,15 @@ namespace Microsoft.Azure.Commands.Synapse.Properties {
         internal static string StartSparkSessionNonInteractiveMessage {
             get {
                 return ResourceManager.GetString("StartSparkSessionNonInteractiveMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stopping Pipeline with Id: &apos;{0}&apos; ....
+        /// </summary>
+        internal static string StoppingPipelineRun {
+            get {
+                return ResourceManager.GetString("StoppingPipelineRun", resourceCulture);
             }
         }
         
