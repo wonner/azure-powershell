@@ -421,6 +421,15 @@ namespace Microsoft.Azure.Commands.Synapse.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deleting linked service &apos;{0}&apos; in workspace &apos;{1}&apos;..
+        /// </summary>
+        internal static string RemovingSynapseLinkedService {
+            get {
+                return ResourceManager.GetString("RemovingSynapseLinkedService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deleting pipeline &apos;{0}&apos; in workspace &apos;{1}&apos;..
         /// </summary>
         internal static string RemovingSynapsePipeline {
@@ -507,6 +516,15 @@ namespace Microsoft.Azure.Commands.Synapse.Properties {
         internal static string ServicePrincipalNameDoesNotExist {
             get {
                 return ResourceManager.GetString("ServicePrincipalNameDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting linked service &apos;{1}&apos; in workspace &apos;{0}&apos;..
+        /// </summary>
+        internal static string SettingSynapseLinkedService {
+            get {
+                return ResourceManager.GetString("SettingSynapseLinkedService", resourceCulture);
             }
         }
         

@@ -58,6 +58,8 @@ namespace Microsoft.Azure.Commands.Synapse.Models
 
         public const string ActivityRun = nameof(ActivityRun);
 
+        public const string LinkedService = nameof(LinkedService);
+
         public static Dictionary<string, ComputeNodeSize> ComputeNodeSizes = new Dictionary<string, ComputeNodeSize>
         {
             {
