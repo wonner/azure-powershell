@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Commands.Synapse.Models
     public class SynapseAnalyticsManagementClient
     {
         private readonly Guid _subscriptionId;
-        private SynapseManagementClient _synapseManagementClient { get; }
+        private readonly SynapseManagementClient _synapseManagementClient;
 
         public SynapseAnalyticsManagementClient(IAzureContext context)
         {
