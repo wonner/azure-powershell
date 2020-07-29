@@ -91,33 +91,33 @@ CmdletsToExport = 'Get-AzSynapseSparkJob', 'Stop-AzSynapseSparkJob',
                'Test-AzSynapseSparkPool', 'Test-AzSynapseSqlPool', 
                'New-AzSynapseFirewallRule', 'Remove-AzSynapseFirewallRule', 
                'Get-AzSynapseFirewallRule', 'Update-AzSynapseFirewallRule',
-               'Get-AzSynapseRoleAssignment','New-AzSynapseRoleAssignment',
-               'Remove-AzSynapseRoleAssignment','Get-AzSynapseRoleDefinition',
-               'Get-AzSynapsePipeline','Remove-AzSynapsePipeline',
-               'Set-AzSynapsePipeline','Invoke-AzSynapsePipelineRun',
-               'Get-AzSynapsePipelineRun','Stop-AzSynapsePipelineRun',
-               'Get-AzSynapseActivityRun','Get-AzSynapseLinkedService',
-               'Set-AzSynapseLinkedService','Remove-AzSynapseLinkedService',
-               'Get-AzSynapseNotebook','Set-AzSynapseNotebook',
-               'Remove-AzSynapseNotebook','Import-AzSynapseNotebook',
-               'Export-AzSynapseNotebook','Set-AzSynapseTrigger',
-               'Get-AzSynapseTrigger','Remove-AzSynapseTrigger',
-               'Get-AzSynapseTriggerSubscriptionStatus','Add-AzSynapseTriggerSubscription',
-               'Remove-AzSynapseTriggerSubscription','Start-AzSynapseTrigger',
-               'Stop-AzSynapseTrigger','Get-AzSynapseTriggerRun',
-               'Get-AzSynapseIntegrationRuntime','Get-AzSynapseIntegrationRuntimeKey',
-               'Get-AzSynapseIntegrationRuntimeMetric','Get-AzSynapseIntegrationRuntimeNode',
-               'Invoke-AzSynapseIntegrationRuntimeUpgrade','New-AzSynapseIntegrationRuntimeKey',
-               'Remove-AzSynapseIntegrationRuntime','Remove-AzSynapseIntegrationRuntimeNode',
-               'Set-AzSynapseIntegrationRuntime','Sync-AzSynapseIntegrationRuntimeCredential',
-               'Update-AzSynapseIntegrationRuntime','Update-AzSynapseIntegrationRuntimeNode'
+               'Get-AzSynapseRoleAssignment', 'New-AzSynapseRoleAssignment',
+               'Remove-AzSynapseRoleAssignment', 'Get-AzSynapseRoleDefinition',
+               'Get-AzSynapsePipeline', 'Remove-AzSynapsePipeline',
+               'Set-AzSynapsePipeline', 'Invoke-AzSynapsePipelineRun',
+               'Get-AzSynapsePipelineRun', 'Stop-AzSynapsePipelineRun',
+               'Get-AzSynapseActivityRun', 'Get-AzSynapseLinkedService',
+               'Set-AzSynapseLinkedService', 'Remove-AzSynapseLinkedService',
+               'Get-AzSynapseNotebook', 'Set-AzSynapseNotebook',
+               'Remove-AzSynapseNotebook', 'Import-AzSynapseNotebook',
+               'Set-AzSynapseTrigger', 'Get-AzSynapseTrigger', 'Remove-AzSynapseTrigger',
+               'Get-AzSynapseTriggerSubscriptionStatus', 'Add-AzSynapseTriggerSubscription',
+               'Remove-AzSynapseTriggerSubscription', 'Start-AzSynapseTrigger',
+               'Stop-AzSynapseTrigger', 'Get-AzSynapseTriggerRun',
+               'Get-AzSynapseIntegrationRuntime', 'Get-AzSynapseIntegrationRuntimeKey',
+               'Get-AzSynapseIntegrationRuntimeMetric', 'Get-AzSynapseIntegrationRuntimeNode',
+               'Invoke-AzSynapseIntegrationRuntimeUpgrade', 'New-AzSynapseIntegrationRuntimeKey',
+               'Remove-AzSynapseIntegrationRuntime', 'Remove-AzSynapseIntegrationRuntimeNode',
+               'Set-AzSynapseIntegrationRuntime', 'Sync-AzSynapseIntegrationRuntimeCredential',
+               'Update-AzSynapseIntegrationRuntime', 'Update-AzSynapseIntegrationRuntimeNode'
 
 # Variables to export from this module
 # VariablesToExport = @()
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-AliasesToExport = 'New-AzSynapsePipeline','New-AzSynapseLinkedService',
-                'New-AzSynapseNotebook','New-AzSynapseTrigger'
+AliasesToExport = 'New-AzSynapsePipeline', 'New-AzSynapseLinkedService',
+                'New-AzSynapseNotebook', 'Export-AzSynapseNotebook',
+                'New-AzSynapseTrigger'
 
 # DSC resources to export from this module
 # DscResourcesToExport = @()
