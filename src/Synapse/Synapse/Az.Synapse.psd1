@@ -58,7 +58,8 @@ RequiredModules = @(@{ModuleName = 'Az.Accounts'; ModuleVersion = '1.9.1'; })
 # Assemblies that must be loaded prior to importing this module
 RequiredAssemblies = 'Microsoft.Azure.Management.Synapse.dll', 
                'Azure.Analytics.Synapse.Spark.dll', 
-               'Azure.Analytics.Synapse.AccessControl.dll'
+               'Azure.Analytics.Synapse.AccessControl.dll',
+               'Azure.Analytics.Synapse.Artifacts.dll'
 
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
 # ScriptsToProcess = @()
@@ -94,7 +95,7 @@ CmdletsToExport = 'Get-AzSynapseSparkJob', 'Stop-AzSynapseSparkJob',
                'Get-AzSynapseRoleAssignment', 'New-AzSynapseRoleAssignment',
                'Remove-AzSynapseRoleAssignment', 'Get-AzSynapseRoleDefinition',
                'Get-AzSynapsePipeline', 'Remove-AzSynapsePipeline',
-               'Set-AzSynapsePipeline', 'Invoke-AzSynapsePipelineRun',
+               'Set-AzSynapsePipeline', 'Invoke-AzSynapsePipeline',
                'Get-AzSynapsePipelineRun', 'Stop-AzSynapsePipelineRun',
                'Get-AzSynapseActivityRun', 'Get-AzSynapseLinkedService',
                'Set-AzSynapseLinkedService', 'Remove-AzSynapseLinkedService',
