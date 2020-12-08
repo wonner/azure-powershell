@@ -24,6 +24,8 @@ namespace Microsoft.Azure.Commands.Synapse.Common
 
         public const string SqlAdministratorLoginCredential = "SQL administrator credentials.";
 
+        public const string DoNotAssignManagedIdentity = "Do not assign the workspace's system-assigned managed identity CONTROL permissions to SQL pools for pipeline integration.";
+
         public const string SparkPoolName = "Name of Synapse Spark pool.";
 
         public const string SparkPoolResourceId = "Resource identifier of Synapse Spark pool.";

@@ -600,4 +600,16 @@ Are you sure you want to continue?</value>
   <data name="RemoveSynapseSqlPoolRestorePoint" xml:space="preserve">
     <value>Are you sure you want to remove Synapse Sql Pool Restore Point '{0}'?</value>
   </data>
+  <data name="DisableManagedIdentity" xml:space="preserve">
+    <value>Are you sure you want to disable managed identity CONTROL permissions to SQL pools for pipeline integration on workspace '{0}'?</value>
+  </data>
+  <data name="DisablingManagedIdentity" xml:space="preserve">
+    <value>Disabling managed identity CONTROL permissions to SQL pools for pipeline integration on workspace '{0}'.</value>
+  </data>
+  <data name="EnableManagedIdentity" xml:space="preserve">
+    <value>Are you sure you want to enable managed identity CONTROL permissions to SQL pools for pipeline integration on workspace '{0}'?</value>
+  </data>
+  <data name="EnablingManagedIdentity" xml:space="preserve">
+    <value>Enabling managed identity CONTROL permissions to SQL pools for pipeline integration on workspace '{0}'.</value>
+  </data>
 </root>

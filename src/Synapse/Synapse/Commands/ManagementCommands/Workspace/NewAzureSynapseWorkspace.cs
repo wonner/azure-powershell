@@ -57,6 +57,9 @@ namespace Microsoft.Azure.Commands.Synaspe
         [ValidateSet("default")]
         public string ManagedVirtualNetwork { get; set; }
 
+        [Parameter(Mandatory = false, HelpMessage = HelpMessages.DoNotAssignManagedIdentity)]
+        public SwitchParameter DoNotAssignManagedIdentity { get; set; }
+
         [Parameter(Mandatory = false, HelpMessage = HelpMessages.AsJob)]
         public SwitchParameter AsJob { get; set; }
 
@@ -115,6 +118,15 @@ namespace Microsoft.Azure.Commands.Synaspe
                     this.ResourceGroupName,
                     this.Name,
                     createParams));
+
+                if (this.DoNotAssignManagedIdentity.IsPresent)
+                {
+                    SynapseAnalyticsClient.UpdateManagedIdentitySqlControl(this.ResourceGroupName, this.Name, "Disabled");
+                }
+                else
+                {
+                    SynapseAnalyticsClient.UpdateManagedIdentitySqlControl(this.ResourceGroupName, this.Name, "Enabled");
+                }
 
                 this.WriteObject(workspace);
             } 

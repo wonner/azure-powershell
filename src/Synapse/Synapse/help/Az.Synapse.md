@@ -83,6 +83,9 @@ Gets the auditing settings of an Azure Synapse Analytics Workspace.
 ### [Get-AzSynapseSqlDatabase](Get-AzSynapseSqlDatabase.md)
 This feature is in a limited preview, initially accessible only to certain subscriptions. Gets a Synapse Analytics SQL database.
 
+### [Get-AzSynapseSqlManagedIdentityControlAccess](Get-AzSynapseSqlManagedIdentityControlAccess.md)
+Gets managed identity Sql control settings.
+
 ### [Get-AzSynapseSqlPool](Get-AzSynapseSqlPool.md)
 Gets a Synapse Analytics SQL pool.
 
@@ -91,9 +94,6 @@ Gets the auditing settings of an Azure Synapse Analytics SQL pool.
 
 ### [Get-AzSynapseSqlPoolRestorePoint](Get-AzSynapseSqlPoolRestorePoint.md)
 Retrieves the distinct restore points from which a Synapse Analytics SQL pool can be restored.
-
-### [Get-AzSynapseSqlTransparentDataEncryptionProtector](Get-AzSynapseSqlTransparentDataEncryptionProtector.md)
-Gets the Transparent Data Encryption (TDE) protector.
 
 ### [Get-AzSynapseSqlVulnerabilityAssessmentSetting](Get-AzSynapseSqlVulnerabilityAssessmentSetting.md)
 Gets the vulnerability assessment settings of a workspace.
@@ -109,6 +109,9 @@ Get the status of the subscription for the event trigger to the specified extern
 
 ### [Get-AzSynapseWorkspace](Get-AzSynapseWorkspace.md)
 Gets a Synapse Analytics workspace.
+
+### [Grant-AzSynapseSqlManagedIdentityControlAccess](Grant-AzSynapseSqlManagedIdentityControlAccess.md)
+Grants workspace's system-assigned managed identity Sql control access.
 
 ### [Invoke-AzSynapseIntegrationRuntimeUpgrade](Invoke-AzSynapseIntegrationRuntimeUpgrade.md)
 Upgrades self-hosted integration runtime.
@@ -182,6 +185,9 @@ This feature is in a limited preview, initially accessible only to certain subsc
 ### [Remove-AzSynapseSqlPool](Remove-AzSynapseSqlPool.md)
 Deletes a Synapse Analytics SQL pool.
 
+### [Remove-AzSynapseSqlPoolRestorePoint](Remove-AzSynapseSqlPoolRestorePoint.md)
+Deletes a Synapse Analytics SQL pool restore point.
+
 ### [Remove-AzSynapseTrigger](Remove-AzSynapseTrigger.md)
 Removes a trigger from a workspace.
 
@@ -212,6 +218,9 @@ Restores a Synapse Analytics SQL pool.
 ### [Resume-AzSynapseSqlPool](Resume-AzSynapseSqlPool.md)
 Resumes a Synapse Analytics SQL pool.
 
+### [Revoke-AzSynapseSqlManagedIdentityControlAccess](Revoke-AzSynapseSqlManagedIdentityControlAccess.md)
+Revokes workspace's system-assigned managed identity Sql control access.
+
 ### [Set-AzSynapseDataFlow](Set-AzSynapseDataFlow.md)
 Creates or updates a data flow in workspace.
 
@@ -238,9 +247,6 @@ Changes the auditing settings of an Azure Synapse Analytics Workspace.
 
 ### [Set-AzSynapseSqlPoolAuditSetting](Set-AzSynapseSqlPoolAuditSetting.md)
 Changes the auditing settings for an Azure Synapse Analytics SQL pool.
-
-### [Set-AzSynapseSqlTransparentDataEncryptionProtector](Set-AzSynapseSqlTransparentDataEncryptionProtector.md)
-Sets the Transparent Data Encryption (TDE) protector for a Synapse Analytics Workspace.
 
 ### [Set-AzSynapseTrigger](Set-AzSynapseTrigger.md)
 Creates a trigger in a workspace.

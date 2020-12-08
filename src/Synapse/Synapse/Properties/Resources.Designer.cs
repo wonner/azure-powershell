@@ -260,6 +260,24 @@ namespace Microsoft.Azure.Commands.Synapse.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to disable managed identity CONTROL permissions to SQL pools for pipeline integration on workspace &apos;{0}&apos;?.
+        /// </summary>
+        internal static string DisableManagedIdentity {
+            get {
+                return ResourceManager.GetString("DisableManagedIdentity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabling managed identity CONTROL permissions to SQL pools for pipeline integration on workspace &apos;{0}&apos;..
+        /// </summary>
+        internal static string DisablingManagedIdentity {
+            get {
+                return ResourceManager.GetString("DisablingManagedIdentity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disabling Auto-pause for spark pool &apos;{0}&apos; in resource group &apos;{1}&apos; under parent workspace &apos;{2}&apos;..
         /// </summary>
         internal static string DisablingSynapseSparkPoolAutoPause {
@@ -283,6 +301,24 @@ namespace Microsoft.Azure.Commands.Synapse.Properties {
         internal static string EmailsAreNotValid {
             get {
                 return ResourceManager.GetString("EmailsAreNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to enable managed identity CONTROL permissions to SQL pools for pipeline integration on workspace &apos;{0}&apos;?.
+        /// </summary>
+        internal static string EnableManagedIdentity {
+            get {
+                return ResourceManager.GetString("EnableManagedIdentity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabling managed identity CONTROL permissions to SQL pools for pipeline integration on workspace &apos;{0}&apos;..
+        /// </summary>
+        internal static string EnablingManagedIdentity {
+            get {
+                return ResourceManager.GetString("EnablingManagedIdentity", resourceCulture);
             }
         }
         

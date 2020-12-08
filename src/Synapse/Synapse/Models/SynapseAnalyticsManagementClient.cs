@@ -1584,6 +1584,49 @@ namespace Microsoft.Azure.Commands.Synapse.Models
 
         #endregion
 
+        #region Managed Identity Sql Control
+
+        public ManagedIdentitySqlControlSettingsModel GetManagedIdentitySqlControl(string resourceGroupName, string workspaceName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(resourceGroupName))
+                {
+                    resourceGroupName = GetResourceGroupByWorkspaceName(workspaceName);
+                }
+
+                return this._synapseManagementClient.WorkspaceManagedIdentitySqlControlSettings.Get(resourceGroupName, workspaceName);
+            }
+            catch (ErrorContractException ex)
+            {
+                throw GetSynapseException(ex);
+            }
+        }
+
+        public ManagedIdentitySqlControlSettingsModel UpdateManagedIdentitySqlControl(string resourceGroupName, string workspaceName, string desiredState)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(resourceGroupName))
+                {
+                    resourceGroupName = GetResourceGroupByWorkspaceName(workspaceName);
+                }
+
+                var managedIdentitySqlControlSettings = new ManagedIdentitySqlControlSettingsModel
+                {
+                    GrantSqlControlToManagedIdentity = new ManagedIdentitySqlControlSettingsModelPropertiesGrantSqlControlToManagedIdentity(desiredState: desiredState)
+                };
+                
+                return this._synapseManagementClient.WorkspaceManagedIdentitySqlControlSettings.CreateOrUpdate(resourceGroupName, workspaceName, managedIdentitySqlControlSettings);
+            }
+            catch (ErrorContractException ex)
+            {
+                throw GetSynapseException(ex);
+            }
+        }
+
+        #endregion
+
         #region SQL Pool V3 operations
 
         public SqlPoolV3 CreateSqlPoolV3(string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolV3 createOrUpdateParams)
