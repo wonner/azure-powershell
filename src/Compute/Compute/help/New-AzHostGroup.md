@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Compute.dll-Help.xml
 Module Name: Az.Compute
-online version: https://docs.microsoft.com/en-us/powershell/module/az.compute/new-azhostgroup
+online version: https://docs.microsoft.com/powershell/module/az.compute/new-azhostgroup
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Creates a host group.
 
 ```
 New-AzHostGroup [-ResourceGroupName] <String> [-Name] <String> [-Location] <String>
- -PlatformFaultDomain <Int32> [-Zone <String[]>] [-Tag <Hashtable>] [-AsJob]
+ -PlatformFaultDomain <Int32> [-Zone <String[]>] [-SupportAutomaticPlacement <bool>] [-Tag <Hashtable>] [-AsJob]
  [-DefaultProfile <IAzureContextContainer>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -160,6 +160,24 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -SupportAutomaticPlacement
+Specifies if HostGroup will enable automatic placement of vm's.
+Automatic placement means these VMs are placed on dedicated hosts, chosen by Azure, under the dedicated host group.
+If not specified, default value will be false.
+
+```yaml
+Type: bool
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 
 ### -Confirm
 Prompts you for confirmation before running the cmdlet.

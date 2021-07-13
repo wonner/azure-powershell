@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Resources.dll-Help.xml
 Module Name: Az.Resources
 ms.assetid: 8300B143-E322-419E-BC98-DBA56DD90A59
-online version: https://docs.microsoft.com/en-us/powershell/module/az.resources/new-azroledefinition
+online version: https://docs.microsoft.com/powershell/module/az.resources/new-azroledefinition
 schema: 2.0.0
 ---
 
@@ -80,8 +80,8 @@ Following is a sample json role definition that can be provided as input
 
 ## EXAMPLES
 
-### Create using PSRoleDefinitionObject
-```
+### Example 1: Create using PSRoleDefinitionObject
+```powershell
 PS C:\> $role = Get-AzRoleDefinition -Name "Virtual Machine Contributor"
 
 PS C:\> $role.Id = $null
@@ -105,8 +105,8 @@ PS C:\> $role.AssignableScopes.Add("/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxx
 PS C:\> New-AzRoleDefinition -Role $role
 ```
 
-### Create using JSON file
-```
+### Example 2: Create using JSON file
+```powershell
 PS C:\> New-AzRoleDefinition -InputFile C:\Temp\roleDefinition.json
 ```
 

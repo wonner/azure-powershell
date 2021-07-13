@@ -12,6 +12,92 @@
 # limitations under the License.
 # ----------------------------------------------------------------------------------
 
+function Test-AzureVMCrossRegionRestore
+{
+	$location = "centraluseuap"
+	$resourceGroupName = Create-ResourceGroup $location 24
+
+	try
+	{
+		# Setup
+		$vault = Create-RecoveryServicesVault $resourceGroupName $location 25
+
+		# waiting for service to reflect
+		Start-TestSleep 20000
+
+		# Enable CRR
+		Set-AzRecoveryServicesBackupProperty -Vault $vault -EnableCrossRegionRestore
+
+		# waiting for service to reflect
+		Start-TestSleep 30000
+
+		# Assert that the vault is now CRR enabled
+		$crr = Get-AzRecoveryServicesBackupProperty -Vault $vault
+		Assert-True { $crr.CrossRegionRestore -eq $true }
+	}
+	finally
+	{
+		# Cleanup
+		Cleanup-ResourceGroup $resourceGroupName
+	}
+}
+
+function Test-AzureRSVaultMSI
+{
+	try
+	{		
+		$location = "southeastasia"
+		$resourceGroupName = Create-ResourceGroup $location 22	
+		$vault = Create-RecoveryServicesVault $resourceGroupName $location
+	
+		# disable soft delete for successful cleanup
+		Set-AzRecoveryServicesVaultProperty -VaultId $vault.ID -SoftDeleteFeatureState "Disable"
+	
+		# get Identity - verify Empty 
+		$vault = Get-AzRecoveryServicesVault -Name $vault.Name -ResourceGroupName $vault.ResourceGroupName
+		Assert-True { $vault.Identity -eq $null }
+		
+		# set Identity - verify System assigned
+		$updatedVault = Update-AzRecoveryServicesVault -ResourceGroupName $vault.ResourceGroupName -Name $vault.Name -IdentityType "SystemAssigned"
+		Assert-True { $updatedVault.Identity.Type -eq "SystemAssigned" }
+	
+		# remove Identity - verify empty again 
+		$rm = Update-AzRecoveryServicesVault -ResourceGroupName $vault.ResourceGroupName -Name $vault.Name -IdentityType "None"
+		Assert-True { $rm.Identity.Type -eq "None" }	
+	}
+	finally
+	{
+		# Cleanup
+		Cleanup-ResourceGroup $resourceGroupName
+	}
+}
+
+function Test-AzureBackupDataMove
+{
+	$sourceLocation = "eastus2euap"
+	$sourceResourceGroup = Create-ResourceGroup $sourceLocation 21
+
+	$targetLocation = "centraluseuap"
+	$targetResourceGroup = Create-ResourceGroup $targetLocation 23
+		
+	$vm = Create-VM $sourceResourceGroup $sourceLocation 3
+	$vault1 = Create-RecoveryServicesVault $sourceResourceGroup $sourceLocation
+	$vault2 = Create-RecoveryServicesVault $targetResourceGroup $targetLocation
+	Enable-Protection $vault1 $vm
+		
+	# disable soft delete for successful cleanup
+	Set-AzRecoveryServicesVaultProperty -VaultId $vault1.ID -SoftDeleteFeatureState "Disable"
+	Set-AzRecoveryServicesVaultProperty -VaultId $vault2.ID -SoftDeleteFeatureState "Disable"
+
+	# data move v2 to v1 fails due to TargetVaultNotEmpty
+	Assert-ThrowsContains { Copy-AzRecoveryServicesVault -SourceVault $vault2 -TargetVault $vault1 -Force } `
+		"Please provide an empty target vault. The target vault should not have any backup items or backup containers";			
+
+	# data move from v1 to v2 succeeds
+	$dataMove = Copy-AzRecoveryServicesVault -SourceVault $vault1 -TargetVault $vault2 -Force;
+	Assert-True { $dataMove -contains "Please monitor the operation using Az-RecoveryServicesBackupJob cmdlet" }			
+}
+
 function Test-AzureVMGetItems
 {
 	$location = "southeastasia"
@@ -23,6 +109,10 @@ function Test-AzureVMGetItems
 		$vm = Create-VM $resourceGroupName $location 1
 		$vm2 = Create-VM $resourceGroupName $location 12
 		$vault = Create-RecoveryServicesVault $resourceGroupName $location
+
+		# disable soft delete for successful cleanup
+		Set-AzRecoveryServicesVaultProperty -VaultId $vault.ID -SoftDeleteFeatureState "Disable"
+
 		Enable-Protection $vault $vm
 		Enable-Protection $vault $vm2
 		$policy = Get-AzRecoveryServicesBackupProtectionPolicy `
@@ -129,7 +219,7 @@ function Test-AzureVMProtection
 		# Setup
 		$vm = Create-VM $resourceGroupName $location
 		$vault = Create-RecoveryServicesVault $resourceGroupName $location
-
+		Set-AzRecoveryServicesVaultProperty -VaultId $vault.ID -SoftDeleteFeatureState "Disable"
 		# Sleep to give the service time to add the default policy to the vault
         Start-TestSleep 5000
 
@@ -192,6 +282,7 @@ function Test-AzureVMGetRPs
   		# Setup
 		$vm = Create-VM $resourceGroupName $location
 		$vault = Create-RecoveryServicesVault $resourceGroupName $location
+		Set-AzRecoveryServicesVaultProperty -VaultId $vault.ID -SoftDeleteFeatureState "Disable"
 		$item = Enable-Protection $vault $vm
 		$backupJob = Backup-Item $vault $item
 
@@ -259,6 +350,7 @@ function Test-AzureVMFullRestore
 		$saName = Create-SA $resourceGroupName $location
 		$vm = Create-VM $resourceGroupName $location
 		$vault = Create-RecoveryServicesVault $resourceGroupName $location
+		Set-AzRecoveryServicesVaultProperty -VaultId $vault.ID -SoftDeleteFeatureState "Disable"
 		$item = Enable-Protection $vault $vm
 		$backupJob = Backup-Item $vault $item
 		$rp = Get-RecoveryPoint $vault $item $backupJob
@@ -312,6 +404,10 @@ function Test-AzureUnmanagedVMFullRestore
 		$saName = Create-SA $resourceGroupName $location
 		$vm = Create-UnmanagedVM $resourceGroupName $location $saName
 		$vault = Create-RecoveryServicesVault $resourceGroupName $location
+		Set-AzRecoveryServicesVaultProperty -VaultId $vault.ID -SoftDeleteFeatureState "Disable"
+		$VaultProperty = Get-AzRecoveryServicesVaultProperty -VaultId $vault.ID
+		Assert-True { $VaultProperty.SoftDeleteFeatureState -eq "Disabled" }
+
 		$item = Enable-Protection $vault $vm $resourceGroupName
 		$backupJob = Backup-Item $vault $item
 		$rp = Get-RecoveryPoint $vault $item $backupJob
@@ -325,6 +421,14 @@ function Test-AzureUnmanagedVMFullRestore
 			-UseOriginalStorageAccount | Wait-AzRecoveryServicesBackupJob -VaultId $vault.ID
 		
 		Assert-True { $restoreJob.Status -eq "Completed" }
+
+		$restoreJob2 = Restore-AzRecoveryServicesBackupItem `
+			-VaultId $vault.ID `
+			-VaultLocation $vault.Location `
+			-RecoveryPoint $rp `
+			-StorageAccountName $saName `
+			-StorageAccountResourceGroupName $resourceGroupName `
+			-RestoreAsManagedDisk -TargetResourceGroupName $resourceGroupName
 	}
 	finally
 	{
@@ -342,6 +446,7 @@ function Test-AzureVMRPMountScript
 		# Setup
 		$vm = Create-VM $resourceGroupName $location
 		$vault = Create-RecoveryServicesVault $resourceGroupName $location
+		Set-AzRecoveryServicesVaultProperty -VaultId $vault.ID -SoftDeleteFeatureState "Disable"
 		$item = Enable-Protection $vault $vm
 		$backupJob = Backup-Item $vault $item
 		$rp = Get-RecoveryPoint $vault $item $backupJob
@@ -377,6 +482,7 @@ function Test-AzureVMBackup
 	{
 		# Setup
 		$vault = Create-RecoveryServicesVault $resourceGroupName $location
+		Set-AzRecoveryServicesVaultProperty -VaultId $vault.ID -SoftDeleteFeatureState "Disable"
 		$vm = Create-VM $resourceGroupName $location
 		$item = Enable-Protection $vault $vm
 		
@@ -405,10 +511,13 @@ function Test-AzureVMSetVaultContext
 		$vm = Create-VM $resourceGroupName $location
 		$vault = Create-RecoveryServicesVault $resourceGroupName $location
 
+		# disable soft delete for successful cleanup
+		Set-AzRecoveryServicesVaultProperty -VaultId $vault.ID -SoftDeleteFeatureState "Disable"
+
 		# Sleep to give the service time to add the default policy to the vault
         Start-TestSleep 5000
 
-		Set-AzRecoveryServicesVaultContext -Vault $vault
+		Set-AzRecoveryServicesVaultContext -Vault $vault | Out-Null
 
 		# Get default policy
 		$policy = Get-AzRecoveryServicesBackupProtectionPolicy `

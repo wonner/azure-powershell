@@ -1,7 +1,7 @@
 ---
 external help file:
 Module Name: Az.MySql
-online version: https://docs.microsoft.com/en-us/powershell/module/az.mysql/update-azmysqlfirewallrule
+online version: https://docs.microsoft.com/powershell/module/az.mysql/update-azmysqlfirewallrule
 schema: 2.0.0
 ---
 
@@ -17,6 +17,19 @@ Creates a new firewall rule or updates an existing firewall rule.
 Update-AzMySqlFirewallRule -Name <String> -ResourceGroupName <String> -ServerName <String>
  -EndIPAddress <String> -StartIPAddress <String> [-SubscriptionId <String>] [-DefaultProfile <PSObject>]
  [-AsJob] [-NoWait] [-Confirm] [-WhatIf] [<CommonParameters>]
+```
+
+### ClientIPAddress
+```
+Update-AzMySqlFirewallRule -Name <String> -ResourceGroupName <String> -ServerName <String>
+ -ClientIPAddress <String> [-SubscriptionId <String>] [-DefaultProfile <PSObject>] [-AsJob] [-NoWait]
+ [-Confirm] [-WhatIf] [<CommonParameters>]
+```
+
+### ClientIPAddressViaIdentity
+```
+Update-AzMySqlFirewallRule -InputObject <IMySqlIdentity> -ClientIPAddress <String>
+ [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-Confirm] [-WhatIf] [<CommonParameters>]
 ```
 
 ### UpdateViaIdentityExpanded
@@ -53,6 +66,18 @@ rule 0.0.0.2        0.0.0.3
 
 These cmdlets update MySql Firewall Rule by identity.
 
+### Example 3: Update MySql Firewall Rule by -ClientIPAddress.
+```powershell
+PS C:\> $ID = "/subscriptions/<SubscriptionId>/resourceGroups/PowershellMySqlTest/providers/Microsoft.DBforMySQL/servers/mysql-test/firewallRules/rule"
+PS C:\> Update-AzMySqlFirewallRule -InputObject $ID --ClientIPAddress 0.0.0.2
+
+Name StartIPAddress EndIPAddress
+---- -------------- ------------
+rule 0.0.0.2        0.0.0.2
+```
+
+These cmdlets update MySql Firewall Rule by -ClientIPAddress.
+
 ## PARAMETERS
 
 ### -AsJob
@@ -64,6 +89,22 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ClientIPAddress
+Client specified single IP of the server firewall rule.
+Must be IPv4 format.
+
+```yaml
+Type: System.String
+Parameter Sets: ClientIPAddress, ClientIPAddressViaIdentity
+Aliases:
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -91,7 +132,7 @@ Must be IPv4 format.
 
 ```yaml
 Type: System.String
-Parameter Sets: (All)
+Parameter Sets: UpdateExpanded, UpdateViaIdentityExpanded
 Aliases:
 
 Required: True
@@ -107,7 +148,7 @@ To construct, see NOTES section for INPUTOBJECT properties and create a hash tab
 
 ```yaml
 Type: Microsoft.Azure.PowerShell.Cmdlets.MySql.Models.IMySqlIdentity
-Parameter Sets: UpdateViaIdentityExpanded
+Parameter Sets: ClientIPAddressViaIdentity, UpdateViaIdentityExpanded
 Aliases:
 
 Required: True
@@ -122,7 +163,7 @@ The name of the server firewall rule.
 
 ```yaml
 Type: System.String
-Parameter Sets: UpdateExpanded
+Parameter Sets: ClientIPAddress, UpdateExpanded
 Aliases: FirewallRuleName
 
 Required: True
@@ -153,7 +194,7 @@ The name is case insensitive.
 
 ```yaml
 Type: System.String
-Parameter Sets: UpdateExpanded
+Parameter Sets: ClientIPAddress, UpdateExpanded
 Aliases:
 
 Required: True
@@ -168,7 +209,7 @@ The name of the server.
 
 ```yaml
 Type: System.String
-Parameter Sets: UpdateExpanded
+Parameter Sets: ClientIPAddress, UpdateExpanded
 Aliases:
 
 Required: True
@@ -184,7 +225,7 @@ Must be IPv4 format.
 
 ```yaml
 Type: System.String
-Parameter Sets: (All)
+Parameter Sets: UpdateExpanded, UpdateViaIdentityExpanded
 Aliases:
 
 Required: True
@@ -199,7 +240,7 @@ The ID of the target subscription.
 
 ```yaml
 Type: System.String
-Parameter Sets: UpdateExpanded
+Parameter Sets: ClientIPAddress, UpdateExpanded
 Aliases:
 
 Required: False
@@ -256,6 +297,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ALIASES
 
 COMPLEX PARAMETER PROPERTIES
+
 To create the parameters described below, construct a hash table containing the appropriate properties. For information on hash tables, run Get-Help about_Hash_Tables.
 
 
@@ -264,6 +306,7 @@ INPUTOBJECT <IMySqlIdentity>: Identity Parameter
   - `[DatabaseName <String>]`: The name of the database.
   - `[FirewallRuleName <String>]`: The name of the server firewall rule.
   - `[Id <String>]`: Resource identity path
+  - `[KeyName <String>]`: The name of the server key.
   - `[LocationName <String>]`: The name of the location.
   - `[ResourceGroupName <String>]`: The name of the resource group. The name is case insensitive.
   - `[SecurityAlertPolicyName <SecurityAlertPolicyName?>]`: The name of the security alert policy.

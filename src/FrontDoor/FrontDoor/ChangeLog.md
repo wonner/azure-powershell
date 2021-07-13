@@ -19,6 +19,21 @@
 -->
 ## Upcoming Release
 
+## Version 1.8.0
+* Allowed Enable-AzFrontDoorCustomDomainHttps's SecretVersion parameter to be optional to support bring-your-own-certificate auto-rotation
+* Added Sku / RuleSetAction parameters for WAF
+
+## Version 1.7.0
+* Added FrontDoorId to properties
+* Added JSON Exclusions and RequestBodyCheck support to managed rules
+
+## Version 1.6.1
+* Fixed an issue where an exception is being thrown when Enum.Parse tries to coerce a null value to an Enabled or Disabled enum values [#12344]
+
+## Version 1.6.0
+* Updated module to use API 2020-05-01
+* Added Private link support for Storage, Keyvault and Web App Service resources
+
 ## Version 1.5.0
 * Added new cmdlets for creation, update, retreival, and deletion of Front Door Rules Engine object
 * Added helper cmdlets for construction of Front Door Rules Engine object

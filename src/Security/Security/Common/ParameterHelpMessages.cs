@@ -26,6 +26,7 @@ namespace Microsoft.Azure.Commands.Security.Common
         public const string Scope = "Scope.";
         public const string Kind = "Kind.";
         public const string InputObject = "Input Object.";
+        public const string InputObjectV3 = "Input Object V3.";
         public const string Location = "Location.";
         public const string PassThru = "Return whether the operation was successful.";
         public const string Tags = "Tags.";
@@ -137,6 +138,43 @@ namespace Microsoft.Azure.Commands.Security.Common
         public const string StatusDescription = "Human readable description of the cause of the assessment's result.";
         public const string AdditionalData = "Data that is attached to the assessment result for better investigations or status clarity.";
         public const string AssessmentsName = "Name of the assessment resource.";
+
+        #endregion
+
+        #region Adaptive Network Hardenings
+
+        public const string ResourceNamespace = "Resource namespace";
+        public const string ResourceType = "Resource type";
+        public const string RulesToEnforce = "Rule to enforce";
+        public const string AdaptiveNetworkHardeningResourceName = "Adaptive Network Hardening resource name";
+        public const string AdaptiveNetworkHardeningEnforceAction = "Adaptive Network Hardening enforce action";
+        public const string EffectiveNetworkSecurityGroups = "The Azure resource IDs of the effective network security groups";
+
+        #endregion
+ 
+        #region Adaptive Application Controls
+
+        public const string AdaptiveApplicationControlsGroupName = "Name of an application control VM/server group";
+        public const string AscLocation = "The location where ASC stores the data of the subscription. can be retrieved from Get locations";
+        public const string IncludePathRecommendation = "Include the policy rules";
+        public const string Summary = "Return output in a summarized form";
+
+        #endregion
+
+        #region SQL Vulnerability Assessment
+
+        public const string Server = "Server name";
+        public const string Database = "Database name";
+        public const string ComputerName = "Computer full name - on premise parameter";
+        public const string VmUuid = "Virtual machine universal unique identifier - on premise parameter";
+        public const string AgentId = "Agent ID - on premise parameter";
+        public const string WorkspaceResourceId = "Workspace resource ID - on premise parameter";
+        public const string UseLatest = "Use latest results for the operation";
+        public const string RuleId = "Vulnerability Assessment rule ID";
+        public const string ScanId = "Vulnerability Assessment scan ID - use scanId = 'latest' to get latest results";
+        public const string Baseline = "Vulnerability Assessment baseline object";
+        public const string ForceRemoveBaseline = "Force remove baseline without confirmation";
+        public const string ForceSetBaseline = "Force set baseline without confirmation";
 
         #endregion
     }

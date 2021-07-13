@@ -33,10 +33,24 @@ namespace Microsoft.Azure.Commands.Management.Storage.Test.ScenarioTests
 
         [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestStorageBlobIsVersioningEnabled()
+        {
+            TestController.NewInstance.RunPsTest(_logger, "Test-StorageBlobIsVersioningEnabled");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void TestStorageBlobContainer()
         {
             TestController.NewInstance.RunPsTest(_logger, "Test-StorageBlobContainer");
         }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestStorageBlobContainerEncryptionScope()
+        {
+            TestController.NewInstance.RunPsTest(_logger, "Test-StorageBlobContainerEncryptionScope");
+        }        
 
         [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
@@ -57,6 +71,41 @@ namespace Microsoft.Azure.Commands.Management.Storage.Test.ScenarioTests
         public void TestStorageBlobServiceProperties()
         {
             TestController.NewInstance.RunPsTest(_logger, "Test-StorageBlobServiceProperties");
-        }        
+        }    
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestStorageBlobORS()
+        {
+            TestController.NewInstance.RunPsTest(_logger, "Test-StorageBlobORS");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestStorageBlobRestore()
+        {
+            TestController.NewInstance.RunPsTest(_logger, "Test-StorageBlobRestore");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestStorageBlobChangeFeed()
+        {
+            TestController.NewInstance.RunPsTest(_logger, "Test-StorageBlobChangeFeed");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestStorageBlobContainerSoftDelete()
+        {
+            TestController.NewInstance.RunPsTest(_logger, "Test-StorageBlobContainerSoftDelete");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestStorageBlobLastAccessTimeTracking()
+        {
+            TestController.NewInstance.RunPsTest(_logger, "Test-StorageBlobLastAccessTimeTracking");
+        }
     }
 }

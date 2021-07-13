@@ -6,6 +6,7 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>Permissions for the key -- read-only or full permissions.</summary>
     public partial struct KeyPermission :
         System.IEquatable<KeyPermission>
     {
@@ -20,7 +21,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="KeyPermission" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new KeyPermission(System.Convert.ToString(value));
+            return new KeyPermission(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type KeyPermission</summary>

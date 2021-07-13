@@ -6,6 +6,10 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>
+    /// The signed services accessible with the service SAS. Possible values include: Blob (b), Container (c), File (f), Share
+    /// (s).
+    /// </summary>
     public partial struct SignedResource :
         System.IEquatable<SignedResource>
     {
@@ -24,7 +28,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="SignedResource" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new SignedResource(System.Convert.ToString(value));
+            return new SignedResource(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type SignedResource</summary>

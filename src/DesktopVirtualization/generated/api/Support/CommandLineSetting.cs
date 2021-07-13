@@ -6,6 +6,10 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Support
 {
 
+    /// <summary>
+    /// Specifies whether this published application can be launched with command line arguments provided by the client, command
+    /// line arguments specified at publish time, or no command line arguments at all.
+    /// </summary>
     public partial struct CommandLineSetting :
         System.IEquatable<CommandLineSetting>
     {
@@ -29,7 +33,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Support
         /// <param name="value">the value to convert to an instance of <see cref="CommandLineSetting" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new CommandLineSetting(System.Convert.ToString(value));
+            return new CommandLineSetting(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type CommandLineSetting</summary>

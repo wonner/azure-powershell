@@ -81,6 +81,9 @@ namespace Microsoft.Azure.Commands.Compute.Automation
         [LocationCompleter("Microsoft.Compute/virtualMachineScaleSets")]
         public string Location { get; set; }
 
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
+        public string EdgeZone { get; set; }
+
         // this corresponds to VmSku in the Azure CLI
         [Parameter(ParameterSetName = SimpleParameterSet, Mandatory = false)]
         public string VmSize { get; set; } = "Standard_DS1_v2";
@@ -134,6 +137,15 @@ namespace Microsoft.Azure.Commands.Compute.Automation
         [Parameter(ParameterSetName = SimpleParameterSet, Mandatory = false)]
         public string ProximityPlacementGroupId { get; set; }
 
+        [Alias("HostGroup")]
+        [Parameter(
+            ParameterSetName = SimpleParameterSet,
+            Mandatory = false,
+            HelpMessage = "Specifies the dedicated host group the virtual machine scale set will reside in.",
+            ValueFromPipelineByPropertyName = true
+        )]
+        public string HostGroupId { get; set; }
+
         [Parameter(ParameterSetName = SimpleParameterSet, Mandatory = false,
             HelpMessage = "The priority for the virtual machine in the scale set. Only supported values are 'Regular', 'Spot' and 'Low'. 'Regular' is for regular virtual machine. 'Spot' is for spot virtual machine. 'Low' is also for spot virtual machine but is replaced by 'Spot'. Please use 'Spot' instead of 'Low'.")]
         [PSArgumentCompleter("Regular", "Spot")]
@@ -167,6 +179,22 @@ namespace Microsoft.Azure.Commands.Compute.Automation
             HelpMessage = "When Overprovision is enabled, extensions are launched only on the requested number of VMs which are finally kept. "
                         + "This property will hence ensure that the extensions do not run on the extra overprovisioned VMs.")]
         public SwitchParameter SkipExtensionsOnOverprovisionedVMs { get; set; }
+
+        [Parameter(ParameterSetName = SimpleParameterSet, Mandatory = false)]
+        public SwitchParameter EncryptionAtHost { get; set; }
+
+        [Parameter(ParameterSetName = SimpleParameterSet, Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Fault Domain count for each placement group.")]
+        public int PlatformFaultDomainCount { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            ParameterSetName = SimpleParameterSet,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Specifies the orchestration mode for the virtual machine scale set.")]
+        [PSArgumentCompleter("Uniform", "Flexible")]
+        public string OrchestrationMode { get; set; }
 
         const int FirstPortRangeStart = 50000;
 
@@ -210,6 +238,7 @@ namespace Microsoft.Azure.Commands.Compute.Automation
 
                 var publicIpAddress = resourceGroup.CreatePublicIPAddressConfig(
                     name: _cmdlet.PublicIpAddressName,
+                    edgeZone: _cmdlet.EdgeZone,
                     domainNameLabel: _cmdlet.DomainNameLabel,
                     allocationMethod: _cmdlet.AllocationMethod,
                     //sku.Basic is not compatible with multiple placement groups
@@ -220,6 +249,7 @@ namespace Microsoft.Azure.Commands.Compute.Automation
 
                 var virtualNetwork = resourceGroup.CreateVirtualNetworkConfig(
                     name: _cmdlet.VirtualNetworkName,
+                    edgeZone: _cmdlet.EdgeZone,
                     addressPrefix: _cmdlet.VnetAddressPrefix);
 
                 var subnet = virtualNetwork.CreateSubnet(
@@ -282,6 +312,8 @@ namespace Microsoft.Azure.Commands.Compute.Automation
 
                 var proximityPlacementGroup = resourceGroup.CreateProximityPlacementGroupSubResourceFunc(_cmdlet.ProximityPlacementGroupId);
 
+                var hostGroup = resourceGroup.CreateDedicatedHostGroupSubResourceFunc(_cmdlet.HostGroupId);
+
                 return resourceGroup.CreateVirtualMachineScaleSetConfig(
                     name: _cmdlet.VMScaleSetName,
                     subnet: subnet,                    
@@ -302,11 +334,16 @@ namespace Microsoft.Azure.Commands.Compute.Automation
                     identity: _cmdlet.GetVmssIdentityFromArgs(),
                     singlePlacementGroup : _cmdlet.SinglePlacementGroup.IsPresent,
                     proximityPlacementGroup: proximityPlacementGroup,
+                    hostGroup: hostGroup,
                     priority: _cmdlet.Priority,
                     evictionPolicy: _cmdlet.EvictionPolicy,
                     maxPrice: _cmdlet.IsParameterBound(c => c.MaxPrice) ? _cmdlet.MaxPrice : (double?)null,
                     scaleInPolicy: _cmdlet.ScaleInPolicy,
-                    doNotRunExtensionsOnOverprovisionedVMs: _cmdlet.SkipExtensionsOnOverprovisionedVMs.IsPresent
+                    doNotRunExtensionsOnOverprovisionedVMs: _cmdlet.SkipExtensionsOnOverprovisionedVMs.IsPresent,
+                    encryptionAtHost : _cmdlet.EncryptionAtHost.IsPresent,
+                    platformFaultDomainCount: _cmdlet.IsParameterBound(c => c.PlatformFaultDomainCount) ? _cmdlet.PlatformFaultDomainCount : (int?)null,
+                    edgeZone: _cmdlet.EdgeZone,
+                    orchestrationMode: _cmdlet.IsParameterBound(c => c.OrchestrationMode) ? _cmdlet.OrchestrationMode : null
                     );
             }
         }
@@ -327,6 +364,12 @@ namespace Microsoft.Azure.Commands.Compute.Automation
             var client = new Client(DefaultProfile.DefaultContext);
 
             var parameters = new Parameters(this, client);
+
+            if (parameters?.ImageAndOsType?.Image?.Version?.ToLower() != "latest")
+            {
+                WriteWarning("You are deploying VMSS pinned to a specific image version from Azure Marketplace. \n" +
+                    "Consider using \"latest\" as the image version. This allows VMSS to auto upgrade when a newer version is available.");
+            }
 
             // If the user did not specify a load balancer name, mark the LB setting to ignore
             // preexisting check. The most common scenario is users will let the cmdlet create and name the LB for them with the default

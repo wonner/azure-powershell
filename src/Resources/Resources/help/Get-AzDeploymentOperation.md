@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.ResourceManager.dll-Help.xml
 Module Name: Az.Resources
-online version: https://docs.microsoft.com/en-us/powershell/module/az.resources/get-azdeploymentoperation
+online version: https://docs.microsoft.com/powershell/module/az.resources/get-azdeploymentoperation
 schema: 2.0.0
 ---
 
@@ -14,14 +14,14 @@ Get deployment operation
 
 ### GetByDeploymentName (Default)
 ```
-Get-AzDeploymentOperation -DeploymentName <String> [-OperationId <String>] [-ApiVersion <String>] [-Pre]
+Get-AzDeploymentOperation -DeploymentName <String> [-OperationId <String>] [-Pre]
  [-DefaultProfile <IAzureContextContainer>] [<CommonParameters>]
 ```
 
 ### GetByDeploymentObject
 ```
-Get-AzDeploymentOperation -DeploymentObject <PSDeployment> [-ApiVersion <String>] [-Pre]
- [-DefaultProfile <IAzureContextContainer>] [<CommonParameters>]
+Get-AzDeploymentOperation -DeploymentObject <PSDeployment> [-Pre] [-DefaultProfile <IAzureContextContainer>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,37 +35,21 @@ For more on this setting and how to enable it, see New-AzDeployment and Debuggin
 
 ## EXAMPLES
 
-### Get deployment operations given a deployment name
-```
+### Example 1: Get deployment operations given a deployment name
+```powershell
 PS C:\>Get-AzDeploymentOperation -DeploymentName test
 ```
 
 Gets deployment operation with name "test" at the current subscription scope.
 
-### Get a deployment and get its deployment operations
-```
+### Example 2: Get a deployment and get its deployment operations
+```powershell
 PS C:\>Get-AzDeployment -Name "test" | Get-AzDeploymentOperation
 ```
 
 This command gets the deployment "test" at the current subscription scope and get its deployment operations.
 
 ## PARAMETERS
-
-### -ApiVersion
-When set, indicates the version of the resource provider API to use.
-If not specified, the API version is automatically determined as the latest available.
-
-```yaml
-Type: System.String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -DefaultProfile
 The credentials, account, tenant, and subscription used for communication with Azure.

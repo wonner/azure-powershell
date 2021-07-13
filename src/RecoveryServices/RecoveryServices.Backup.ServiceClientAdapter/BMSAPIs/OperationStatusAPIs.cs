@@ -12,6 +12,8 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
+using Newtonsoft.Json;
 using RestAzureNS = Microsoft.Rest.Azure;
 using ServiceClientModel = Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
@@ -33,6 +35,21 @@ namespace Microsoft.Azure.Commands.RecoveryServices.Backup.Cmdlets.ServiceClient
             return BmsAdapter.Client.BackupOperationStatuses.GetWithHttpMessagesAsync(
                 vaultName ?? BmsAdapter.GetResourceName(),
                 resourceGroupName ?? BmsAdapter.GetResourceGroupName(),
+                operationId).Result;
+        }
+
+        /// <summary>
+        /// Gets status of a generic operation on the protected item using the operation ID
+        /// </summary>
+        /// <param name="operationId">ID of the operation in progress</param>
+        /// <returns>Operation status response returned by the service</returns>
+        public RestAzureNS.AzureOperationResponse<ServiceClientModel.OperationStatus>
+            GetCrrOperationStatus(
+                string secondaryRegion,
+                string operationId)
+        {
+            return BmsAdapter.Client.CrrOperationStatus.GetWithHttpMessagesAsync(
+                secondaryRegion,
                 operationId).Result;
         }
 
@@ -97,6 +114,45 @@ namespace Microsoft.Azure.Commands.RecoveryServices.Backup.Cmdlets.ServiceClient
                     AzureFabricName,
                     containerName,
                     operationId).Result;
+        }
+
+        /// <summary>
+        /// Gets status of prepare data move operation on the source vault 
+        /// </summary>
+        /// <param name="operationId">ID of the operation in progress</param>
+        /// <returns></returns>
+        public RestAzureNS.AzureOperationResponse<ServiceClientModel.OperationStatus>
+            GetDataMoveOperationStatus(
+            string operationId,
+            string vaultName = null,
+            string resourceGroupName = null)
+        {
+            return BmsAdapter.Client.GetOperationStatusWithHttpMessagesAsync(
+                                vaultName,
+                                resourceGroupName,
+                                operationId).Result;
+        }
+
+        /// <summary>
+        /// Gets correlationId result of prepare data move operation on the source vault 
+        /// </summary>
+        /// <param name="operationId">ID of the operation in progress</param>
+        /// <returns></returns>
+        public ServiceClientModel.PrepareDataMoveResponse
+            GetPrepareDataMoveOperationResult(
+            string operationId,
+            string vaultName = null,
+            string resourceGroupName = null)
+        {
+            var prepareResponseBase = BmsAdapter.Client.BMSPrepareDataMoveOperationResult.GetWithHttpMessagesAsync(
+                                vaultName,
+                                resourceGroupName,
+                                operationId).Result.Body;
+
+            var prepareResponseSerialized = JsonConvert.SerializeObject(prepareResponseBase);
+            PrepareDataMoveResponse prepareResponseDerived = JsonConvert.DeserializeObject<PrepareDataMoveResponse>(prepareResponseSerialized);
+            
+            return prepareResponseDerived;
         }
 
         /// <summary>

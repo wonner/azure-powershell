@@ -65,6 +65,44 @@ function Test-GetNonExistingDataFactory
 
 <#
 .SYNOPSIS
+Gets and updates a Data Factory global parameters object.
+#>
+function Test-UpdateFactoryGlobalParameters
+{	
+    $dfname = Get-DataFactoryName
+    $rgname = Get-ResourceGroupName
+    $rglocation = Get-ProviderLocation ResourceManagement
+    $dflocation = Get-ProviderLocation DataFactoryManagement
+    
+    New-AzResourceGroup -Name $rgname -Location $rglocation -Force
+
+    try
+    {
+        $actual = Get-AzDataFactoryV2 -ResourceGroupName $rgname -Name $dfname
+
+        if($actual.GlobalParameters -eq $null) {
+            $actual.GlobalParameters = New-Object 'system.collections.generic.dictionary[string,Microsoft.Azure.Management.DataFactory.Models.GlobalParameterSpecification]'
+		}
+
+        $actual.GlobalParameters.add("paramFromPs", @{ Type="String"; Value="String param from PS"})
+
+        $expected = Set-AzDataFactoryV2 -InputObject $actual -Force
+
+		ValidateFactoryProperties $expected $actual
+		ValidateFactoryProperties $expected.GlobalParameters $actual.GlobalParameters
+
+        $actual.GlobalParameters.GetEnumerator() | ForEach-Object {
+            ValidateFactoryProperties $_.Value $expected.GlobalParameters[$_.Key]
+        }
+    }
+    finally
+    {
+        CleanUp $rgname $dfname
+    }
+}
+
+<#
+.SYNOPSIS
 Creates a data factory and then does a Get to verify that both are identical.
 #>
 function Test-CreateDataFactory
@@ -223,6 +261,64 @@ function Test-CreateDataFactoryV2WithGitHubRepoConfig
     try
     {
         $actual = Set-AzDataFactoryV2 -ResourceGroupName $rgname -Name $dfname -Location $dflocation -Force -AccountName  "an" -RepositoryName "rn" -CollaborationBranch "cb" -RootFolder  "rf" -LastCommitId "lci" -HostName "hn" 
+        $expected = Get-AzDataFactoryV2 -ResourceGroupName $rgname -Name $dfname
+
+		ValidateFactoryProperties $expected $actual
+    }
+    finally
+    {
+        CleanUp $rgname $dfname
+    }
+}
+
+<#
+.SYNOPSIS
+Creates a data factory with User assigned identity and then does a Get to verify that both are identical.
+#>
+function Test-CreateDataFactoryV2WithUserAssignedIdentity
+{
+    $dfname = Get-DataFactoryName
+    $rgname = Get-ResourceGroupName
+    $rglocation = Get-ProviderLocation ResourceManagement
+    $dflocation = Get-ProviderLocation DataFactoryManagement
+    $userAssignedIdentities = New-Object 'system.collections.generic.dictionary[string,object]'
+    $userAssignedIdentities.add("/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourcegroups/ADF/providers/Microsoft.ManagedIdentity/userAssignedIdentities/PacoTestUAMI2", @{})
+    
+    New-AzResourceGroup -Name $rgname -Location $rglocation -Force
+
+    try
+    {
+        $actual = Set-AzDataFactoryV2 -ResourceGroupName $rgname -Name $dfname -Location $dflocation -Force -UserAssignedIdentity $userAssignedIdentities
+        $expected = Get-AzDataFactoryV2 -ResourceGroupName $rgname -Name $dfname
+
+		ValidateFactoryProperties $expected $actual
+    }
+    finally
+    {
+        CleanUp $rgname $dfname
+    }
+}
+
+<#
+.SYNOPSIS
+Creates a data factory with User assigned identity and then does a Get to verify that both are identical.
+#>
+function Test-CreateDataFactoryV2WithCMK
+{
+    $dfname = Get-DataFactoryName
+    $rgname = Get-ResourceGroupName
+    $rglocation = Get-ProviderLocation ResourceManagement
+    $dflocation = Get-ProviderLocation DataFactoryManagement
+    $encryptionVaultBaseUrl = "https://pacotestcmkkv.vault.azure.net"
+    $encryptionKeyName = "PacoTestCMK"
+    $encryptionKeyVersion = "b57994d085814d0f9fe2c38c2e5136fe"
+    $encryptionUserAssignedIdentity = "/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourcegroups/ADF/providers/Microsoft.ManagedIdentity/userAssignedIdentities/PAcotestUAMI"
+    
+    New-AzResourceGroup -Name $rgname -Location $rglocation -Force
+
+    try
+    {
+        $actual = Set-AzDataFactoryV2 -ResourceGroupName $rgname -Name $dfname -Location $dflocation -Force -EncryptionVaultBaseUrl $encryptionVaultBaseUrl -EncryptionKeyName $encryptionKeyName -EncryptionKeyVersion $encryptionKeyVersion -EncryptionUserAssignedIdentity $encryptionUserAssignedIdentity
         $expected = Get-AzDataFactoryV2 -ResourceGroupName $rgname -Name $dfname
 
 		ValidateFactoryProperties $expected $actual

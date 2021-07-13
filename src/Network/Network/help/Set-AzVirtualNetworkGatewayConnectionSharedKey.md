@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Network.dll-Help.xml
 Module Name: Az.Network
 ms.assetid: 78BADAF3-6001-4A25-A74D-F6B50079FCB4
-online version: https://docs.microsoft.com/en-us/powershell/module/az.network/set-azvirtualnetworkgatewayconnectionsharedkey
+online version: https://docs.microsoft.com/powershell/module/az.network/set-azvirtualnetworkgatewayconnectionsharedkey
 schema: 2.0.0
 ---
 
@@ -23,8 +23,8 @@ The **Set-AzVirtualNetworkGatewayConnectionSharedKey** cmdlet configures the sha
 
 ## EXAMPLES
 
-### Example 1:
-```
+### Example 1
+```powershell
 PS C:\Users\alzam> Set-AzVirtualNetworkGatewayConnectionSharedKey -ResourceGroupName VPNGatewayV3 -Name VNet1toVNet2 -Value abcd1234
 
 Confirm

@@ -52,7 +52,7 @@ INPUTOBJECT <IFunctionsIdentity>: Identity Parameter
   [BackupId <String>]: ID of the backup.
   [BaseAddress <String>]: Module base address.
   [BlobServicesName <String>]: The name of the blob Service within the specified storage account. Blob Service Name must be 'default'
-  [CertificateOrderName <String>]: Name of the certificate order.
+  [CertificateOrderName <String>]: Name of the certificate order..
   [ContainerName <String>]: The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number.
   [DeletedSiteId <String>]: The numeric ID of the deleted app, e.g. 12345
   [DetectorName <String>]: Detector Resource Name
@@ -65,7 +65,8 @@ INPUTOBJECT <IFunctionsIdentity>: Identity Parameter
   [GatewayName <String>]: Name of the gateway. Currently, the only supported string is "primary".
   [HostName <String>]: Hostname in the hostname binding.
   [HostingEnvironmentName <String>]: Name of the hosting environment.
-  [Id <String>]: Resource identity path
+  [Id <String>]: Deployment ID.
+  [Id1 <String>]: Resource identity path
   [ImmutabilityPolicyName <String>]: The name of the blob container immutabilityPolicy within the specified storage account. ImmutabilityPolicy Name must be 'default'
   [Instance <String>]: Name of the instance in the multi-role pool.
   [InstanceId <String>]: 
@@ -85,12 +86,12 @@ INPUTOBJECT <IFunctionsIdentity>: Identity Parameter
   [PurgeId <String>]: In a purge status request, this is the Id of the operation the status of which is returned.
   [RelayName <String>]: The relay name for this hybrid connection.
   [ResourceGroupName <String>]: Name of the resource group to which the resource belongs.
-  [ResourceName <String>]: The name of the identity resource.
+  [ResourceName <String>]: The name of the Application Insights component resource.
   [RouteName <String>]: Name of the Virtual Network route.
   [Scope <String>]: The resource provider scope of the resource. Parent resource being extended by Managed Identities.
   [SiteExtensionId <String>]: Site extension name.
   [SiteName <String>]: Site Name
-  [Slot <String>]: Name of the deployment slot. By default, this API returns the production slot.
+  [Slot <String>]: Slot Name
   [SnapshotId <String>]: The ID of the snapshot to read.
   [SourceControlType <String>]: Type of source control
   [SubscriptionId <String>]: Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
@@ -102,8 +103,6 @@ INPUTOBJECT <IFunctionsIdentity>: Identity Parameter
   [WorkerPoolName <String>]: Name of the worker pool.
 
 REQUEST <IRestoreRequest>: Description of a restore request.
-  Overwrite <Boolean>: <code>true</code> if the restore operation can overwrite target app; otherwise, <code>false</code>. <code>true</code> is needed if trying to restore over an existing app.
-  StorageAccountUrl <String>: SAS URL to the container.
   [Kind <String>]: Kind of resource.
   [AdjustConnectionString <Boolean?>]: <code>true</code> if SiteConfig.ConnectionStrings should be set in new app; otherwise, <code>false</code>.
   [AppServicePlan <String>]: Specify app service plan that will own restored site.
@@ -117,9 +116,11 @@ REQUEST <IRestoreRequest>: Description of a restore request.
   [IgnoreConflictingHostName <Boolean?>]: Changes a logic when restoring an app with custom domains. <code>true</code> to remove custom domains automatically. If <code>false</code>, custom domains are added to         the app's object when it is being restored, but that might fail due to conflicts during the operation.
   [IgnoreDatabase <Boolean?>]: Ignore the databases and only restore the site content
   [OperationType <BackupRestoreOperationType?>]: Operation type.
+  [Overwrite <Boolean?>]: <code>true</code> if the restore operation can overwrite target app; otherwise, <code>false</code>. <code>true</code> is needed if trying to restore over an existing app.
   [SiteName <String>]: Name of an app.
+  [StorageAccountUrl <String>]: SAS URL to the container.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.functions/restore-azfunctionapp
+https://docs.microsoft.com/powershell/module/az.functions/restore-azfunctionapp
 #>
 function Restore-AzFunctionApp {
 [OutputType([System.Boolean])]
@@ -195,6 +196,7 @@ param(
 
     [Parameter(ParameterSetName='RestoreExpanded')]
     [Parameter(ParameterSetName='RestoreViaIdentityExpanded')]
+    [AllowEmptyCollection()]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190801.IDatabaseBackupSetting[]]
     # Collection of databases which should be restored.

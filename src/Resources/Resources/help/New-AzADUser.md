@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Resources.dll-Help.xml
 Module Name: Az.Resources
 ms.assetid: 86D8965D-D999-48A4-A4EE-9E054E5486EE
-online version: https://docs.microsoft.com/en-us/powershell/module/az.resources/new-azaduser
+online version: https://docs.microsoft.com/powershell/module/az.resources/new-azaduser
 schema: 2.0.0
 ---
 
@@ -25,8 +25,8 @@ For more information: https://msdn.microsoft.com/en-us/library/azure/ad/graph/ap
 
 ## EXAMPLES
 
-### Example 1 - Create a new AD user
-```
+### Example 1: Create a new AD user
+```powershell
 PS C:\> $SecureStringPassword = ConvertTo-SecureString -String "password" -AsPlainText -Force
 PS C:\> New-AzADUser -DisplayName "MyDisplayName" -UserPrincipalName "myemail@domain.com" -Password $SecureStringPassword -MailNickname "MyMailNickName"
 ```
@@ -197,6 +197,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 [Get-AzADUser](./Get-AzADUser.md)
 
-[Set-AzADUser](./Set-AzADUser.md)
+[Update-AzADUser](./Update-AzADUser.md)
 
 [Remove-AzADUser](./Remove-AzADUser.md)

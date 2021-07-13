@@ -92,6 +92,18 @@ namespace Microsoft.Azure.Commands.DataFactoryV2.Models
             }
         }
 
+        public EncryptionConfiguration Encryption
+        {
+            get
+            {
+                return dataFactory.Encryption;
+            }
+            set
+            {
+                dataFactory.Encryption = value;
+            }
+        }
+
         public string ProvisioningState
         {
             get { return dataFactory.ProvisioningState; }
@@ -106,6 +118,18 @@ namespace Microsoft.Azure.Commands.DataFactoryV2.Models
             set
             {
                 dataFactory.RepoConfiguration = value;
+            }
+        }
+
+        public IDictionary<string, GlobalParameterSpecification> GlobalParameters
+        {
+            get
+            {
+                return dataFactory.GlobalParameters;
+            }
+            set
+            {
+                dataFactory.GlobalParameters = value;
             }
         }
     }

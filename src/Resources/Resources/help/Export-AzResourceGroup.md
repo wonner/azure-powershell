@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.ResourceManager.dll-Help.xml
 Module Name: Az.Resources
 ms.assetid: 63BBDF98-75FC-4A44-9FD0-95AD21ED93A6
-online version: https://docs.microsoft.com/en-us/powershell/module/az.resources/export-azresourcegroup
+online version: https://docs.microsoft.com/powershell/module/az.resources/export-azresourcegroup
 schema: 2.0.0
 ---
 
@@ -267,6 +267,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[Find-AzResourceGroup](./Find-AzResourceGroup.md)
+[Get-AzResourceGroup](./Get-AzResourceGroup.md)
 
 

@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Resources.dll-Help.xml
 Module Name: Az.Resources
-online version: https://docs.microsoft.com/en-us/powershell/module/az.resources/remove-azadgroup
+online version: https://docs.microsoft.com/powershell/module/az.resources/remove-azadgroup
 schema: 2.0.0
 ---
 
@@ -35,17 +35,17 @@ Deletes an active directory group.
 
 ## EXAMPLES
 
-### Example 1 - Remove a group by object id
+### Example 1: Remove a group by object id
 
-```
+```powershell
 PS C:\> Remove-AzADGroup -ObjectId 85F89C90-780E-4AA6-9F4F-6F268D322EEE
 ```
 
 Removes the group with object id '85F89C90-780E-4AA6-9F4F-6F268D322EEE' from the tenant.
 
-### Example 2 - Remove a group by piping
+### Example 2: Remove a group by piping
 
-```
+```powershell
 PS C:\> Get-AzADGroup -ObjectId 85F89C90-780E-4AA6-9F4F-6F268D322EEE | Remove-AzADGroup
 ```
 

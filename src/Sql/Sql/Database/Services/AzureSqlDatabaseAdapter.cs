@@ -160,7 +160,11 @@ namespace Microsoft.Azure.Commands.Sql.Database.Services
                 LicenseType = model.Database.LicenseType,
                 AutoPauseDelay = model.Database.AutoPauseDelayInMinutes,
                 MinCapacity = model.Database.MinimumCapacity,
-                ReadReplicaCount = model.Database.ReadReplicaCount,
+                HighAvailabilityReplicaCount = model.Database.HighAvailabilityReplicaCount,
+                RequestedBackupStorageRedundancy = model.Database.RequestedBackupStorageRedundancy,
+                SecondaryType = model.Database.SecondaryType,
+                MaintenanceConfigurationId = MaintenanceConfigurationHelper.ConvertMaintenanceConfigurationIdArgument(model.Database.MaintenanceConfigurationId, _subscription.Id),
+                IsLedgerOn = model.Database.EnableLedger,
             });
 
             return CreateDatabaseModelFromResponse(resourceGroup, serverName, resp);
@@ -388,6 +392,32 @@ namespace Microsoft.Azure.Commands.Sql.Database.Services
             }
 
             return sku;
+        }
+
+        /// <summary>
+        /// Map external BackupStorageRedundancy value (Geo/Local/Zone) to internal (GRS/LRS/ZRS)
+        /// </summary>
+        /// <param name="backupStorageRedundancy">Backup storage redundancy</param>
+        /// <returns>internal backupStorageRedundancy</returns>
+        private static string MapExternalBackupStorageRedundancyToInternal(string backupStorageRedundancy)
+        {
+
+            if (string.IsNullOrWhiteSpace(backupStorageRedundancy))
+            {
+                return null;
+            }
+
+            switch (backupStorageRedundancy.ToLower())
+            {
+                case "geo":
+                    return "GRS";
+                case "local":
+                    return "LRS";
+                case "zone":
+                    return "ZRS";
+                default:
+                    return null;
+            }
         }
     }
 }

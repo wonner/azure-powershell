@@ -70,7 +70,7 @@ INPUTOBJECT <IFunctionsIdentity>: Identity Parameter
   [BackupId <String>]: ID of the backup.
   [BaseAddress <String>]: Module base address.
   [BlobServicesName <String>]: The name of the blob Service within the specified storage account. Blob Service Name must be 'default'
-  [CertificateOrderName <String>]: Name of the certificate order.
+  [CertificateOrderName <String>]: Name of the certificate order..
   [ContainerName <String>]: The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number.
   [DeletedSiteId <String>]: The numeric ID of the deleted app, e.g. 12345
   [DetectorName <String>]: Detector Resource Name
@@ -83,7 +83,8 @@ INPUTOBJECT <IFunctionsIdentity>: Identity Parameter
   [GatewayName <String>]: Name of the gateway. Currently, the only supported string is "primary".
   [HostName <String>]: Hostname in the hostname binding.
   [HostingEnvironmentName <String>]: Name of the hosting environment.
-  [Id <String>]: Resource identity path
+  [Id <String>]: Deployment ID.
+  [Id1 <String>]: Resource identity path
   [ImmutabilityPolicyName <String>]: The name of the blob container immutabilityPolicy within the specified storage account. ImmutabilityPolicy Name must be 'default'
   [Instance <String>]: Name of the instance in the multi-role pool.
   [InstanceId <String>]: 
@@ -103,12 +104,12 @@ INPUTOBJECT <IFunctionsIdentity>: Identity Parameter
   [PurgeId <String>]: In a purge status request, this is the Id of the operation the status of which is returned.
   [RelayName <String>]: The relay name for this hybrid connection.
   [ResourceGroupName <String>]: Name of the resource group to which the resource belongs.
-  [ResourceName <String>]: The name of the identity resource.
+  [ResourceName <String>]: The name of the Application Insights component resource.
   [RouteName <String>]: Name of the Virtual Network route.
   [Scope <String>]: The resource provider scope of the resource. Parent resource being extended by Managed Identities.
   [SiteExtensionId <String>]: Site extension name.
   [SiteName <String>]: Site Name
-  [Slot <String>]: Name of the deployment slot. By default, this API returns the production slot.
+  [Slot <String>]: Slot Name
   [SnapshotId <String>]: The ID of the snapshot to read.
   [SourceControlType <String>]: Type of source control
   [SubscriptionId <String>]: Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
@@ -144,7 +145,6 @@ SCMIPSECURITYRESTRICTION <IIPSecurityRestriction[]>: IP security restrictions fo
   [VnetTrafficTag <Int32?>]: (internal) Vnet traffic tag
 
 SITECONFIG <ISiteConfigResource>: Web app configuration ARM resource.
-  IsPushEnabled <Boolean>: Gets or sets a flag indicating whether the Push endpoint is enabled.
   [Kind <String>]: Kind of resource.
   [ActionMinProcessExecutionTime <String>]: Minimum time the process must execute         before taking the action
   [ActionType <AutoHealActionType?>]: Predefined action to be taken.
@@ -197,6 +197,7 @@ SITECONFIG <ISiteConfigResource>: Web app configuration ARM resource.
     [Tag <IPFilterTag?>]: Defines what this IP filter will be used for. This is to support IP filtering on proxies.
     [VnetSubnetResourceId <String>]: Virtual network resource id
     [VnetTrafficTag <Int32?>]: (internal) Vnet traffic tag
+  [IsPushEnabled <Boolean?>]: Gets or sets a flag indicating whether the Push endpoint is enabled.
   [JavaContainer <String>]: Java container.
   [JavaContainerVersion <String>]: Java container version.
   [JavaVersion <String>]: Java version.
@@ -273,7 +274,7 @@ VIRTUALAPPLICATION <IVirtualApplication[]>: Virtual applications.
     [VirtualPath <String>]: Path to virtual application.
   [VirtualPath <String>]: Virtual path.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.functions/update-azwebappconfigurationslot
+https://docs.microsoft.com/powershell/module/az.functions/update-azwebappconfigurationslot
 #>
 function Update-AzWebAppConfigurationSlot {
 [OutputType([Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190801.ISiteConfigResource])]
@@ -372,6 +373,7 @@ param(
 
     [Parameter(ParameterSetName='UpdateExpanded')]
     [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
+    [AllowEmptyCollection()]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190801.INameValuePair[]]
     # Application settings.
@@ -394,6 +396,7 @@ param(
 
     [Parameter(ParameterSetName='UpdateExpanded')]
     [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
+    [AllowEmptyCollection()]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190801.IConnStringInfo[]]
     # Connection strings.
@@ -402,6 +405,7 @@ param(
 
     [Parameter(ParameterSetName='UpdateExpanded')]
     [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
+    [AllowEmptyCollection()]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
     [System.String[]]
     # Gets or sets the list of origins that should be allowed to make cross-origincalls (for example: http://example.com:12345).
@@ -432,6 +436,7 @@ param(
 
     [Parameter(ParameterSetName='UpdateExpanded')]
     [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
+    [AllowEmptyCollection()]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
     [System.String[]]
     # Default documents.
@@ -460,6 +465,7 @@ param(
 
     [Parameter(ParameterSetName='UpdateExpanded')]
     [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
+    [AllowEmptyCollection()]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190801.IRampUpRule[]]
     # List of ramp-up rules.
@@ -476,6 +482,7 @@ param(
 
     [Parameter(ParameterSetName='UpdateExpanded')]
     [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
+    [AllowEmptyCollection()]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190801.IHandlerMapping[]]
     # Handler mappings.
@@ -505,6 +512,7 @@ param(
 
     [Parameter(ParameterSetName='UpdateExpanded')]
     [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
+    [AllowEmptyCollection()]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190801.IIPSecurityRestriction[]]
     # IP security restrictions for main.
@@ -595,34 +603,6 @@ param(
     [System.Int32]
     # HTTP logs directory size limit.
     ${LogsDirectorySizeLimit},
-
-    [Parameter(ParameterSetName='UpdateExpanded')]
-    [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
-    [System.String]
-    # Algorithm used for decryption.
-    ${MachineKeyDecryption},
-
-    [Parameter(ParameterSetName='UpdateExpanded')]
-    [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
-    [System.String]
-    # Decryption key.
-    ${MachineKeyDecryptionKey},
-
-    [Parameter(ParameterSetName='UpdateExpanded')]
-    [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
-    [System.String]
-    # MachineKey validation.
-    ${MachineKeyValidation},
-
-    [Parameter(ParameterSetName='UpdateExpanded')]
-    [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
-    [System.String]
-    # Validation key.
-    ${MachineKeyValidationKey},
 
     [Parameter(ParameterSetName='UpdateExpanded')]
     [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
@@ -754,6 +734,7 @@ param(
 
     [Parameter(ParameterSetName='UpdateExpanded')]
     [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
+    [AllowEmptyCollection()]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190801.IIPSecurityRestriction[]]
     # IP security restrictions for scm.
@@ -827,6 +808,7 @@ param(
 
     [Parameter(ParameterSetName='UpdateExpanded')]
     [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
+    [AllowEmptyCollection()]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190801.IStatusCodesBasedTrigger[]]
     # A rule based on status codes.
@@ -842,6 +824,7 @@ param(
 
     [Parameter(ParameterSetName='UpdateExpanded')]
     [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
+    [AllowEmptyCollection()]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190801.IVirtualApplication[]]
     # Virtual applications.

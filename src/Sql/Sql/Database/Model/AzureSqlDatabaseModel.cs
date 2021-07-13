@@ -176,9 +176,39 @@ namespace Microsoft.Azure.Commands.Sql.Database.Model
         public double? MinimumCapacity { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of readonly replicas for the database
+        /// Gets or sets the number of readonly secondary replicas for the database that are used to provide high availability
         /// </summary>
         public int? ReadReplicaCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of readonly secondary replicas for the database that are used to provide high availability
+        /// </summary>
+        public int? HighAvailabilityReplicaCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current backup storage redundancy for the database
+        /// </summary>
+        public string CurrentBackupStorageRedundancy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the requested backup storage redundancy for the database
+        /// </summary>
+        public string RequestedBackupStorageRedundancy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the secondary type for the database if it is a secondary.
+        /// </summary>
+        public string SecondaryType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maintenance configuration id for the database
+        /// </summary>
+        public string MaintenanceConfigurationId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ledger property for the database
+        /// </summary>
+        public bool? EnableLedger { get; set; }
 
         /// <summary>
         /// Construct AzureSqlDatabaseModel
@@ -233,6 +263,12 @@ namespace Microsoft.Azure.Commands.Sql.Database.Model
             AutoPauseDelayInMinutes = null;
             MinimumCapacity = null;
             ReadReplicaCount = null;
+            HighAvailabilityReplicaCount = null;
+            CurrentBackupStorageRedundancy = null;
+            RequestedBackupStorageRedundancy = null;
+            SecondaryType = null;
+            MaintenanceConfigurationId = null;
+            EnableLedger = false;
         }
 
         /// <summary>
@@ -283,7 +319,32 @@ namespace Microsoft.Azure.Commands.Sql.Database.Model
 
             AutoPauseDelayInMinutes = database.AutoPauseDelay;
             MinimumCapacity = database.MinCapacity;
-            ReadReplicaCount = database.ReadReplicaCount;
+            HighAvailabilityReplicaCount = database.HighAvailabilityReplicaCount;
+            CurrentBackupStorageRedundancy = database.CurrentBackupStorageRedundancy;
+            RequestedBackupStorageRedundancy = database.RequestedBackupStorageRedundancy;
+            SecondaryType = database.SecondaryType;
+            MaintenanceConfigurationId = database.MaintenanceConfigurationId;
+            EnableLedger = database.IsLedgerOn;
+        }
+
+        /// <summary>
+        /// Map internal BackupStorageRedundancy value (GRS/LRS/ZRS) to external (Geo/Local/Zone)
+        /// </summary>
+        /// <param name="backupStorageRedundancy">Backup storage redundancy</param>
+        /// <returns>internal backupStorageRedundancy</returns>
+        private static string MapInternalBackupStorageRedundancyToExternal(string backupStorageRedundancy)
+        {
+            switch (backupStorageRedundancy)
+            {
+                case "GRS":
+                    return "Geo";
+                case "LRS":
+                    return "Local";
+                case "ZRS":
+                    return "Zone";
+                default:
+                    return null;
+            }
         }
     }
 }

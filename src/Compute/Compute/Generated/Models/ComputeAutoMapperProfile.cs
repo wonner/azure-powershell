@@ -56,9 +56,6 @@ namespace Microsoft.Azure.Commands.Compute.Automation.Models
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<FROM.ContainerService, TO.PSContainerServiceList>();
-                cfg.CreateMap<TO.PSContainerServiceList, TO.PSContainerService>();
-                cfg.CreateMap<TO.PSContainerService, TO.PSContainerServiceList>();
                 cfg.CreateMap<FROM.DedicatedHostGroup, TO.PSHostGroupList>();
                 cfg.CreateMap<TO.PSHostGroupList, TO.PSHostGroup>();
                 cfg.CreateMap<TO.PSHostGroup, TO.PSHostGroupList>();
@@ -109,8 +106,6 @@ namespace Microsoft.Azure.Commands.Compute.Automation.Models
                 cfg.CreateMap<FROM.SnapshotUpdate, FROM.Snapshot>();
                 cfg.CreateMap<FROM.SnapshotUpdate, TO.PSSnapshotUpdate>();
                 cfg.CreateMap<TO.PSSnapshotUpdate, FROM.SnapshotUpdate>();
-                cfg.CreateMap<FROM.ContainerService, TO.PSContainerService>();
-                cfg.CreateMap<TO.PSContainerService, FROM.ContainerService>();
                 cfg.CreateMap<FROM.DedicatedHostGroup, TO.PSHostGroup>();
                 cfg.CreateMap<TO.PSHostGroup, FROM.DedicatedHostGroup>();
                 cfg.CreateMap<FROM.DedicatedHost, TO.PSHost>();
@@ -180,6 +175,22 @@ namespace Microsoft.Azure.Commands.Compute.Automation.Models
                     .ForMember(c => c.Type, o => o.MapFrom(r => r.Type1));
                 cfg.CreateMap<TO.PSVirtualMachineScaleSetExtension, FROM.VirtualMachineScaleSetExtension>()
                     .ForMember(c => c.Type1, o => o.MapFrom(r => r.Type));
+
+                cfg.CreateMap<FROM.DiskAccess, TO.PSDiskAccess>();
+                cfg.CreateMap<TO.PSDiskAccess, FROM.DiskAccess>();
+                cfg.CreateMap<FROM.DiskAccess, TO.PSDiskAccessList>();
+                cfg.CreateMap<TO.PSDiskAccessList, TO.PSDiskAccess>();
+                cfg.CreateMap<TO.PSDiskAccess, TO.PSDiskAccessList>();
+
+                cfg.CreateMap<FROM.VirtualMachineAssessPatchesResult, TO.PSVirtualMachinePatchAssessmentResult>();
+                cfg.CreateMap<TO.PSVirtualMachinePatchAssessmentResult, FROM.VirtualMachineAssessPatchesResult>();
+                cfg.CreateMap<FROM.VirtualMachineInstallPatchesResult, TO.PSVirtualMachineInstallPatchesResult>();
+                cfg.CreateMap<TO.PSVirtualMachineInstallPatchesResult, FROM.VirtualMachineInstallPatchesResult>();
+                cfg.CreateMap<FROM.SshPublicKeyResource, TO.PSSshPublicKeyResource>();
+                cfg.CreateMap<TO.PSSshPublicKeyResource, FROM.SshPublicKeyResource>();
+                cfg.CreateMap<FROM.SshPublicKeyResource, TO.PSSshPublicKeyResourceList>();
+                cfg.CreateMap<TO.PSSshPublicKeyResourceList, TO.PSSshPublicKeyResource>();
+                cfg.CreateMap<TO.PSSshPublicKeyResource, TO.PSSshPublicKeyResourceList>();
             });
             _mapper = config.CreateMapper();
         }

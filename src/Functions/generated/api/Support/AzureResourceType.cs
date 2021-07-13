@@ -6,6 +6,7 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>Type of the Azure resource the hostname is assigned to.</summary>
     public partial struct AzureResourceType :
         System.IEquatable<AzureResourceType>
     {
@@ -27,7 +28,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="AzureResourceType" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new AzureResourceType(System.Convert.ToString(value));
+            return new AzureResourceType(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type AzureResourceType</summary>

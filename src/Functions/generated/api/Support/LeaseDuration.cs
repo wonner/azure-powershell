@@ -6,6 +6,9 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>
+    /// Specifies whether the lease on a container is of infinite or fixed duration, only when the container is leased.
+    /// </summary>
     public partial struct LeaseDuration :
         System.IEquatable<LeaseDuration>
     {
@@ -20,7 +23,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="LeaseDuration" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new LeaseDuration(System.Convert.ToString(value));
+            return new LeaseDuration(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type LeaseDuration</summary>

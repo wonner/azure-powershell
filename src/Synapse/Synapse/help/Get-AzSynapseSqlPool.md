@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Synapse.dll-Help.xml
 Module Name: Az.Synapse
-online version: https://docs.microsoft.com/en-us/powershell/module/az.synapse/get-azsynapsesqlpool
+online version: https://docs.microsoft.com/powershell/module/az.synapse/get-azsynapsesqlpool
 schema: 2.0.0
 ---
 
@@ -14,19 +14,20 @@ Gets a Synapse Analytics SQL pool.
 
 ### GetByNameParameterSet (Default)
 ```
-Get-AzSynapseSqlPool [-ResourceGroupName <String>] -WorkspaceName <String> [-Name <String>]
+Get-AzSynapseSqlPool [-ResourceGroupName <String>] -WorkspaceName <String> [-Name <String>] [-Version <Int32>]
  [-DefaultProfile <IAzureContextContainer>] [<CommonParameters>]
 ```
 
 ### GetByParentObjectParameterSet
 ```
-Get-AzSynapseSqlPool [-Name <String>] -WorkspaceObject <PSSynapseWorkspace>
+Get-AzSynapseSqlPool [-Name <String>] [-Version <Int32>] -WorkspaceObject <PSSynapseWorkspace>
  [-DefaultProfile <IAzureContextContainer>] [<CommonParameters>]
 ```
 
 ### GetByResourceIdParameterSet
 ```
-Get-AzSynapseSqlPool -ResourceId <String> [-DefaultProfile <IAzureContextContainer>] [<CommonParameters>]
+Get-AzSynapseSqlPool [-Version <Int32>] -ResourceId <String> [-DefaultProfile <IAzureContextContainer>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -86,7 +87,7 @@ Name of Synapse SQL pool.
 ```yaml
 Type: System.String
 Parameter Sets: GetByNameParameterSet, GetByParentObjectParameterSet
-Aliases:
+Aliases: SqlPoolName
 
 Required: False
 Position: Named
@@ -119,6 +120,22 @@ Parameter Sets: GetByResourceIdParameterSet
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Version
+[This feature is in a limited preview, initially accessible only to certain subscriptions.]
+Version of Synapse SQL pool. For example, 2 or 3.
+
+```yaml
+Type: System.Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

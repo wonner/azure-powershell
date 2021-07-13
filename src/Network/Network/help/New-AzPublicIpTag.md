@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Network.dll-Help.xml
 Module Name: Az.Network
-online version: https://docs.microsoft.com/en-us/powershell/module/az.network/new-azpubliciptag
+online version: https://docs.microsoft.com/powershell/module/az.network/new-azpubliciptag
 schema: 2.0.0
 ---
 
@@ -22,8 +22,8 @@ The **New-AzPublicIpTag** cmdlet creates a IP Tag.
 
 ## EXAMPLES
 
-### 1: Create a new IP Tag
-```
+### Example 1: Create a new IP Tag
+```powershell
 $ipTag = New-AzPublicIpTag -IpTagType $ipTagType -Tag $tag
 ```
 

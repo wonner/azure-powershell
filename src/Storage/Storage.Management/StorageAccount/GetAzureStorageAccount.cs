@@ -26,6 +26,7 @@ namespace Microsoft.Azure.Commands.Management.Storage
     {
         protected const string ResourceGroupParameterSet = "ResourceGroupParameterSet";
         protected const string AccountNameParameterSet = "AccountNameParameterSet";
+        protected const string BlobRestoreStatusParameterSet = "BlobRestoreStatusParameterSet";
 
         [Parameter(
             Position = 0,
@@ -39,6 +40,12 @@ namespace Microsoft.Azure.Commands.Management.Storage
             ParameterSetName = AccountNameParameterSet,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Resource Group Name.")]
+        [Parameter(
+            Position = 0,
+            Mandatory = true,
+            ParameterSetName = BlobRestoreStatusParameterSet,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Resource Group Name.")]
         [ResourceGroupCompleter]
         [ValidateNotNullOrEmpty]
         public string ResourceGroupName { get; set; }
@@ -48,6 +55,12 @@ namespace Microsoft.Azure.Commands.Management.Storage
             Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = AccountNameParameterSet,
+            HelpMessage = "Storage Account Name.")]
+        [Parameter(
+            Position = 1,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = BlobRestoreStatusParameterSet,
             HelpMessage = "Storage Account Name.")]
         [Alias(StorageAccountNameAlias, AccountNameAlias)]
         [ValidateNotNullOrEmpty]
@@ -59,6 +72,12 @@ namespace Microsoft.Azure.Commands.Management.Storage
             HelpMessage = "Get the GeoReplicationStats of the Storage account.")]
         [ValidateNotNullOrEmpty]
         public SwitchParameter IncludeGeoReplicationStats { get; set; }
+        
+       [Parameter(
+            Mandatory = true,
+            ParameterSetName = BlobRestoreStatusParameterSet,
+            HelpMessage = "Get the BlobRestoreStatus of the Storage account.")]
+        public SwitchParameter IncludeBlobRestoreStatus { get; set; }
 
         [Parameter(Mandatory = false, HelpMessage = "Run cmdlet in the background")]
         public SwitchParameter AsJob { get; set; }
@@ -80,16 +99,26 @@ namespace Microsoft.Azure.Commands.Management.Storage
             }
             else if (string.IsNullOrEmpty(this.Name))
             {
-                var storageAccounts = this.StorageClient.StorageAccounts.ListByResourceGroup(this.ResourceGroupName);
-
+                IPage<Microsoft.Azure.Management.Storage.Models.StorageAccount> storageAccounts = this.StorageClient.StorageAccounts.ListByResourceGroup(this.ResourceGroupName);
                 WriteStorageAccountList(storageAccounts);
+
+                while (storageAccounts.NextPageLink != null)
+                {
+                    storageAccounts = this.StorageClient.StorageAccounts.ListByResourceGroupNext(storageAccounts.NextPageLink);
+                    WriteStorageAccountList(storageAccounts);
+                }
             }
             else
             {
+                // ParameterSet ensure can only set one of the following 2 parameters
                 StorageAccountExpand? expandproperties = null;
-                if (IncludeGeoReplicationStats)
+                if (this.IncludeGeoReplicationStats)
                 {
                     expandproperties = StorageAccountExpand.GeoReplicationStats;
+                }
+                if (this.IncludeBlobRestoreStatus)
+                {
+                    expandproperties = StorageAccountExpand.BlobRestoreStatus;
                 }
 
                 var storageAccount = this.StorageClient.StorageAccounts.GetProperties(

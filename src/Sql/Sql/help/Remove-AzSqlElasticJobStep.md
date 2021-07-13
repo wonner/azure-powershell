@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Sql.dll-Help.xml
 Module Name: Az.Sql
-online version: https://docs.microsoft.com/en-us/powershell/module/Az.sql/remove-Azsqlelasticjobstep
+online version: https://docs.microsoft.com/powershell/module/Az.sql/remove-Azsqlelasticjobstep
 schema: 2.0.0
 ---
 
@@ -50,7 +50,8 @@ Removes a job step from a job
 
 ### Example 2
 
-```powershell <!-- Aladdin Generated Example --> 
+```powershell
+<!-- Aladdin Generated Example --> 
 Remove-AzSqlElasticJobStep -AgentName agent -JobName job1 -Name step1 -ResourceGroupName MyResourceGroup -ServerName s1
 ```
 

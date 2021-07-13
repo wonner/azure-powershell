@@ -19,6 +19,261 @@
 --->
 
 ## Upcoming Release
+
+## Version 4.10.0
+* Added public ip address as an optional parameter to create route server
+    - `New-AzRouteServer`
+* Updated cmdlets to enable specification of edge zone
+    - `New-AzPublicIpPrefix`
+    - `New-AzLoadBalancer`
+    - `New-AzPrivateLinkService`
+    - `New-AzPrivateEndpoint`
+* Added support for viewing extended location of virtual network in the console
+    - `New-AzVirtualNetwork`
+    - `Get-AzVirtualNetwork`
+* Added support for viewing extended location of public IP address in the console
+    - `New-AzPublicIpAddress`
+    - `Get-AzPublicIpAddress`
+
+## Version 4.9.0
+* Updated cmdlets for route server for a more stable way to add IP configuration.
+* Added support for getting a single private link resource.
+* Added more detailed description about GroupId in `New-AzPrivateLinkServiceConnection`
+* Updated cmdlets to enable setting of PrivateRange on AzureFirewallPolicy.
+    - `New-AzFirewallPolicy`
+    - `Set-AzFirewallPolicy`
+* Updated cmdlets to add NatRules in VirtualNetworkGateway and BgpRouteTranslationForNat.
+    - `New-AzVirtualNetworkGateway`
+    - `Set-AzVirtualNetworkGateway`
+* Updated cmdlets to add EngressNatRules and EgressNatRules in VirtualNetworkGateway Connection.
+    - `New-AzVirtualNetworkGatewayConnection`
+    - `Set-AzVirtualNetworkGatewayConnection`
+* Updated cmdlet to enable setting of FlowTimeout in VirtualNetwork.
+    - `New-AzVirtualNetwork`
+* Added cmdlets for Get/Create/Update/Delete VirtualNetworkGatewayNatRules.
+    - `New-AzVirtualNetworkGatewayNatRule`
+    - `Update-AzVirtualNetworkGatewayNatRule`
+    - `Get-AzVirtualNetworkGatewayNatRule`
+    - `Remove-AzVirtualNetworkGatewayNatRule`
+* Added a new cmdlet for Sync on VirtualNetworkPeering
+    - `Sync-AzVirtualNetworkPeering`
+* Updated cmdlets to add new properties and redefined an existing property in the VirtualNetworkPeering
+    - `Add-AzVirtualNetworkPeering`
+    - `Get-AzVirtualNetworkPeering`
+* Updated cmdlets to enable setting of PreferredRoutingGateway on VirtualHub.
+    - `New-AzVirtualHub`
+    - `Update-AzVirtualHub`
+* Updated cmdlets to expose two read-only properties of client certificate.
+    - `Get-AzApplicationGatewayTrustedClientCertificate`
+
+## Version 4.8.0
+* Updated validation to allow passing zero value for saDataSizeKilobytes parameter
+    - `New-AzureRmIpsecPolicy`
+* Added optional parameter `-EdgeZone` to the following cmdlets:
+    - `New-AzNetworkInterface`
+    - `New-AzPublicIpAddress`
+    - `New-AzVirtualNetwork`
+
+## Version 4.7.0
+* Added new cmdlets to replace old product name `virtual router` with new name `route server` in the future.
+    - `Get-AzRouteServerPeerAdvertisedRoute`
+    - `Get-AzRouteServerPeerAdvertisedRoute`
+    - Added deprecation attribute warning to the old cmdlets.
+* Updated `set-azExpressRouteGateway` to allow parameter -MinScaleUnits without specifying -MaxScaleUnits
+* Updated cmdlets to enable setting of VpnLinkConnectionMode on VpnSiteLinkConnections.
+    - `New-AzVpnSiteLinkConnection`
+    - `Update-AzVpnConnection`
+* Added new cmdlet to fetch IKE Security Associations for VPN Site Link Connections.
+    - `Get-VpnSiteLinkConnectionIkeSa`
+* Added new cmdlet to reset a Virtual Network Gateway Connection.
+    - `Reset-AzVirtualNetworkGatewayConnection`
+* Added new cmdlet to reset a Vpn Site Link Connection.
+    - `Reset-VpnSiteLinkConnection`
+* Updated cmdlets to enable setting an optional parameter -TrafficSelectorPolicies
+    - `New-AzVpnConnection`
+    - `Update-AzVpnConnection`
+* Bug fix for update vpnServerConfiguration.
+* Add scenarioTest for p2s multi auth VWAN.
+* Added multi auth feature support for VNG
+	- `Get-AzVpnClientConfiguration`
+	- `New-AzVirtualNetworkGateway`
+	- `Set-AzVirtualNetworkGateway`
+
+## Version 4.6.0
+* Added new cmdlets to replace old product name `virtual router` with new name `route server` in the future.
+    - `New-AzRouteServer`
+    - `Get-AzRouteServer`
+    - `Remove-AzRouteServer`
+    - `Update-AzRouteServer`
+    - `Get-AzRouteServerPeer`
+    - `Add-AzRouteServerPeer`
+    - `Update-AzRouteServerPeer`
+    - `Remove-AzRouteServerPeer`
+    - Added deprecation attribute warning to the old cmdlets.
+* Bug fix in ExpressRouteLink MacSecConfig. Added new property `SciState` to `PSExpressRouteLinkMacSecConfig`
+* Updated format list and format table views for Get-AzVirtualNetworkGatewayConnectionIkeSa
+* Updated New-AzFirewall to no longer require data public IP for force tunneling firewall (with management IP and subnet)
+
+## Version 4.5.0
+* Added new cmdlets for CRUD of VpnGatewayNATRule.
+    - `New-AzAzVpnGatewayNatRule`
+    - `Update-AzAzVpnGatewayNatRule`
+    - `Get-AzAzVpnGatewayNatRule`
+    - `Remove-AzAzVpnGatewayNatRule`	
+* Updated cmdlets to set NATRule on VpnGateway resource and associate it with VpnSiteLinkConnection resource.
+    - `New-AzVpnGateway`
+    - `Update-AzVpnGateway`	
+    - `New-AzVpnSiteLinkConnection`
+* Updated cmdlets to enable setting of ConnectionMode on Virtual Network Gateway Connections.
+    - `New-AzVirtualNetworkGatewayConnection`
+    - `Set-AzVirtualNetworkGatewayConnection`
+* Updated `New-AzFirewallPolicyApplicationRule` cmdlet:
+    - Added parameter TargetUrl
+    - Added parameter TerminateTLS
+* Added new cmdlets for Azure Firewall Premium Features
+    - `New-AzFirewallPolicyIntrusionDetection`
+    - `New-AzFirewallPolicyIntrusionDetectionBypassTraffic`
+    - `New-AzFirewallPolicyIntrusionDetectionSignatureOverride`
+* Updated New-AzFirewallPolicy cmdlet:
+    - Added parameter -SkuTier
+    - Added parameter -Identity
+    - Added parameter -UserAssignedIdentityId
+    - Added parameter -IntrusionDetection
+    - Added parameter -TransportSecurityName
+    - Added parameter -TransportSecurityKeyVaultSecretId
+* Added new cmdlet to fetch IKE Security Associations for Virtual Network Gateway Connections.
+    - `Get-AzVirtualNetworkGatewayConnectionIkeSa`
+* Added multiple Authentication support for p2sVpnGateway
+    - Updated New-AzVpnServerConfiguration and Update-AzVpnServerConfiguration to allow multiple authentication parameters to be set.
+* Updated `New-AzVpnGateway` and `New-AzP2sVpnGateway` cmdlet:
+    - Added parameter EnableRoutingPreferenceInternetFlag
+
+## Version 4.4.0
+* Fixed issue in remove peering and connection cmdlet for ExpressRouteCircuit scenario
+    - `Remove-AzExpressRouteCircuitPeeringConfig` and `Remove-AzExpressRouteCircuitConnectionConfig`
+
+## Version 4.3.0
+* Updated below cmdlet 
+    - `New-AzLoadBalancerFrontendIpConfigCommand`, `Set-AzLoadBalancerFrontendIpConfigCommand`, `Add-AzLoadBalancerFrontendIpConfigCommand`:
+        - Added PublicIpAddressPrefix property
+        - Added PublicIpAddressPrefixId property
+* Added new properties to the following cmdlets to allow for global load balancing
+    - `New-AzLoadBalancer`:
+        - Added Sku Tier property
+    - `New-AzPuplicIpAddress`:
+        - Added Sku Tier property
+    - `New-AzPublicIpPrefix`:
+        - Added Sku Tier property
+    - `New-AzLoadBalancerBackendAddressConfig`:
+        - Added LoadBalancerFrontendIPConfigurationId property
+* Updated planning to deprecate warnings for the following cmdlets
+    -`New-AzVirtualHubRoute`
+    -`New-AzVirtualHubRouteTable`
+    -`Add-AzVirtualHubRoute`
+    -`Add-AzVirtualHubRouteTable`
+    -`Get-AzVirtualHubRouteTable`
+    -`Remove-AzVirtualHubRouteTable`
+* Added planning to deprecate warnings on the argument `RouteTable` for the following cmdlets
+    -`New-AzVirtualHub`
+    -`Set-AzVirtualHub`
+    -`Update-AzVirtualHub`
+* Made arguments `-MinScaleUnits` and `-MaxScaleUnits` optional in `Set-AzExpressRouteGateway`
+* Added new cmdlets to support Mutual Authentication and SSL Profiles on Application Gateway
+    - `Get-AzApplicationGatewayClientAuthConfiguration`
+    - `New-AzApplicationGatewayClientAuthConfiguration`
+    - `Remove-AzApplicationGatewayClientAuthConfiguration`
+    - `Set-AzApplicationGatewayClientAuthConfiguration`
+    - `Add-AzApplicationGatewayTrustedClientCertificate` 
+    - `Get-AzApplicationGatewayTrustedClientCertificate` 
+    - `New-AzApplicationGatewayTrustedClientCertificate` 
+    - `Remove-AzApplicationGatewayTrustedClientCertificate` 
+    - `Set-AzApplicationGatewayTrustedClientCertificate`
+    - `Add-AzApplicationGatewaySslProfile`
+    - `Get-AzApplicationGatewaySslProfile`
+    - `New-AzApplicationGatewaySslProfile`
+    - `Remove-AzApplicationGatewaySslProfile`
+    - `Set-AzApplicationGatewaySslProfile`
+    - `Get-AzApplicationGatewaySslProfilePolicy`
+    - `Remove-AzApplicationGatewaySslProfilePolicy`
+    - `Set-AzApplicationGatewaySslProfilePolicy`
+* Added new parameter 'Priority' to support Rule Priority in Application Gateway RequestRoutingRule for the below cmdlets
+    - `Add-AzApplicationGatewayRequestRoutingRule`
+    - `New-AzApplicationGatewayRequestRoutingRule`
+    - `Set-AzApplicationGatewayRequestRoutingRule`
+
+## Version 4.2.0
+* Added warning messages for upcoming breaking change for Virtual Router Peer Routes
+    - `Get-AzVirtualRouterPeerLearnedRoute`
+    - `Get-AzVirtualRouterPeerAdvertisedRoute`
+* Added new cmdlet for virtual router
+    - `Update-AzVirtualRouter`: to allow branch to branch traffic
+* Updated New-AzFirewallPolicyNatRule cmdlet:
+    - Added parameter Translated FQDN
+
+## Version 4.1.0
+* [Breaking Change] Removed parameter `HostedSubnet` and added `Subnet` instead
+* Added new cmdlets for Virtual Router Peer Routes
+    - `Get-AzVirtualRouterPeerLearnedRoute`
+    - `Get-AzVirtualRouterPeerAdvertisedRoute`
+* Updated New-AzFirewall cmdlet:
+    - Added parameter `-SkuTier`
+    - Added parameter `-SkuName` and made Sku as Alias for this
+    - Removed parameter `-Sku`
+* [Breaking Change] Made `Connectionlink` argument mandatory in `Start-AzVpnConnectionPacketCapture` and `Stop-AzVpnConnectionPacketCapture`
+* [Breaking Change] Updated `New-AzNetworkWatcherConnectionMonitorEndPointObject` to remove parameter `-Filter`
+* [Breaking Change] Replaced `New-AzNetworkWatcherConnectionMonitorEndpointFilterItemObject` cmdlet with `New-AzNetworkWatcherConnectionMonitorEndpointScopeItemObject`
+* Updated `New-AzNetworkWatcherConnectionMonitorEndPointObject` cmdlet:
+	- Added parameter `-Type`
+	- Added parameter `-CoverageLevel`
+	- Added parameter `-Scope`
+* Updated `New-AzNetworkWatcherConnectionMonitorProtocolConfigurationObject` cmdlet with new parameter `-DestinationPortBehavior` 
+    
+## Version 3.5.0
+* Added Office365 Policy to VPNSite Resource
+    - `New-AzO365PolicyProperty`
+* Added example to New-AzVirtualHubVnetConnection
+    - `Example details how to create a new routing config and static routes and apply it to a connection`
+* Added example to New-AzVHubRoute
+    - `Example details how to set static route on HubVnet connection`
+    
+## Version 3.4.0
+* [Breaking Change] Updated below cmdlets to align resource virtual router and virtual hub
+    - `New-AzVirtualRouter`: 
+        - Added -HostedSubnet parameter to support IP configuration child resource
+        - deleted -HostedGateway and -HostedGatewayId
+    - `Get-AzVirtualRouter`:
+        - Added subscription level parameter set
+    - `Remove-AzVirtualRouter`
+    - `Add-AzVirtualRouterPeer`
+    - `Get-AzVirtualRouterPeer`
+    - `Remove-AzVirtualRouterPeer`
+* Added new cmdlet for Azure Express Route Port
+    - `New-AzExpressRoutePortLOA`
+* Added RemoteBgpCommunities property to the VirtualNetwork Peering Resource
+* Modified the warning message for `New-AzLoadBalancerFrontendIpConfig`, `New-AzPublicIpAddress` and `New-AzPublicIpPrefix`.
+* Added VpnGatewayIpConfigurations to `Get-AzVpnGateway` output
+* Fixed bug for `Set-AzApplicationGatewaySslCertificate` [#9488]
+* Added `AllowActiveFTP` parameter to `AzureFirewall`
+* Updated below commands for feature: Enable internet security set/remove on VirtualWan P2SVpnGateway.
+- Updated `New-AzP2sVpnGateway`: Added optional switch parameter `EnableInternetSecurityFlag` for customers to set true to enable internet security on P2SVpnGateway, which will be applied for Point to site clients.
+- Updated `Update-AzP2sVpnGateway`: Added optional switch parameters `EnableInternetSecurityFlag` or `DisableInternetSecurityFlag` for customers to set true/false to enable/disable internet security on P2SVpnGateway, which will be applied for Point to site clients.
+* Added new cmdlet `Reset-AzP2sVpnGateway` for customers to reset/reboot their VirtualWan P2SVpnGateway for troubleshooting.
+* Added new cmdlet `Reset-AzVpnGateway` for customers to reset/reboot their VirtualWan VpnGateway for troubleshooting.
+* Updated `Set-AzVirtualNetworkSubnetConfig`
+    - Set NSG and Route Table properties of subnet to null if explicitly set in parameters [#1548][#9718]
+* [Breaking Change] Deprecated a switch parameter in below cmdlets
+    - `New-AzFirewall`:
+        - Deprecated `-DnsProxyNotRequiredForNetworkRule` switch paramemter
+    - `New-AzFirewallPolicyDnsSetting`:
+        - Deprecated `-ProxyNotRequiredForNetworkRule` switch parameter
+
+## Version 3.3.0
+* Added support for AddressPrefixType parameter to `Remove-AzExpressRouteCircuitConnectionConfig`
+* Added non-breaking changes: PeerAddressType functionality for Private Peering in `Remove-AzExpressRouteCircutPeeringConfig`.
+* Code changed to ignore case for AddressPrefixType and PeerAddressType parameter.
+* Modified the warning message for `New-AzLoadBalancerFrontendIpConfig`, `New-AzPublicIpAddress` and `New-AzPublicIpPrefix`.
+
+## Version 3.2.0
 * Fixed parameters swap in VWan HubVnet connection
 * Added new cmdlets for Azure Network Virtual Appliance Sites
     - `Get-AzVirtualApplianceSite`
@@ -33,8 +288,13 @@
     - `Update-AzNetworkVirtualAppliance`
     - `Get-AzNetworkVirtualApplianceSku`
     - `New-AzVirtualApplianceSkuProperty`
-* Onboarded Application Gateway to Private Link Common Cmdlets
-* Onboarded StorageSync to Private Link Common Cmdlets
+* Added new cmdlets for VirtualWan
+    - `Start-AzVpnGatewayPacketCapture`
+    - `Stop-AzVpnGatewayPacketCapture`
+    - `Start-AzVpnConnectionPacketCapture`
+    - `Stop-AzVpnConnectionPacketCapture`
+* Onboard Application Gateway to Private Link Common Cmdlets
+* Onboard StorageSync to Private Link Common Cmdlets
 * Onboarded SignalR to Private Link Common Cmdlets
 
 ## Version 3.1.0
@@ -535,4 +795,3 @@
         - Set-AzApplicationGatewaySslCertificate
     - New-AzApplicationGateway cmdlet updated with optional parameter -UserAssignedIdentityId, -UserAssignedIdentity
 * Add MaxCapacity property in ApplicationGatewayAutoscaleConfiguration
-

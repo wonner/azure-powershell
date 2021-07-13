@@ -19,12 +19,16 @@
 -->
 ## Upcoming Release
 
-## Version 0.7.4
+## Version 0.9.0
+* Update our Azure PowerShell command to use our latest released .NET package with the version of 3.1.0.
 
+## Version 0.8.0
+* Allow pricing information to be updated using Set-AzIoTCentralApp command.
+
+## Version 0.7.4
 * Updated SDK version to throw Cloud Exception with error details. Update default SKU to be ST2.
 
 ## Version 0.7.3
-
 * This release adds new skus: ST0, ST1, ST2 for IotCentral.
 
 ## Version 0.7.2

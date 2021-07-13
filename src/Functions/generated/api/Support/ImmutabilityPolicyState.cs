@@ -6,6 +6,9 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>
+    /// The ImmutabilityPolicy state of a blob container, possible values include: Locked and Unlocked.
+    /// </summary>
     public partial struct ImmutabilityPolicyState :
         System.IEquatable<ImmutabilityPolicyState>
     {
@@ -20,7 +23,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="ImmutabilityPolicyState" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new ImmutabilityPolicyState(System.Convert.ToString(value));
+            return new ImmutabilityPolicyState(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type ImmutabilityPolicyState</summary>

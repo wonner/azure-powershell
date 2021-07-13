@@ -107,6 +107,23 @@ namespace Microsoft.Azure.Commands.NetAppFiles.Volume
 
         [Parameter(
             Mandatory = false,
+            HelpMessage = "A hashtable array which represents the backup object")]
+        [ValidateNotNullOrEmpty]
+        public PSNetAppFilesVolumeBackupProperties Backup { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "Maximum throughput in Mibps that can be achieved by this volume")]
+        public double? ThroughputMibps { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "Snapshot Policy ResourceId used to apply a snapshot policy to the volume")]
+        [ValidateNotNullOrEmpty]
+        public string SnapshotPolicyId { get; set; }
+
+        [Parameter(
+            Mandatory = false,
             HelpMessage = "A hashtable which represents resource tags")]
         [ValidateNotNullOrEmpty]
         [Alias("Tags")]
@@ -177,12 +194,24 @@ namespace Microsoft.Azure.Commands.NetAppFiles.Volume
                 PoolName = NameParts[1];
             }
 
+            PSNetAppFilesVolumeDataProtection dataProtection = null;
+            if (!string.IsNullOrWhiteSpace(SnapshotPolicyId) || Backup != null)
+            {
+                dataProtection = new PSNetAppFilesVolumeDataProtection
+                {             
+                    Snapshot = new PSNetAppFilesVolumeSnapshot() { SnapshotPolicyId = SnapshotPolicyId },
+                    Backup = Backup
+                };
+            }
+
             var volumePatchBody = new VolumePatch()
             {
                 ServiceLevel = ServiceLevel,
                 UsageThreshold = UsageThreshold,
                 ExportPolicy = (ExportPolicy != null) ? ModelExtensions.ConvertExportPolicyPatchFromPs(ExportPolicy) : null,
-                Tags = tagPairs
+                Tags = tagPairs,
+                ThroughputMibps = ThroughputMibps,                
+                DataProtection = (dataProtection != null) ? dataProtection.ConvertToPatchFromPs() : null
             };
 
             if (ShouldProcess(Name, string.Format(PowerShell.Cmdlets.NetAppFiles.Properties.Resources.UpdateResourceMessage, ResourceGroupName)))

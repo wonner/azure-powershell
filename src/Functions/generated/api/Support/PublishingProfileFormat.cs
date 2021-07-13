@@ -6,6 +6,12 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>
+    /// Name of the format. Valid values are:
+    /// FileZilla3
+    /// WebDeploy -- default
+    /// Ftp
+    /// </summary>
     public partial struct PublishingProfileFormat :
         System.IEquatable<PublishingProfileFormat>
     {
@@ -22,7 +28,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="PublishingProfileFormat" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new PublishingProfileFormat(System.Convert.ToString(value));
+            return new PublishingProfileFormat(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type PublishingProfileFormat</summary>

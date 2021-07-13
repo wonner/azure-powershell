@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Network.dll-Help.xml
 Module Name: Az.Network
-online version: https://docs.microsoft.com/en-us/powershell/module/az.network/new-azvirtualwan
+online version: https://docs.microsoft.com/powershell/module/az.network/new-azvirtualwan
 schema: 2.0.0
 ---
 
@@ -27,7 +27,7 @@ Creates a new Azure VirtualWAN resource.
 
 ```powershell
 PS C:\> New-AzResourceGroup -Location "West US" -Name "testRG" 
-PS C:\> New-AzVirtualWan -ResourceGroupName "testRG" -Name "myVirtualWAN" -Location "West US" -AllowBranchToBranchTraffic $true
+PS C:\> New-AzVirtualWan -ResourceGroupName "testRG" -Name "myVirtualWAN" -Location "West US" -AllowBranchToBranchTraffic
 
 Name                       : testRG
 Id                         : /subscriptions/{SubscriptionId}/resourceGroups/testRG/providers/Microsoft.Network/virtualWans/myVirtualWAN

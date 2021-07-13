@@ -18,6 +18,29 @@
         - Additional information about change #1
 -->
 ## Upcoming Release
+* [Breaking Change] Changed type of PSCognitiveServicesAccount.Identity.Type from IdentityType to ResourceIdentityType.
+* [Breaking Change] Changed type of PSCognitiveServicesAccount.Sku.Tier from SkuTier to string.
+* [Breaking Change] Removed ActionRequired from PrivateLinkServiceConnectionState.
+* Updated PowerShell to use 2021-04-30 version.
+* Add `Undo-AzCognitiveServicesAccountRemoval` cmdlet.
+* `New-AzureCognitiveServicesAccount` add `-RestrictOutboundNetworkAccess`, `-AllowedFqdnList`, `-DisableLocalAuth`, `-KeyVaultIdentityClientId`, `-IdentityType`, `-UserAssignedIdentityId`.
+* `Set-AzureCognitiveServicesAccount` add `-RestrictOutboundNetworkAccess`, `-AllowedFqdnList`, `-DisableLocalAuth`, `-KeyVaultIdentityClientId`, `-IdentityType`, `-UserAssignedIdentityId`.
+* `Remove-AzureCognitiveServicesAccount` add `-InRemovedState`, `-Location`.
+* `Get-AzureCognitiveServicesAccount` add `-InRemovedState`, `-Location`.
+
+## Version 1.8.0
+
+* Updated SDK to 7.4.0-preview.
+
+## Version 1.7.0
+* Added `New-AzCognitiveServicesAccountApiProperty` cmdlet.
+* Supported `ApiProperty` parameter for `New-AzCognitiveServicesAccount` and `Set-AzCognitiveServicesAccount`
+
+## Version 1.6.0
+* Showed additional legal terms for certain APIs.
+
+## Version 1.5.1
+* Used `Deny` specifically as NetworkRules default action.
 
 ## Version 1.5.0
 * Supported displaying account capabilities.

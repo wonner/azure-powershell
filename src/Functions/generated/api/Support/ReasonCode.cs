@@ -6,6 +6,11 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>
+    /// The reason for the restriction. As of now this can be "QuotaId" or "NotAvailableForSubscription". Quota Id is set when
+    /// the SKU has requiredQuotas parameter as the subscription does not belong to that quota. The "NotAvailableForSubscription"
+    /// is related to capacity at DC.
+    /// </summary>
     public partial struct ReasonCode :
         System.IEquatable<ReasonCode>
     {
@@ -20,7 +25,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="ReasonCode" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new ReasonCode(System.Convert.ToString(value));
+            return new ReasonCode(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type ReasonCode</summary>

@@ -17,8 +17,146 @@
     ## YYYY.MM.DD - Version X.Y.Z (Previous Release)
     * Overview of change #1
         - Additional information about change #1
+
 -->
 ## Upcoming Release
+* Fixed the warning in `New-AzVM` cmdlet stating the sku of the VM is being defaulted even if a sku size is provided by the user. Now it only occurs when the user does not provide a sku size.
+
+## Version 4.15.0
+* Added optional parameter `-OrchestrationMode` to `New-AzVmss` and `New-AzVmssConfig`
+* Updated the following cmdlets to work when the resource uses a remote image source using AKS or Shared Image Gallery.
+    - `Update-AzVm`
+    - `Update-AzVmss`
+    - `Update-AzGalleryImageVersion`
+* Added parameters `-EnableCrossZoneUpgrade` and `-PrioritizeUnhealthyInstance` to the `Set-AzVmssRollingUpgradePolicy`  
+* Added `AssessmentMode` parameter to the `Set-AzVMOperatingSystem` cmdlet.
+* Fixed a bug in `Add-AzVmssNetworkInterfaceConfiguration`
+* Fixed IOPS and throughput check in `Test-AzVMAEMExtension`
+* Added new cmdlets for 2020-12-01 DiskRP API version
+    - New-AzDiskPurchasePlanConfig
+    - Set-AzDiskSecurityProfile
+* Changed Cmdlets for 2020-12-01 DiskRP API version
+    - New-AzDiskConfig
+    - New-AzSnapshotConfig
+    - New-AzSnapshotUpdateConfig
+    - New-AzDiskUpdateConfig
+    - New-AzDiskEncryptionSetConfig
+    - Update-AzDiskEncryptionSet
+
+## Version 4.14.0
+* Updated Compute module to use the latest .Net SDK version 47.0.0.
+
+## Version 4.13.0
+* Added `Invoke-AzVmInstallPatch` to support patch installation in VMs using PowerShell.
+* Updated Compute module to use the latest .Net SDK version 46.0.0.
+* Added optional parameter `-EdgeZone` to the following cmdlets:
+    - `Get-AzVMImage
+    - `Get-AzVMImageOffer`
+    - `Get-AzVMImageSku`
+    - `New-AzDiskConfig`
+    - `New-AzImageConfig`
+    - `New-AzSnapshotConfig`
+    - `New-AzVM`
+    - `New-AzVmssConfig`
+    - `New-AzVMSS`
+* Added cmdlets to create, update, delete, and get new Azure resource: Ssh Public Key
+    - `New-AzSshKey`
+    - `Remove-AzSshKey`
+    - `Get-AzSshKey`
+    - `Update-AzSshKey`
+
+## Version 4.12.0
+* Updated the `Set-AzVMDiskEncryptionExtension` cmdlet to support ADE extension migration from two pass (version with AAD input parameters) to single pass (version without AAD input parameters).
+    - Added a switch parameter `-Migrate` to trigger migration workflow.
+    - Added a switch parameter `-MigrationRecovery` to trigger recovery workflow for VMs experiencing failures after migration from two pass ADE.
+* Added `Win2019Datacenter` in the argument completer list for `Image` parameter in the `New-AzVM` cmdlet.
+
+## Version 4.11.0
+* Fixed a bug when 1 data disk attached to VMSS for Remove-AzVmssDataDisk [#13368]
+* Added new cmdlets to support TrustedLaunch related cmdlets:
+    - `Set-AzVmSecurityProfile`
+    - `Set-AzVmUefi`
+    - `Set-AzVmssSecurityProfile`
+    - `Set-AzVmssUefi`
+* Edited default value for Size parameter in New-AzVM cmdlet from Standard_DS1_v2 to Standard_D2s_v3.
+
+## Version 4.10.0
+* Added parameter `-EnableHotpatching` to the `Set-AzVMOperatingSystem` cmdlet for Windows machines. 
+* Added parameter `-PatchMode` to the Linux parameter sets in the cmdlet `Set-AzVMOperatingSystem`. 
+* [Breaking Change] Breaking changes for users in the public preview for the VM Guest Patching feature.
+    - Removed property `RebootStatus` from the `Microsoft.Azure.Management.Compute.Models.LastPatchInstallationSummary` object. 
+    - Removed property `StartedBy` from the `Microsoft.Azure.Management.Compute.Models.LastPatchInstallationSummary` object.
+    - Renamed property `Kbid` to `KbId` in the `Microsoft.Azure.Management.Compute.Models.VirtualMachineSoftwarePatchProperties` object. 
+    - Renamed property `patches` to `availablePatches` in the `Microsoft.Azure.Management.Compute.Models.VirtualMachineAssessPatchesResult` object. 
+    - Renamed object `Microsoft.Azure.Management.Compute.Models.SoftwareUpdateRebootBehavior` to `Microsoft.Azure.Management.Compute.Models.VMGuestPatchRebootBehavior`.
+    - Renamed object `Microsoft.Azure.Management.Compute.Models.InGuestPatchMode` to `Microsoft.Azure.Management.Compute.Models.WindowsVMGuestPatchMode`.
+* [Breaking Change] Removed all `ContainerService` cmdlets. The Container Service API was deprecated in January 2020. 
+    - `Add-AzContainerServiceAgentPoolProfile`
+    - `Get-AzContainerService`
+    - `New-AzContainerService`
+    - `New-AzContainerServiceConfig`
+    - `Remove-AzContainerService`
+    - `Remove-AzContainerServiceAgentPoolProfile`
+    - `Update-AzContainerService`
+
+## Version 4.9.0
+* Added parameter `-EnableAutomaticUpgrade` to `Set-AzVmExtension` and `Add-AzVmssExtension`.
+* Removed FilterExpression parameter from `Get-AzVMImage` cmdlet documentation. 
+* Added deprecation message to the ContainerService cmdlets:
+    - `Add-AzureRmContainerServiceAgentPoolProfileCommand`
+    - `Get-AzContainerService`
+    - `New-AzContainerService`
+    - `New-AzContainerServiceConfig`
+    - `Remove-AzContainerService`
+    - `Remove-AzContainerServiceAgentPoolProfile`
+    - `Update-AzContainerService`
+* Added parameter `-BurstingEnabled` to `New-AzDiskConfig` and `New-AzDiskUpdateConfig`
+* Added `-GroupByApplicationId` and `-GroupByUserAgent` parameters to the `Export-AzLogAnalyticThrottledRequest` and `Export-AzLogAnalyticRequestRateByInterval` cmdlets.
+* Added `VMParameterSet` parameter set to `Get-AzVMExtension` cmdlet. Added new parameter `-VM` to this parameter set. 
+
+## Version 4.8.0
+* New parameter `VM` in new parameter set `VMParameterSet` added to `Get-AzVMDscExtensionStatus` and `Get-AzVMDscExtension` cmdlets. 
+* Edited `New-AzSnapshot` cmdlet to check for existing snapshot with the same name in the same resource group. 
+    - Throws an error if a duplicate snapshot exists. 
+
+## Version 4.7.0
+* Edited Get-AzVm to filter by `-Name` prior to checking for throttling due to too many resources. 
+* New cmdlet `Start-AzVmssRollingExtensionUpgrade`.
+## Version 4.6.0
+* Added `-VmssId` parameter to `New-AzVm`
+* Added `PlatformFaultDomainCount` parameter to the `New-AzVmss` cmdlet.
+* New cmdlet `Get-AzDiskEncryptionSetAssociatedResource`
+* Added `Tier` and `LogicalSectorSize` optional parameters to the New-AzDiskConfig cmdlet. 
+* Added `Tier`, `MaxSharesCount`, `DiskIOPSReadOnly`, and `DiskMBpsReadOnly` optional parameters to the `New-AzDiskUpdateConfig` cmdlet. 
+* Modified `Get-AzVmBootDiagnostics` cmdlet to use the new RetrieveBootDiagnosticsData API instead of directly accessing the BootDiagnostics properties on the virtual machine.  
+
+## Version 4.5.0
+* Fixed issue in `Update-ASRRecoveryPlan` by populating FailoverTypes
+* Added the `-Top` and `-OrderBy` optional parameters to the `Get-AzVmImage` cmdlet. 
+
+## Version 4.4.0
+* Added the `-EncryptionType` optional parameter to `New-AzVmDiskEncryptionSetConfig`
+* New cmdlets for new resource type: DiskAccess `Get-AzDiskAccess`, `New-AzDiskAccess`, `Get-AzDiskAccess`
+* Added optional parameters `-DiskAccessId` and `-NetworkAccessPolicy` to `New-AzSnapshotConfig`
+* Added optional parameters `-DiskAccessId` and `-NetworkAccessPolicy` to `New-AzDiskConfig`
+* Added `PatchStatus` property to VirtualMachine Instance View
+* Added `VMHealth` property to the virtual machine's instance view, which is the returned object when `Get-AzVm` is invoked with `-Status`
+* Added `AssignedHost` field to `Get-AzVM` and `Get-AzVmss` instance views. The field shows the resource id of the virtual machine instance
+* Added optional parameter `-SupportAutomaticPlacement` to `New-AzHostGroup` 
+* Added the `-HostGroupId` parameter to `New-AzVm` and `New-AzVmss`
+
+## Version 4.3.1
+* Patched `-EncryptionAtHost` parameter in `New-AzVm` to remove default value of false [#12776]
+
+## Version 4.3.0
+* Added `-EncryptionAtHost` parameter to `New-AzVm`, `New-AzVmss`, `New-AzVMConfig`, `New-AzVmssConfig`, `Update-AzVM`, and `Update-AzVmss`
+* Added `SecurityProfile` to `Get-AzVM` and `Get-AzVmss` return object
+* Added `-InstanceView` switch as optional parameter to `Get-AzHostGroup`
+* Added new cmdlet `Invoke-AzVmPatchAssessment`
+
+## Version 4.2.1
+* Added warning when using `New-AzVmss` without "latest" image version
+* Added '-Location' as optional positional parameter to Get-AzComputeResourceSku cmdlet
 
 ## Version 4.2.0
 * Added SimulateEviction parameter to Set-AzVM and Set-AzVmssVM cmdlets.

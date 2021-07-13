@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.RecoveryServices.dll-Help.xml
 Module Name: Az.RecoveryServices
 ms.assetid: 818B5302-91EE-425F-B1CD-86B626F1B7A3
-online version: https://docs.microsoft.com/en-us/powershell/module/az.recoveryservices/get-azrecoveryservicesvault
+online version: https://docs.microsoft.com/powershell/module/az.recoveryservices/get-azrecoveryservicesvault
 schema: 2.0.0
 ---
 
@@ -34,7 +34,7 @@ The **Get-AzRecoveryServicesVault** cmdlet gets a list of Recovery Services vaul
 
 ### Example 1
 
-```powershell
+```
 PS C:\> Get-AzRecoveryServicesVault
 ```
 
@@ -42,7 +42,7 @@ Get the list of vault in selected subscription.
 
 ### Example 2
 
-```powershell
+```
 PS C:\> Get-AzRecoveryServicesVault -ResourceGroupName "resourceGroup"
 ```
 
@@ -50,11 +50,16 @@ Get the list of vault in resource group in selected subscription.
 
 ### Example 3
 
-```powershell
-PS C:\> Get-AzRecoveryServicesVault -ResourceGroupName "resourceGroup" -Name "vaultName"
+```
+PS C:\> $vault = Get-AzRecoveryServicesVault -ResourceGroupName "resourceGroup" -Name "vaultName"
+PS C:\> $vault.Identity | fl
+
+PrincipalId : XXXXXXXX-XXXX-XXXX
+TenantId    : XXXXXXXX-XXXX-XXXX
+Type        : SystemAssigned
 ```
 
-Get the vault in resource group with given name.
+The first cmdlet gets the vault in resource group with given name. Then we access the MSI information from the vault.
 
 ## PARAMETERS
 
@@ -166,6 +171,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### Microsoft.Azure.Commands.RecoveryServices.ARSVault
 
 ## NOTES
+Get-AzRecoveryServicesVault in old version of Az.RecoveryServices(<=2.10.0) cannot work with Az.Accounts(>=1.8.1) because of incorrect assembly reference. The module Az.RecoveryServices needs to be upgraded to 2.11.0 or newer if you are using the latest Az or Az.Accounts.
 
 ## RELATED LINKS
 

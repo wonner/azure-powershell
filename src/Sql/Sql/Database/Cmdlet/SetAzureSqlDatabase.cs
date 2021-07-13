@@ -17,17 +17,24 @@ using Microsoft.Azure.Commands.ResourceManager.Common.ArgumentCompleters;
 using Microsoft.Azure.Commands.ResourceManager.Common.Tags;
 using Microsoft.Azure.Commands.Sql.Database.Model;
 using Microsoft.Azure.Commands.Sql.Database.Services;
+using Microsoft.WindowsAzure.Commands.Common.CustomAttributes;
 using Microsoft.WindowsAzure.Commands.Utilities.Common;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using System.Globalization;
 
 namespace Microsoft.Azure.Commands.Sql.Database.Cmdlet
 {
     /// <summary>
     /// Cmdlet to create a new Azure Sql Database
     /// </summary>
+    [CmdletOutputBreakingChange(
+        deprecatedCmdletOutputTypeName: typeof(AzureSqlDatabaseModel),
+        deprecateByVersion: "3.0.0",
+        DeprecatedOutputProperties = new String[] { "BackupStorageRedundancy" },
+        NewOutputProperties = new String[] { "CurrentBackupStorageRedundancy", "RequestedBackupStorageRedundancy" })]
     [Cmdlet("Set", ResourceManager.Common.AzureRMConstants.AzureRMPrefix + "SqlDatabase", SupportsShouldProcess = true,ConfirmImpact = ConfirmImpact.Medium, DefaultParameterSetName = UpdateParameterSetName), OutputType(typeof(AzureSqlDatabaseModel))]
     public class SetAzureSqlDatabase : AzureSqlDatabaseCmdletBase<IEnumerable<AzureSqlDatabaseModel>>
     {
@@ -68,13 +75,14 @@ namespace Microsoft.Azure.Commands.Sql.Database.Cmdlet
             HelpMessage = "The edition to assign to the Azure SQL Database.",
             ParameterSetName = VcoreDatabaseParameterSet)]
         [PSArgumentCompleter("None",
-            Management.Sql.Models.DatabaseEdition.Basic,
-            Management.Sql.Models.DatabaseEdition.Standard,
-            Management.Sql.Models.DatabaseEdition.Premium,
-            Management.Sql.Models.DatabaseEdition.DataWarehouse,
-            Management.Sql.Models.DatabaseEdition.Free,
-            Management.Sql.Models.DatabaseEdition.Stretch,
-            "GeneralPurpose", "BusinessCritical")]
+            "Basic",
+            "Standard",
+            "Premium",
+            "DataWarehouse",
+            "Free",
+            "Stretch",
+            "GeneralPurpose",
+            "BusinessCritical")]
         [ValidateNotNullOrEmpty]
         public string Edition { get; set; }
 
@@ -173,8 +181,8 @@ namespace Microsoft.Azure.Commands.Sql.Database.Cmdlet
             HelpMessage = "The license type for the Azure Sql database. Possible values are BasePrice (with AHB discount) and LicenseIncluded (without AHB discount).",
             ParameterSetName = VcoreDatabaseParameterSet)]
         [PSArgumentCompleter(
-            Management.Sql.Models.DatabaseLicenseType.LicenseIncluded,
-            Management.Sql.Models.DatabaseLicenseType.BasePrice)]
+            "LicenseIncluded",
+            "BasePrice")]
         public string LicenseType { get; set; }
 
         /// <summary>
@@ -223,13 +231,46 @@ namespace Microsoft.Azure.Commands.Sql.Database.Cmdlet
         [Parameter(Mandatory = false,
             HelpMessage = "The number of readonly secondary replicas associated with the database.  For Hyperscale edition only.",
             ParameterSetName = VcoreDatabaseParameterSet)]
-        public int ReadReplicaCount { get; set; }
+        [Alias("ReadReplicaCount")]
+        public int HighAvailabilityReplicaCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the database backup storage redundancy.
+        /// </summary>
+        [Parameter(Mandatory = false,
+            HelpMessage = "The Backup storage redundancy used to store backups for the SQL Database. Options are: Local, Zone and Geo.")]
+        [ValidateSet("Local", "Zone", "Geo")]
+        public string BackupStorageRedundancy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the secondary type for the database if it is a secondary.
+        /// </summary>
+        [Parameter(Mandatory = false,
+            HelpMessage = "The secondary type of the database if it is a secondary.  Valid values are Geo and Named.")]
+        [ValidateSet("Named", "Geo")]
+        public string SecondaryType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maintenance configuration id for the database
+        /// </summary>
+        [Parameter(Mandatory = false,
+            HelpMessage = "The Maintenance configuration id for the SQL Database.")]
+        public string MaintenanceConfigurationId { get; set; }
 
         /// <summary>
         /// Overriding to add warning message
         /// </summary>
         public override void ExecuteCmdlet()
         {
+            ModelAdapter = InitModelAdapter();
+            string location = ModelAdapter.GetServerLocation(ResourceGroupName, ServerName);
+            if (ListOfRegionsToShowWarningMessageForGeoBackupStorage.Contains(location.ToLower()))
+            {
+                if (string.Equals(this.BackupStorageRedundancy, "Geo", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    WriteWarning(string.Format(CultureInfo.InvariantCulture, Properties.Resources.BackupRedundancyChosenIsGeoWarning));
+                }
+            }
             base.ExecuteCmdlet();
         }
 
@@ -261,12 +302,15 @@ namespace Microsoft.Azure.Commands.Sql.Database.Cmdlet
                 Tags = TagsConversionHelper.ReadOrFetchTags(this, model.FirstOrDefault().Tags),
                 ElasticPoolName = ElasticPoolName,
                 Location = model.FirstOrDefault().Location,
-                ReadScale = ReadScale,
+                ReadScale = this.IsParameterBound(p => p.ReadScale) ? ReadScale : (DatabaseReadScale?)null,
                 ZoneRedundant = MyInvocation.BoundParameters.ContainsKey("ZoneRedundant") ? (bool?)ZoneRedundant.ToBool() : null,
                 LicenseType = LicenseType ?? model.FirstOrDefault().LicenseType, // set to original license type
                 AutoPauseDelayInMinutes = this.IsParameterBound(p => p.AutoPauseDelayInMinutes) ? AutoPauseDelayInMinutes : (int?)null,
                 MinimumCapacity = this.IsParameterBound(p => p.MinimumCapacity) ? MinimumCapacity : (double?)null,
-                ReadReplicaCount = this.IsParameterBound(p => p.ReadReplicaCount) ? ReadReplicaCount : (int?)null,
+                HighAvailabilityReplicaCount = this.IsParameterBound(p => p.HighAvailabilityReplicaCount) ? HighAvailabilityReplicaCount : (int?)null,
+                RequestedBackupStorageRedundancy = BackupStorageRedundancy,
+                SecondaryType = SecondaryType,
+                MaintenanceConfigurationId = MaintenanceConfigurationId,
             };
 
             var database = ModelAdapter.GetDatabase(ResourceGroupName, ServerName, DatabaseName);

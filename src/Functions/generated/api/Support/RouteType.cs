@@ -6,6 +6,13 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>
+    /// The type of route this is:
+    /// DEFAULT - By default, every app has routes to the local address ranges specified by RFC1918
+    /// INHERITED - Routes inherited from the real Virtual Network routes
+    /// STATIC - Static route set on the app only
+    /// These values will be used for syncing an app's routes with those from a Virtual Network.
+    /// </summary>
     public partial struct RouteType :
         System.IEquatable<RouteType>
     {
@@ -22,7 +29,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="RouteType" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new RouteType(System.Convert.ToString(value));
+            return new RouteType(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type RouteType</summary>

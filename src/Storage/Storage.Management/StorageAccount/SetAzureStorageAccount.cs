@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Commands.Management.Storage
         [Parameter(HelpMessage = "Storage Account encryption keySource KeyVault KeyVersion",
         Mandatory = false,
         ParameterSetName = KeyvaultEncryptionParameterSet)]
-        [ValidateNotNullOrEmpty]
+        [ValidateNotNull]
         public string KeyVersion { get; set; }
 
         [Parameter(HelpMessage = "Storage Account encryption keySource KeyVault KeyVaultUri",
@@ -176,6 +176,28 @@ namespace Microsoft.Azure.Commands.Management.Storage
         Mandatory = false,
         HelpMessage = "Generate and assign a new Storage Account Identity for this storage account for use with key management services like Azure KeyVault.")]
         public SwitchParameter AssignIdentity { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "Set resource ids for the the new Storage Account user assignedd Identity, the identity will be used with key management services like Azure KeyVault.")]
+        [ValidateNotNull]
+        public string UserAssignedIdentityId { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "Set resource id for user assigned Identity used to access Azure KeyVault of Storage Account Encryption, the id must in the storage account's UserAssignIdentityId.")]
+        [ValidateNotNull]
+        public string KeyVaultUserAssignedIdentityId { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "Set the new Storage Account Identity type, the idenetity is for use with key management services like Azure KeyVault.")]
+        [ValidateSet(AccountIdentityType.systemAssigned,
+            AccountIdentityType.userAssigned,
+            AccountIdentityType.systemAssignedUserAssigned,
+            AccountIdentityType.none,
+            IgnoreCase = true)]
+        public string IdentityType { get; set; }
 
         [Parameter(HelpMessage = "Storage Account NetworkRule",
             Mandatory = false)]
@@ -215,6 +237,48 @@ namespace Microsoft.Azure.Commands.Management.Storage
         [Parameter(Mandatory = false, HelpMessage = "Indicates whether or not the storage account can support large file shares with more than 5 TiB capacity. Once the account is enabled, the feature cannot be disabled. Currently only supported for LRS and ZRS replication types, hence account conversions to geo-redundant accounts would not be possible. Learn more in https://go.microsoft.com/fwlink/?linkid=2086047")]
         public SwitchParameter EnableLargeFileShare { get; set; }
 
+        [Parameter(Mandatory = false, HelpMessage = "Routing Choice defines the kind of network routing opted by the user. Possible values include: 'MicrosoftRouting', 'InternetRouting'")]
+        [ValidateSet(
+            Microsoft.Azure.Management.Storage.Models.RoutingChoice.MicrosoftRouting,
+            Microsoft.Azure.Management.Storage.Models.RoutingChoice.InternetRouting,
+            IgnoreCase = true)]
+        [ValidateNotNullOrEmpty]
+        public string RoutingChoice;
+
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "Indicates whether microsoft routing storage endpoints are to be published")]
+        [ValidateNotNullOrEmpty]
+        public bool PublishMicrosoftEndpoint
+        {
+            get
+            {
+                return publishMicrosoftEndpoint.Value;
+            }
+            set
+            {
+                publishMicrosoftEndpoint = value;
+            }
+        }
+        private bool? publishMicrosoftEndpoint = null;
+        
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "Indicates whether internet  routing storage endpoints are to be published")]
+        [ValidateNotNullOrEmpty]
+        public bool PublishInternetEndpoint
+        {
+            get
+            {
+                return publishInternetEndpoint.Value;
+            }
+            set
+            {
+                publishInternetEndpoint = value;
+            }
+        }
+        private bool? publishInternetEndpoint = null;
+        
         [Parameter(
             Mandatory = true,
             HelpMessage = "Enable Azure Files Active Directory Domain Service Authentication for the storage account.",
@@ -310,8 +374,82 @@ namespace Microsoft.Azure.Commands.Management.Storage
                 minimumTlsVersion = value;
             }
         }
-        private string minimumTlsVersion = null;
+        private string minimumTlsVersion = null;    
 
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. " +
+            "If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). " +
+            "The default value is null, which is equivalent to true.")]
+        [ValidateNotNullOrEmpty]
+        public bool AllowSharedKeyAccess
+        {
+            get
+            {
+                return allowSharedKeyAccess.Value;
+            }
+            set
+            {
+                allowSharedKeyAccess = value;
+            }
+        }
+        private bool? allowSharedKeyAccess = null;
+
+        [Parameter(Mandatory = false, HelpMessage = "The SAS expiration period of this account, it is a timespan and accurate to seconds.")]
+        public TimeSpan SasExpirationPeriod
+        {
+            get
+            {
+                return sasExpirationPeriod is null ? TimeSpan.Zero : sasExpirationPeriod.Value;
+            }
+            set
+            {
+                sasExpirationPeriod = value;
+            }
+        }
+        private TimeSpan? sasExpirationPeriod = null;
+
+        [Parameter(Mandatory = false, HelpMessage = "The Key expiration period of this account, it is accurate to days.")]
+        public int KeyExpirationPeriodInDay
+        {
+            get
+            {
+                return keyExpirationPeriodInDay.Value;
+            }
+            set
+            {
+                keyExpirationPeriodInDay = value;
+            }
+        }
+        private int? keyExpirationPeriodInDay = null;
+
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "Gets or sets allow or disallow cross AAD tenant object replication. The default interpretation is true for this property.")]
+        [ValidateNotNullOrEmpty]
+        public bool AllowCrossTenantReplication
+        {
+            get
+            {
+                return allowCrossTenantReplication.Value;
+            }
+            set
+            {
+                allowCrossTenantReplication = value;
+            }
+        }
+        private bool? allowCrossTenantReplication = null;
+
+
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "Default share permission for users using Kerberos authentication if RBAC role is not assigned.")]
+        [ValidateSet(DefaultSharePermissionType.None,
+            DefaultSharePermissionType.StorageFileDataSmbShareContributor,
+            DefaultSharePermissionType.StorageFileDataSmbShareReader,
+            DefaultSharePermissionType.StorageFileDataSmbShareElevatedContributor,
+            IgnoreCase = true)]
+        public string DefaultSharePermission { get; set; }
 
         [Parameter(Mandatory = false, HelpMessage = "Run cmdlet in the background")]
         public SwitchParameter AsJob { get; set; }
@@ -358,19 +496,50 @@ namespace Microsoft.Azure.Commands.Management.Storage
                         updateParameters.EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
                     }
 
-                    if (AssignIdentity.IsPresent)
+                    if (AssignIdentity.IsPresent || this.UserAssignedIdentityId != null || this.IdentityType != null)
                     {
-                        updateParameters.Identity = new Identity();
+                        updateParameters.Identity = new Identity() { Type = StorageModels.IdentityType.SystemAssigned };
+                        if (this.IdentityType != null)
+                        {
+                            updateParameters.Identity.Type = GetIdentityTypeString(this.IdentityType);
+                        }
+                        if (this.UserAssignedIdentityId != null)
+                        {
+                            if (updateParameters.Identity.Type != StorageModels.IdentityType.UserAssigned && updateParameters.Identity.Type != StorageModels.IdentityType.SystemAssignedUserAssigned)
+                            {
+                                throw new ArgumentException("UserAssignIdentityId should only be specified when AssignIdentityType is UserAssigned or SystemAssignedUserAssigned.", "UserAssignIdentityId");
+                            }
+                            updateParameters.Identity.UserAssignedIdentities = new Dictionary<string, UserAssignedIdentity>();
+                            updateParameters.Identity.UserAssignedIdentities.Add(this.UserAssignedIdentityId, new UserAssignedIdentity());
+
+                            var accountProperties = this.StorageClient.StorageAccounts.GetProperties(this.ResourceGroupName, this.Name);
+                            if (accountProperties.Identity != null && accountProperties.Identity.UserAssignedIdentities != null && accountProperties.Identity.UserAssignedIdentities.Count > 0)
+                            {
+                                foreach (var uid in accountProperties.Identity.UserAssignedIdentities)
+                                {
+                                    if (!uid.Key.Equals(this.UserAssignedIdentityId, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        updateParameters.Identity.UserAssignedIdentities.Add(uid.Key, null);
+                                    }
+                                }
+                            }
+                        }
                     }
 
-                    if (StorageEncryption || (ParameterSetName == KeyvaultEncryptionParameterSet))
+                    if (StorageEncryption || ParameterSetName == KeyvaultEncryptionParameterSet || this.KeyVaultUserAssignedIdentityId != null)
                     {
                         if (ParameterSetName == KeyvaultEncryptionParameterSet)
                         {
                             keyvaultEncryption = true;
                         }
                         updateParameters.Encryption = ParseEncryption(StorageEncryption, keyvaultEncryption, KeyName, KeyVersion, KeyVaultUri);
+                        if (this.KeyVaultUserAssignedIdentityId != null)
+                        {
+                            updateParameters.Encryption.EncryptionIdentity = new EncryptionIdentity();
+                            updateParameters.Encryption.EncryptionIdentity.EncryptionUserAssignedIdentity = this.KeyVaultUserAssignedIdentityId;
+                        }
                     }
+                      
                     if (NetworkRuleSet != null)
                     {
                         updateParameters.NetworkRuleSet = PSNetworkRuleSet.ParseStorageNetworkRule(NetworkRuleSet);
@@ -474,6 +643,14 @@ namespace Microsoft.Azure.Commands.Management.Storage
                             }
                         }
                     }
+                    if (this.DefaultSharePermission != null)
+                    {
+                        if (updateParameters.AzureFilesIdentityBasedAuthentication == null)
+                        {
+                            updateParameters.AzureFilesIdentityBasedAuthentication = new AzureFilesIdentityBasedAuthentication();
+                        }
+                        updateParameters.AzureFilesIdentityBasedAuthentication.DefaultSharePermission = this.DefaultSharePermission;
+                    }
                     if (this.EnableLargeFileShare.IsPresent)
                     {
                         updateParameters.LargeFileSharesState = LargeFileSharesState.Enabled;
@@ -485,6 +662,26 @@ namespace Microsoft.Azure.Commands.Management.Storage
                     if (this.allowBlobPublicAccess != null)
                     {
                         updateParameters.AllowBlobPublicAccess = this.allowBlobPublicAccess;
+                    }
+                    if (this.RoutingChoice != null || this.publishMicrosoftEndpoint != null || this.publishInternetEndpoint != null)
+                    { 
+                        updateParameters.RoutingPreference = new RoutingPreference(this.RoutingChoice, this.publishMicrosoftEndpoint, this.publishInternetEndpoint);
+                    }
+                    if (allowSharedKeyAccess != null)
+                    {
+                        updateParameters.AllowSharedKeyAccess = allowSharedKeyAccess;
+                    }
+                    if (sasExpirationPeriod != null)
+                    {
+                        updateParameters.SasPolicy = new SasPolicy(sasExpirationPeriod.Value.ToString(@"d\.hh\:mm\:ss"));
+                    }
+                    if (keyExpirationPeriodInDay != null)
+                    {
+                        updateParameters.KeyPolicy = new KeyPolicy(keyExpirationPeriodInDay.Value);
+                    }
+                    if (allowCrossTenantReplication != null)
+                    {
+                        updateParameters.AllowCrossTenantReplication = allowCrossTenantReplication;
                     }
 
                     var updatedAccountResponse = this.StorageClient.StorageAccounts.Update(

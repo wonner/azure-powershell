@@ -6,6 +6,7 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>List of channels that this recommendation can apply.</summary>
     public partial struct Channels :
         System.IEquatable<Channels>
     {
@@ -33,7 +34,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="Channels" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new Channels(System.Convert.ToString(value));
+            return new Channels(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type Channels</summary>

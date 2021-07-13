@@ -6,6 +6,10 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>
+    /// Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set
+    /// to 'Bluefield' when creating/updating a component via the REST API.
+    /// </summary>
     public partial struct FlowType :
         System.IEquatable<FlowType>
     {
@@ -18,7 +22,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="FlowType" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new FlowType(System.Convert.ToString(value));
+            return new FlowType(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type FlowType</summary>

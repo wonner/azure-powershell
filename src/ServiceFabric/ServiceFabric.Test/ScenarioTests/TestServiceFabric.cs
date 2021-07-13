@@ -36,14 +36,14 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Test.ScenarioTests
             XunitTracingInterceptor.AddToContext(_logger);
 
             AddAzureRmServiceFabricNodeType.dontRandom = true;
-            ServiceFabricCmdletBase.WriteVerboseIntervalInSec = 0;
+            ServiceFabricCommonCmdletBase.WriteVerboseIntervalInSec = 0;
             ServiceFabricCmdletBase.RunningTest = true;
             ServiceFabricCmdletBase.NewCreatedKeyVaultWaitTimeInSec = 0;
             //change the thumbprint in the common.ps1 file as well
-            ServiceFabricCmdletBase.TestThumbprint = "910AC565E683987971F34531A824284E3B936040";
+            ServiceFabricCmdletBase.TestThumbprint = "D1DC34B88497F50FB0C0F019DA74E4DA5FADD56D";
             ServiceFabricCmdletBase.TestCommonNameCACert = "azurermsfcntest.southcentralus.cloudapp.azure.com";
             ServiceFabricCmdletBase.TestCommonNameAppCert = "AzureRMSFTestCertApp";
-            ServiceFabricCmdletBase.TestThumbprintAppCert = "EE28AF31B2741B52311A00F78DFF4F46240BB4F8";
+            ServiceFabricCmdletBase.TestThumbprintAppCert = "50EA76B5EC4B588CC25CB4C38CC13666A0CA0BB3";
             ServiceFabricCmdletBase.TestAppCert = false;
         }
 
@@ -80,34 +80,6 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Test.ScenarioTests
         public void TestRemoveAzureRmServiceFabricSettings()
         {
             TestController.NewInstance.RunPsTest(_logger, "Test-RemoveAzureRmServiceFabricSettings");
-        }
-
-        [Fact, TestPriority(0)]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void TestAddAzureRmServiceFabricClusterCertificateCNNotAllowed()
-        {
-            TestController.NewInstance.RunPsTest(_logger, "Test-AddAzureRmServiceFabricClusterCertificateCNNotAllowed");
-        }
-
-        [Fact, TestPriority(0)]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void TestAddAzureRmServiceFabricClusterCertificate()
-        {
-            TestController.NewInstance.RunPsTest(_logger, "Test-AddAzureRmServiceFabricClusterCertificate");
-        }
-
-        [Fact, TestPriority(1)]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void TestRemoveAzureRmServiceFabricClusterCertificate()
-        {
-            TestController.NewInstance.RunPsTest(_logger, "Test-RemoveAzureRmServiceFabricClusterCertificate");
-        }
-
-        [Fact, TestPriority(2)]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void TestRemoveAzureRmServiceFabricClusterCertificateNotAllowed()
-        {
-            TestController.NewInstance.RunPsTest(_logger, "Test-RemoveAzureRmServiceFabricClusterCertificateNotAllowed");
         }
 
         [Fact, TestPriority(0)]
@@ -169,6 +141,13 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Test.ScenarioTests
 
         [Fact, TestPriority(0)]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestUpdateAzureRmServiceFabricVmImage()
+        {
+            TestController.NewInstance.RunPsTest(_logger, "Test-UpdateAzureRmServiceFabricVmImage");
+        }
+
+        [Fact, TestPriority(0)]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void DefaultTemplateFilesAvailable()
         {
             var assemblyFolder = AppDomain.CurrentDomain.BaseDirectory;
@@ -179,9 +158,15 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Test.ScenarioTests
             Assert.True(File.Exists(templateFilePath), string.Format("file not found: {0}", templateFilePath));
             Assert.True(File.Exists(parameterFilePath), string.Format("file not found: {0}", parameterFilePath));
 
-            string linuxTemplateDirectory = Path.Combine(assemblyFolder, Constants.LinuxTemplateRelativePath);
-            templateFilePath = Path.Combine(linuxTemplateDirectory, Constants.TemplateFileName);
-            parameterFilePath = Path.Combine(linuxTemplateDirectory, Constants.ParameterFileName);
+            string ubuntu16TemplateDirectory = Path.Combine(assemblyFolder, Constants.UbuntuServer16TemplateRelativePath);
+            templateFilePath = Path.Combine(ubuntu16TemplateDirectory, Constants.TemplateFileName);
+            parameterFilePath = Path.Combine(ubuntu16TemplateDirectory, Constants.ParameterFileName);
+            Assert.True(File.Exists(templateFilePath), string.Format("file not found: {0}", templateFilePath));
+            Assert.True(File.Exists(parameterFilePath), string.Format("file not found: {0}", parameterFilePath));
+
+            string ubuntu18TemplateDirectory = Path.Combine(assemblyFolder, Constants.UbuntuServer18TemplateRelativePath);
+            templateFilePath = Path.Combine(ubuntu18TemplateDirectory, Constants.TemplateFileName);
+            parameterFilePath = Path.Combine(ubuntu18TemplateDirectory, Constants.ParameterFileName);
             Assert.True(File.Exists(templateFilePath), string.Format("file not found: {0}", templateFilePath));
             Assert.True(File.Exists(parameterFilePath), string.Format("file not found: {0}", parameterFilePath));
         }

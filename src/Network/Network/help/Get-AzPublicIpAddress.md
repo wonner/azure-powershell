@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Network.dll-Help.xml
 Module Name: Az.Network
 ms.assetid: 0CD03BF8-8DB6-44BC-91F0-D863949DBD17
-online version: https://docs.microsoft.com/en-us/powershell/module/az.network/get-azpublicipaddress
+online version: https://docs.microsoft.com/powershell/module/az.network/get-azpublicipaddress
 schema: 2.0.0
 ---
 
@@ -44,8 +44,8 @@ The **Get-AzPublicIPAddress** cmdlet gets one or more public IP addresses in a r
 
 ## EXAMPLES
 
-### 1: Get a public IP resource
-```
+### Example 1: Get a public IP resource
+```powershell
 Get-AzPublicIpAddress -Name myPublicIp1 -ResourceGroupName myRg
 
 Name                     : myPublicIp1
@@ -68,15 +68,16 @@ IpConfiguration          : {
 DnsSettings              : null
 Zones                    : {}
 Sku                      : {
-                             "Name": "Basic"
+                             "Name": "Basic", 
+                             "Tier": "Regional"
                            }
 IpTags                   : []
 ```
 
 This command gets a public IP address resource with name myPublicIp in the resource group myRg.
 
-### 2: Get public IP resources using filtering
-```
+### Example 2: Get public IP resources using filtering
+```powershell
 Get-AzPublicIpAddress -Name myPublicIp*
 
 Name                     : myPublicIp1
@@ -99,7 +100,8 @@ IpConfiguration          : {
 DnsSettings              : null
 Zones                    : {}
 Sku                      : {
-                             "Name": "Basic"
+                             "Name": "Basic",
+                             "Tier": "Regional"
                            }
 IpTags                   : []
 ```

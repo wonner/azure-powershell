@@ -32,6 +32,9 @@ namespace Microsoft.Azure.Commands.Network.Models
         public string PeeringState { get; set; }
 
         [JsonProperty(Order = 1)]
+        public string PeeringSyncLevel { get; set; }
+
+        [JsonProperty(Order = 1)]
         [Ps1Xml(Target = ViewControl.Table)]
         public bool? AllowVirtualNetworkAccess { get; set; }
 
@@ -54,7 +57,13 @@ namespace Microsoft.Azure.Commands.Network.Models
         public List<PSResourceId> RemoteGateways { get; set; }
 
         [JsonProperty(Order = 1)]
+        public PSAddressSpace PeeredRemoteAddressSpace { get; set; }
+
+        [JsonProperty(Order = 1)]
         public PSAddressSpace RemoteVirtualNetworkAddressSpace { get; set; }
+
+        [JsonProperty(Order = 1)]
+        public PSVirtualNetworkBgpCommunities RemoteBgpCommunities { get; set; }
 
         [JsonProperty(Order = 1)]
         [Ps1Xml(Target = ViewControl.Table)]
@@ -73,9 +82,21 @@ namespace Microsoft.Azure.Commands.Network.Models
         }
 
         [JsonIgnore]
+        public string PeeredRemoteAddressSpaceText
+        {
+            get { return JsonConvert.SerializeObject(PeeredRemoteAddressSpace, Formatting.Indented, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore }); }
+        }
+
+        [JsonIgnore]
         public string RemoteVirtualNetworkAddressSpaceText
         {
             get { return JsonConvert.SerializeObject(RemoteVirtualNetworkAddressSpace, Formatting.Indented, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore }); }
-        }        
+        }
+
+        [JsonIgnore]
+        public string RemoteBgpCommunitiesText
+        {
+            get { return JsonConvert.SerializeObject(RemoteBgpCommunities, Formatting.Indented, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore }); }
+        }
     }
 }

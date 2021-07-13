@@ -11,7 +11,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Cmdlets
     /// Description for Restores a specific backup to another app (or deployment slot, if specified).
     /// </summary>
     /// <remarks>
-    /// [OpenAPI] WebApps_Restore=>POST:"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}/restore"
+    /// [OpenAPI] Restore=>POST:"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}/restore"
     /// </remarks>
     [global::Microsoft.Azure.PowerShell.Cmdlets.Functions.InternalExport]
     [global::System.Management.Automation.Cmdlet(global::System.Management.Automation.VerbsData.Restore, @"AzFunctionApp_RestoreExpanded", SupportsShouldProcess = true)]
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Cmdlets
         Description = @"<code>true</code> if the restore operation can overwrite target app; otherwise, <code>false</code>. <code>true</code> is needed if trying to restore over an existing app.",
         SerializedName = @"overwrite",
         PossibleTypes = new [] { typeof(global::System.Management.Automation.SwitchParameter) })]
-        public global::System.Management.Automation.SwitchParameter Overwrite { get => RequestBody.Overwrite; set => RequestBody.Overwrite = value; }
+        public global::System.Management.Automation.SwitchParameter Overwrite { get => RequestBody.Overwrite ?? default(global::System.Management.Automation.SwitchParameter); set => RequestBody.Overwrite = value; }
 
         /// <summary>
         /// When specified, forces the cmdlet return a 'bool' given that there isn't a return type by default.

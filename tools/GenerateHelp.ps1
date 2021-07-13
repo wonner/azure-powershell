@@ -11,9 +11,12 @@ Param(
     [string]$FilteredModules
 )
 
-$ResourceManagerFolders = Get-ChildItem -Directory -Path "$PSScriptRoot\..\src" | Where-Object { $_.Name -ne 'lib' -and $_.Name -ne 'Package' -and $_.Name -ne 'packages' }
+$ResourceManagerFolders = Get-ChildItem -Directory -Path "$PSScriptRoot\..\src" | Where-Object { $_.Name -ne 'lib' -and $_.Name -ne 'Package' -and $_.Name -ne 'packages' } | Where-Object { (Get-ChildItem -Directory -Path $_ -Filter *.psd1).Count -ne 0 }
 Import-Module "$PSScriptRoot\HelpGeneration\HelpGeneration.psm1"
-$UnfilteredHelpFolders = Get-ChildItem -Include 'help' -Path "$PSScriptRoot\..\artifacts" -Recurse -Directory | where { $_.FullName -like "*$BuildConfig*" -and ($_.FullName -notlike "*Stack*" -or $_.FullName -like "*StackEdge*") }
+
+.($PSScriptRoot + "\PreloadToolDll.ps1")
+$UnfilteredHelpFolders = Get-ChildItem -Include 'help' -Path "$PSScriptRoot\..\artifacts" -Recurse -Directory | where { $_.FullName -like "*$BuildConfig*" -and (-not [Tools.Common.Utilities.ModuleFilter]::IsAzureStackModule($_.FullName)) }
+
 $FilteredHelpFolders = $UnfilteredHelpFolders
 if (![string]::IsNullOrEmpty($FilteredModules))
 {
@@ -67,7 +70,7 @@ if ($ValidateMarkdownHelp)
     $Exceptions = Import-Csv "$NewExceptionsPath\ValidateHelpIssues.csv"
     if (($Exceptions | Measure-Object).Count -gt 0)
     {
-        $Exceptions | ft
+        $Exceptions | Format-List
         throw "A markdown file containing the help for a cmdlet is incomplete. Please check the exceptions provided for more details."
     }
     else
@@ -79,20 +82,8 @@ if ($ValidateMarkdownHelp)
 }
 
 # We need to define new version of module instead of hardcode here
-$NewModules = @("Az.AppConfiguration",
-                "Az.Blockchain",
-                "Az.Databricks",
-                "Az.DesktopVirtualization",
-                "Az.Functions",
-                "Az.ImageBuilder",
-                "Az.ImportExport",
-                "Az.Kusto",
-                "Az.MariaDb",
-                "Az.MySql",
-                "Az.Portal",
-                "Az.PostgreSql",
-                "Az.TimeSeriesInsights"
-                )
+$GeneratedModuleListPath = [System.IO.Path]::Combine($PSScriptRoot, "GeneratedModuleList.txt")
+$NewModules = Get-Content $GeneratedModuleListPath
 if ($GenerateMamlHelp)
 {
     $FilteredMamlHelpFolders = @()

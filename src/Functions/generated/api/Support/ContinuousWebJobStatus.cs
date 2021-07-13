@@ -6,6 +6,7 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>Job status.</summary>
     public partial struct ContinuousWebJobStatus :
         System.IEquatable<ContinuousWebJobStatus>
     {
@@ -33,7 +34,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="ContinuousWebJobStatus" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new ContinuousWebJobStatus(System.Convert.ToString(value));
+            return new ContinuousWebJobStatus(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type ContinuousWebJobStatus</summary>

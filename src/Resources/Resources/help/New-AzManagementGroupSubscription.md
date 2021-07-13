@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Resources.dll-Help.xml
 Module Name: Az.Resources
-online version: https://docs.microsoft.com/en-us/powershell/module/az.resources/new-azmanagementgroupsubscription/
+online version: https://docs.microsoft.com/powershell/module/az.resources/new-azmanagementgroupsubscription/
 schema: 2.0.0
 ---
 
@@ -50,7 +50,7 @@ Management Group Id
 ```yaml
 Type: System.String
 Parameter Sets: (All)
-Aliases:
+Aliases: GroupId
 
 Required: True
 Position: 0

@@ -6,6 +6,7 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Support
 {
 
+    /// <summary>PersonalDesktopAssignment type for HostPool.</summary>
     public partial struct PersonalDesktopAssignmentType :
         System.IEquatable<PersonalDesktopAssignmentType>
     {
@@ -22,7 +23,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Support
         /// <param name="value">the value to convert to an instance of <see cref="PersonalDesktopAssignmentType" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new PersonalDesktopAssignmentType(System.Convert.ToString(value));
+            return new PersonalDesktopAssignmentType(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type PersonalDesktopAssignmentType</summary>

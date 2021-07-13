@@ -111,6 +111,18 @@ namespace Microsoft.Azure.Commands.Management.CognitiveServices
         public SwitchParameter AssignIdentity { get; set; }
 
         [Parameter(
+            Mandatory = false,
+            HelpMessage = "Set resource ids for the the new Cognitive Services Account user assigned Identity, the identity will be used with key management services like Azure KeyVault.")]
+        [ValidateNotNullOrEmpty]
+        [AllowEmptyCollection]
+        public string[] UserAssignedIdentityId { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "Set the new Cognitive Services Account Identity type, the idenetity is for use with key management services like Azure KeyVault.")]
+        public IdentityType? IdentityType { get; set; }
+
+        [Parameter(
             HelpMessage = "List of User Owned Storage Accounts.",
             Mandatory = false)]
         [ValidateNotNull]
@@ -150,6 +162,13 @@ namespace Microsoft.Azure.Commands.Management.CognitiveServices
 
         [Parameter(
             Mandatory = false,
+            HelpMessage = "Set IdentityClientId to access Azure KeyVault of Cognitive Services Account Encryption.",
+            ParameterSetName = KeyVaultEncryptionParameterSet)]
+        [ValidateNotNull]
+        public string KeyVaultIdentityClientId { get; set; }
+
+        [Parameter(
+            Mandatory = false,
             HelpMessage = "NetworkRuleSet is used to define a set of configuration rules for firewalls and virtual networks, as well as to set values for network properties such as how to handle requests that don't match any of the defined rules")]
         [ValidateNotNull]
         [AllowEmptyCollection]
@@ -161,6 +180,21 @@ namespace Microsoft.Azure.Commands.Management.CognitiveServices
         [ValidateSet("Enabled", "Disabled", IgnoreCase = true)]
         public string PublicNetworkAccess { get; set; }
 
+        [Parameter(HelpMessage = "True if disable Local authentication methods.", Mandatory = false)]
+        public bool? DisableLocalAuth { get; set; }
+
+        [Parameter(HelpMessage = "True if restrict outbound network access.", Mandatory = false)]
+        public bool? RestrictOutboundNetworkAccess { get; set; }
+
+        [Parameter(HelpMessage = "List of Allowed FQDN.", Mandatory = false)]
+        [AllowEmptyCollection]
+        public string[] AllowedFqdnList { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "The ApiProperties of Cognitive Services Account. Required by specific account types.")]
+        public CognitiveServicesAccountApiProperties ApiProperty { get; set; }
+
         [Parameter(Mandatory = false, HelpMessage = "Don't ask for confirmation.")]
         public SwitchParameter Force { get; set; }
 
@@ -170,7 +204,7 @@ namespace Microsoft.Azure.Commands.Management.CognitiveServices
 
             RunCmdLet(() =>
             {
-                var properties = new CognitiveServicesAccountProperties();
+                var properties = new AccountProperties();
                 if (!string.IsNullOrWhiteSpace(CustomSubdomainName))
                 {
                     properties.CustomSubDomainName = CustomSubdomainName;
@@ -181,7 +215,12 @@ namespace Microsoft.Azure.Commands.Management.CognitiveServices
                     properties.NetworkAcls = NetworkRuleSet.ToNetworkRuleSet();
                 }
 
-                CognitiveServicesAccount createParameters = new CognitiveServicesAccount()
+                if (ApiProperty != null)
+                {
+                    properties.ApiProperties = ApiProperty;
+                }
+
+                var createParameters = new Account()
                 {
                     Location = Location,
                     Kind = Type, // must have value, mandatory parameter
@@ -195,9 +234,38 @@ namespace Microsoft.Azure.Commands.Management.CognitiveServices
                     createParameters.Properties.PublicNetworkAccess = PublicNetworkAccess;
                 }
 
-                if (AssignIdentity.IsPresent)
+                if (DisableLocalAuth != null)
                 {
-                    createParameters.Identity = new Identity(IdentityType.SystemAssigned);
+                    createParameters.Properties.DisableLocalAuth = DisableLocalAuth;
+                }
+
+                if (RestrictOutboundNetworkAccess != null)
+                {
+                    createParameters.Properties.RestrictOutboundNetworkAccess = RestrictOutboundNetworkAccess;
+                }
+
+                if (AllowedFqdnList != null)
+                {
+                    createParameters.Properties.AllowedFqdnList = AllowedFqdnList;
+                }
+
+                if (AssignIdentity.IsPresent || this.UserAssignedIdentityId != null || this.IdentityType != null)
+                {
+                    ResourceIdentityType resourceIdentityType = ResourceIdentityType.SystemAssigned;
+                    if (this.IdentityType == null || !Enum.TryParse(this.IdentityType.ToString(), out resourceIdentityType))
+                    {
+                        resourceIdentityType = ResourceIdentityType.SystemAssigned;
+                    }
+
+                    createParameters.Identity = new Identity(resourceIdentityType);
+                    if (this.UserAssignedIdentityId != null)
+                    {
+                        createParameters.Identity.UserAssignedIdentities = new Dictionary<string, UserAssignedIdentity>();
+                        foreach (var userAssignedIdentityId in this.UserAssignedIdentityId)
+                        {
+                            createParameters.Identity.UserAssignedIdentities.Add(userAssignedIdentityId, new UserAssignedIdentity());
+                        }
+                    }
                 }
 
                 if (CognitiveServicesEncryption.IsPresent)
@@ -212,7 +280,8 @@ namespace Microsoft.Azure.Commands.Management.CognitiveServices
                         {
                             KeyName = KeyName,
                             KeyVersion = KeyVersion,
-                            KeyVaultUri = KeyVaultUri
+                            KeyVaultUri = KeyVaultUri,
+                            IdentityClientId = KeyVaultIdentityClientId
                         }, 
                         KeySource.MicrosoftKeyVault);
                 }
@@ -245,21 +314,30 @@ namespace Microsoft.Azure.Commands.Management.CognitiveServices
                             }
                         }
                     }
-                    try
+
+                    if (Type.Equals("Face", StringComparison.InvariantCultureIgnoreCase) || Type.Equals("CognitiveServices", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        CognitiveServicesAccount createAccountResponse = CognitiveServicesClient.Accounts.Create(
-                                        ResourceGroupName,
-                                        Name,
-                                        createParameters);
-                    }
-                    catch (Exception ex)
-                    {
-                        // Give users a specific message says `Failed to create Cognitive Services account.`
-                        // Details should able be found in the exception.
-                        throw new Exception("Failed to create Cognitive Services account.", ex);
+                        if (Force.IsPresent)
+                        {
+                            WriteWarning(Resources.NewAccount_LegalTerm_NotPolice);
+                        }
+                        else
+                        {
+                            bool yesToAll = false, noToAll = false;
+                            if (!ShouldContinue(Resources.NewAccount_LegalTerm_NotPolice, "Notice", true, ref yesToAll, ref noToAll))
+                            {
+                                return;
+                            }
+                        }
                     }
 
-                    CognitiveServicesAccount cognitiveServicesAccount = CognitiveServicesClient.Accounts.GetProperties(ResourceGroupName, Name);
+                    var createAccountResponse = CognitiveServicesClient.Accounts.Create(
+                                    ResourceGroupName,
+                                    Name,
+                                    createParameters);
+
+                    var cognitiveServicesAccount = CognitiveServicesClient.Accounts.Get(ResourceGroupName, Name);
+
                     WriteCognitiveServicesAccount(cognitiveServicesAccount);
                 }
             });

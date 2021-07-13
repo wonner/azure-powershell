@@ -181,7 +181,48 @@ function Create-BasicTestEnvironmentWithParams ($params, $location, $serverVersi
 	$serverPassword = "t357ingP@s5w0rd!Sec"
 	$credentials = new-object System.Management.Automation.PSCredential($serverLogin, ($serverPassword | ConvertTo-SecureString -asPlainText -Force))
 	New-AzSqlServer -ResourceGroupName $params.rgname -ServerName $params.serverName -Location $location -ServerVersion $serverVersion -SqlAdministratorCredentials $credentials
+	New-AzSqlDatabase -DatabaseName $params.databaseName -ResourceGroupName $params.rgname -ServerName $params.serverName -Edition Basic -Force
+}
+
+<#
+.SYNOPSIS
+Gets the values of the parameters used for ledger digest upload tests
+#>
+function Get-LedgerTestEnvironmentParameters ($testSuffix)
+{
+	return @{ subscriptionId = (Get-AzContext).Subscription.Id;
+			  rgname = "ledger-cmdlet-test-rg" + $testSuffix;
+			  serverName = "ledger-cmdlet-server" + $testSuffix;
+			  databaseName = "ledger-cmdlet-db" + $testSuffix;
+		}
+}
+
+<#
+.SYNOPSIS
+Creates the basic test environment used for the ledger tests - creates resource group, server, and database
+#>
+function Create-LedgerTestEnvironment ($params)
+{
+	$location = "eastus2euap"
+	$serverVersion = "12.0"
+	New-AzResourceGroup -Name $params.rgname -Location $location
+	$serverName = $params.serverName
+	$serverLogin = "testusername"
+	<#[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="Test passwords only valid for the duration of the test")]#>
+	$serverPassword = "t357ingP@s5w0rd!ledger"
+	$credentials = new-object System.Management.Automation.PSCredential($serverLogin, ($serverPassword | ConvertTo-SecureString -asPlainText -Force))
+	New-AzSqlServer -ResourceGroupName $params.rgname -ServerName $params.serverName -Location $location -ServerVersion $serverVersion -SqlAdministratorCredentials $credentials
 	New-AzSqlDatabase -DatabaseName $params.databaseName -ResourceGroupName $params.rgname -ServerName $params.serverName -Edition Basic
+}
+
+<#
+.SYNOPSIS
+Removes the test environment that was needed to perform the ledger digest upload tests
+#>
+function Remove-LedgerTestEnvironment ($testSuffix)
+{
+	$params = Get-LedgerTestEnvironmentParameters $testSuffix
+	Remove-AzResourceGroup -Name $params.rgname -Force
 }
 
 <#
@@ -201,7 +242,7 @@ function Create-BasicManagedTestEnvironmentWithParams ($params, $location)
  	$licenseType = "BasePrice"
   	$storageSizeInGB = 32
  	$vCore = 16
- 	$skuName = "GP_Gen4"
+ 	$skuName = "GP_Gen5"
 	$collation = "SQL_Latin1_General_CP1_CI_AS"
 
 	$managedInstance = New-AzureRmSqlInstance -ResourceGroupName $params.rgname -Name $params.serverName `
@@ -224,7 +265,7 @@ function Create-DataMaskingTestEnvironment ($testSuffix)
 	New-AzResourceGroup -Name $params.rgname -Location "West Central US"
     New-AzSqlServer -ResourceGroupName  $params.rgname -ServerName $params.serverName -ServerVersion "12.0" -Location "West Central US" -SqlAdministratorCredentials $credentials
 	New-AzSqlServerFirewallRule -ResourceGroupName  $params.rgname -ServerName $params.serverName -StartIpAddress 0.0.0.0 -EndIpAddress 255.255.255.255 -FirewallRuleName "ddmRule"
-	New-AzSqlDatabase -ResourceGroupName $params.rgname -ServerName $params.serverName -DatabaseName $params.databaseName
+	New-AzSqlDatabase -ResourceGroupName $params.rgname -ServerName $params.serverName -DatabaseName $params.databaseName -Force
 
 	if ([Microsoft.Azure.Test.HttpRecorder.HttpMockServer]::Mode -eq "Record")
 	{
@@ -353,7 +394,7 @@ function Create-ServerKeyVaultKeyTestEnvironment ($params)
 	Assert-AreEqual $server.ServerName $params.serverName
 
 	# Create database
-	$db = New-AzSqlDatabase -ResourceGroupName $rg.ResourceGroupName -ServerName $server.ServerName -DatabaseName $params.databaseName
+	$db = New-AzSqlDatabase -ResourceGroupName $rg.ResourceGroupName -ServerName $server.ServerName -DatabaseName $params.databaseName -Force
 	Assert-AreEqual $db.DatabaseName $params.databaseName
 
 	#Set permissions on key Vault
@@ -694,7 +735,7 @@ function Remove-ServerForTest ($server)
 function Create-DatabaseForTest ($server)
 {
 	$dbName = Get-DatabaseName
-	$db = New-AzSqlDatabase -ResourceGroupName $server.ResourceGroupName -ServerName $server.ServerName -DatabaseName $dbName -Edition Standard -MaxSizeBytes 250GB -RequestedServiceObjectiveName S0
+	$db = New-AzSqlDatabase -ResourceGroupName $server.ResourceGroupName -ServerName $server.ServerName -DatabaseName $dbName -Edition Standard -MaxSizeBytes 250GB -RequestedServiceObjectiveName S0 -Force
 	return $db
 }
 
@@ -803,17 +844,19 @@ function Get-SqlDatabaseImportExportTestEnvironmentParameters ($testSuffix)
 {
     $databaseName = "sql-ie-cmdlet-db" + $testSuffix;
     # TODO: Remove "CallSite.Target" when re-recording ImportExportTests
-    $password = [Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestUtilities]::GenerateName("IEp@ssw0rd", "CallSite.Target");
+    $password = [Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestUtilities]::GenerateName("IEp@ssw0rd");
     #Fake storage account data. Used for playback mode
     $exportBacpacUri = "http://test.blob.core.windows.net/bacpacs"
     $importBacpacUri = "http://test.blob.core.windows.net/bacpacs/test.bacpac"
     $storageKey = "StorageKey"
+    $storageResourceId = "/subscriptions/xys/resourcegroups/default/providers/Microsoft.Storage/test"
 
     $testMode = [System.Environment]::GetEnvironmentVariable("AZURE_TEST_MODE")
     if($testMode -eq "Record"){
         $exportBacpacUri = [System.Environment]::GetEnvironmentVariable("TEST_EXPORT_BACPAC")
         $importBacpacUri = [System.Environment]::GetEnvironmentVariable("TEST_IMPORT_BACPAC")
         $storageKey = [System.Environment]::GetEnvironmentVariable("TEST_STORAGE_KEY")
+        $storageResourceId = [System.Environment]::GetEnvironmentVariable("TEST_STORAGE_RESOURCE_ID")
 
        if ([System.string]::IsNullOrEmpty($exportBacpacUri)){
           throw "The TEST_EXPORT_BACPAC environment variable should point to a bacpac that has been uploaded to Azure blob storage ('e.g.' https://test.blob.core.windows.net/bacpacs/empty.bacpac)"
@@ -823,6 +866,9 @@ function Get-SqlDatabaseImportExportTestEnvironmentParameters ($testSuffix)
        }
        if ([System.string]::IsNullOrEmpty($storageKey)){
           throw "The  TEST_STORAGE_KEY environment variable should point to a valid storage key for an existing Azure storage account"
+       }
+       if ([System.string]::IsNullOrEmpty($storageResourceId)){
+          throw "The  TEST_STORAGE_RESOURCE_ID environment variable should point to the resource id for the storage account"
        }
     }
 
@@ -837,12 +883,13 @@ function Get-SqlDatabaseImportExportTestEnvironmentParameters ($testSuffix)
               storageKey = $storageKey;
               exportBacpacUri = $exportBacpacUri + "/" + $databaseName + ".bacpac";
               importBacpacUri = $importBacpacUri;
-              location = "Australia East";
+              location = "West Central US";
               version = "12.0";
-              databaseEdition = "Standard";
-              serviceObjectiveName = "S0";
-              databaseMaxSizeBytes = "5000000";
+              databaseEdition = "GeneralPurpose";
+              serviceObjectiveName = "GP_Gen5_2";
+              databaseMaxSizeBytes = "1073741824";
               authType = "Sql";
+              storageResourceId = $storageResourceId;
              }
 }
 
@@ -919,7 +966,7 @@ function Create-ManagedInstanceForTest ($resourceGroup, $subnetId)
 	$managedInstanceName = Get-ManagedInstanceName
 	$credentials = Get-ServerCredential
  	$vCore = 16
- 	$skuName = "GP_Gen4"
+ 	$skuName = "GP_Gen5"
 
 	$managedInstance = New-AzSqlInstance -ResourceGroupName $resourceGroup.ResourceGroupName -Name $managedInstanceName `
  			-Location $resourceGroup.Location -AdministratorCredential $credentials -SubnetId $subnetId `
@@ -978,15 +1025,16 @@ function Remove-ManagedInstancesInInstancePool($instancePool)
 function Get-InstancePoolTestProperties()
 {
     $tags = @{ instance="Pools" };
+
     $instancePoolTestProperties = @{
-        resourceGroup = "instancePoolCSSdemo"
-        name = "cssinstancepool0"
-        subnetName = "InstancePool"
-        vnetName = "vnet-cssinstancepool0"
+        resourceGroup = "ps3995"
+        name = "myinstancepool1"
+        subnetName = "ManagedInsanceSubnet"
+        vnetName = "MIVirtualNetwork"
         tags = $tags
         computeGen = "Gen5"
         edition = "GeneralPurpose"
-        location = "canadacentral"
+        location = "westeurope"
         licenseType = "LicenseIncluded"
         vCores = 16
     }
@@ -1000,7 +1048,7 @@ function Get-InstancePoolTestProperties()
 function Create-InstancePoolForTest()
 {
     $props = Get-InstancePoolTestProperties
-    $virtualNetwork = CreateAndGetVirtualNetworkForManagedInstance $props.vnetName $props.subnetName $props.location $props.resourceGroup
+    $virtualNetwork = CreateAndGetVirtualNetworkForManagedInstance $props.vnetName $props.subnetName $props.location "v-urmila"
     $subnetId = $virtualNetwork.Subnets.where({ $_.Name -eq $props.subnetName })[0].Id
     $instancePool = New-AzSqlInstancePool -ResourceGroupName $props.resourceGroup -Name $props.name `
                 -Location $props.location -SubnetId $subnetId -VCore $props.vCores `
@@ -1104,4 +1152,38 @@ function DelegateSubnetToSQLMIAndGetVnet ($vnetName, $subnetName, $resourceGroup
     }
 
 	return $vnet
+}
+
+<#
+	.SYNOPSIS
+	Generates default public maintenance configuration id for specified location
+#>
+function Get-DefaultPublicMaintenanceConfigurationId($location)
+{
+	$subscriptionId = (Get-AzContext).Subscription.Id
+
+	return "/subscriptions/${subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default";
+}
+
+<#
+	.SYNOPSIS
+	Generates public maintenance configuration id for specified location and schedule name
+#>
+function Get-PublicMaintenanceConfigurationName($location, $scheduleName)
+{
+	$shortLocation = $location -replace '\s',''
+
+	return "SQL_${shortLocation}_${scheduleName}";
+}
+
+<#
+	.SYNOPSIS
+	Generates public maintenance configuration id for specified location and schedule name
+#>
+function Get-PublicMaintenanceConfigurationId($location, $scheduleName)
+{
+	$subscriptionId = (Get-AzContext).Subscription.Id
+	$configName = Get-PublicMaintenanceConfigurationName $location $scheduleName
+
+	return "/subscriptions/${subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/${configName}";
 }

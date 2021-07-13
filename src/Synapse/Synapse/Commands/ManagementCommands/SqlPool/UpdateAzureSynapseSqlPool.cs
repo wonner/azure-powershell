@@ -1,8 +1,8 @@
-﻿using Microsoft.Azure.Commands.ResourceManager.Common.ArgumentCompleters;
+﻿using Microsoft.Azure.Commands.Common.Exceptions;
+using Microsoft.Azure.Commands.ResourceManager.Common.ArgumentCompleters;
 using Microsoft.Azure.Commands.ResourceManager.Common.Tags;
 using Microsoft.Azure.Commands.Synapse.Common;
 using Microsoft.Azure.Commands.Synapse.Models;
-using Microsoft.Azure.Commands.Synapse.Models.Exceptions;
 using Microsoft.Azure.Commands.Synapse.Properties;
 using Microsoft.Azure.Management.Internal.Resources.Utilities.Models;
 using Microsoft.Azure.Management.Synapse.Models;
@@ -27,78 +27,42 @@ namespace Microsoft.Azure.Commands.Synapse
         private const string RenameByInputObjectParameterSet = "RenameByInputObjectParameterSet";
         private const string RenameByResourceIdParameterSet = "RenameByResourceIdParameterSet";
 
-        private const string PauseByNameParameterSet = "PauseByNameParameterSet";
-        private const string PauseByParentObjectParameterSet = "PauseByParentObjectParameterSet";
-        private const string PauseByInputObjectParameterSet = "PauseByInputObjectParameterSet";
-        private const string PauseByResourceIdParameterSet = "PauseByResourceIdParameterSet";
-
-        private const string ResumeByNameParameterSet = "ResumeByNameParameterSet";
-        private const string ResumeByParentObjectParameterSet = "ResumeByParentObjectParameterSet";
-        private const string ResumeByInputObjectParameterSet = "ResumeByInputObjectParameterSet";
-        private const string ResumeByResourceIdParameterSet = "ResumeByResourceIdParameterSet";
-
         [Parameter(Mandatory = false, ParameterSetName = UpdateByNameParameterSet, HelpMessage = HelpMessages.ResourceGroupName)]
-        [Parameter(Mandatory = false, ParameterSetName = PauseByNameParameterSet, HelpMessage = HelpMessages.ResourceGroupName)]
-        [Parameter(Mandatory = false, ParameterSetName = ResumeByNameParameterSet, HelpMessage = HelpMessages.ResourceGroupName)]
         [ResourceGroupCompleter]
         [ValidateNotNullOrEmpty]
         public string ResourceGroupName { get; set; }
 
         [Parameter(Mandatory = true, ParameterSetName = UpdateByNameParameterSet, HelpMessage = HelpMessages.WorkspaceName)]
-        [Parameter(Mandatory = true, ParameterSetName = PauseByNameParameterSet, HelpMessage = HelpMessages.WorkspaceName)]
-        [Parameter(Mandatory = true, ParameterSetName = ResumeByNameParameterSet, HelpMessage = HelpMessages.WorkspaceName)]
         [ResourceNameCompleter(ResourceTypes.Workspace, nameof(ResourceGroupName))]
         [ValidateNotNullOrEmpty]
         public string WorkspaceName { get; set; }
 
         [Parameter(Mandatory = true, ParameterSetName = UpdateByNameParameterSet, HelpMessage = HelpMessages.SqlPoolName)]
         [Parameter(Mandatory = true, ParameterSetName = UpdateByParentObjectParameterSet, HelpMessage = HelpMessages.SqlPoolName)]
-        [Parameter(Mandatory = true, ParameterSetName = PauseByNameParameterSet, HelpMessage = HelpMessages.SqlPoolName)]
-        [Parameter(Mandatory = true, ParameterSetName = PauseByParentObjectParameterSet, HelpMessage = HelpMessages.SqlPoolName)]
-        [Parameter(Mandatory = true, ParameterSetName = ResumeByNameParameterSet, HelpMessage = HelpMessages.SqlPoolName)]
-        [Parameter(Mandatory = true, ParameterSetName = ResumeByParentObjectParameterSet, HelpMessage = HelpMessages.SqlPoolName)]
         [ResourceNameCompleter(
             ResourceTypes.SqlPool,
             nameof(ResourceGroupName),
             nameof(WorkspaceName))]
+        [Alias(nameof(SynapseConstants.SqlPoolName))]
         [ValidateNotNullOrEmpty]
         public string Name { get; set; }
 
-        [Parameter(Mandatory = true, ParameterSetName = PauseByNameParameterSet, HelpMessage = HelpMessages.SuspendSqlPool)]
-        [Parameter(Mandatory = true, ParameterSetName = PauseByInputObjectParameterSet, HelpMessage = HelpMessages.SuspendSqlPool)]
-        [Parameter(Mandatory = true, ParameterSetName = PauseByParentObjectParameterSet, HelpMessage = HelpMessages.SuspendSqlPool)]
-        [Parameter(Mandatory = true, ParameterSetName = PauseByResourceIdParameterSet, HelpMessage = HelpMessages.SuspendSqlPool)]
-        public SwitchParameter Suspend { get; set; }
-
-        [Parameter(Mandatory = true, ParameterSetName = ResumeByNameParameterSet, HelpMessage = HelpMessages.ResumeSqlPool)]
-        [Parameter(Mandatory = true, ParameterSetName = ResumeByInputObjectParameterSet, HelpMessage = HelpMessages.ResumeSqlPool)]
-        [Parameter(Mandatory = true, ParameterSetName = ResumeByParentObjectParameterSet, HelpMessage = HelpMessages.ResumeSqlPool)]
-        [Parameter(Mandatory = true, ParameterSetName = ResumeByResourceIdParameterSet, HelpMessage = HelpMessages.ResumeSqlPool)]
-        public SwitchParameter Resume { get; set; }
+        [Parameter(Mandatory = false, HelpMessage = HelpMessages.SqlPoolVersion)]
+        [ValidateNotNullOrEmpty]
+        [ValidateRange(2, 3)]
+        public int Version { get; set; }
 
         [Parameter(ValueFromPipeline = true, ParameterSetName = UpdateByParentObjectParameterSet,
-            Mandatory = true, HelpMessage = HelpMessages.WorkspaceObject)]
-        [Parameter(ValueFromPipeline = true, ParameterSetName = PauseByParentObjectParameterSet,
-            Mandatory = true, HelpMessage = HelpMessages.WorkspaceObject)]
-        [Parameter(ValueFromPipeline = true, ParameterSetName = ResumeByParentObjectParameterSet,
             Mandatory = true, HelpMessage = HelpMessages.WorkspaceObject)]
         [ValidateNotNull]
         public PSSynapseWorkspace WorkspaceObject { get; set; }
 
         [Parameter(ValueFromPipeline = true, ParameterSetName = UpdateByInputObjectParameterSet, Mandatory = true,
             HelpMessage = HelpMessages.SqlPoolObject)]
-        [Parameter(ValueFromPipeline = true, ParameterSetName = PauseByInputObjectParameterSet, Mandatory = true,
-            HelpMessage = HelpMessages.SqlPoolObject)]
-        [Parameter(ValueFromPipeline = true, ParameterSetName = ResumeByInputObjectParameterSet, Mandatory = true,
-            HelpMessage = HelpMessages.SqlPoolObject)]
         [ValidateNotNull]
         public PSSynapseSqlPool InputObject { get; set; }
 
         [Parameter(ValueFromPipelineByPropertyName = false, ParameterSetName = UpdateByResourceIdParameterSet,
-            Mandatory = true, HelpMessage = HelpMessages.SqlPoolResourceId)]
-        [Parameter(ValueFromPipelineByPropertyName = false, ParameterSetName = PauseByResourceIdParameterSet,
-            Mandatory = true, HelpMessage = HelpMessages.SqlPoolResourceId)]
-        [Parameter(ValueFromPipelineByPropertyName = false, ParameterSetName = ResumeByResourceIdParameterSet,
             Mandatory = true, HelpMessage = HelpMessages.SqlPoolResourceId)]
         [ValidateNotNullOrEmpty]
         public string ResourceId { get; set; }
@@ -127,6 +91,15 @@ namespace Microsoft.Azure.Commands.Synapse
 
         [ValidateNotNullOrEmpty]
         public string NewName { get; set; }
+
+        [Parameter(Mandatory = false, HelpMessage = HelpMessages.MaxServiceObjectName)]
+        public string MaxServiceObjectName { get; set; }
+
+        [Parameter(Mandatory = false, HelpMessage = HelpMessages.AutoPauseTimer)]
+        public int AutoPauseTimer { get; set; }
+
+        [Parameter(Mandatory = false, HelpMessage = HelpMessages.AutoResume)]
+        public bool AutoResume { get; set; }
 
         [Parameter(Mandatory = false, HelpMessage = HelpMessages.PassThru)]
         public SwitchParameter PassThru { get; set; }
@@ -165,54 +138,108 @@ namespace Microsoft.Azure.Commands.Synapse
                 this.ResourceGroupName = this.SynapseAnalyticsClient.GetResourceGroupByWorkspaceName(this.WorkspaceName);
             }
 
-            SqlPool existingSqlPool = null;
-            try
+            if (this.Version == 3)
             {
-                existingSqlPool = this.SynapseAnalyticsClient.GetSqlPool(this.ResourceGroupName, this.WorkspaceName, this.Name);
+                SqlPoolV3 existingSqlPool = null;
+                try
+                {
+                    existingSqlPool = this.SynapseAnalyticsClient.GetSqlPoolV3(this.ResourceGroupName, this.WorkspaceName, this.Name);
+                }
+                catch
+                {
+                    existingSqlPool = null;
+                }
+
+                if (existingSqlPool == null)
+                {
+                    throw new AzPSResourceNotFoundCloudException(string.Format(Resources.FailedToDiscoverSqlPool, this.Name, this.ResourceGroupName, this.WorkspaceName));
+                }
+
+                switch (this.ParameterSetName)
+                {
+                    case UpdateByNameParameterSet:
+                    case UpdateByInputObjectParameterSet:
+                    case UpdateByParentObjectParameterSet:
+                    case UpdateByResourceIdParameterSet:
+                        UpdateSqlPoolV3(existingSqlPool);
+                        break;
+
+                    default: throw new AzPSInvalidOperationException(string.Format(Resources.InvalidParameterSet, this.ParameterSetName));
+                }
             }
-            catch
+            else
             {
-                existingSqlPool = null;
-            }
+                SqlPool existingSqlPool = null;
+                try
+                {
+                    existingSqlPool = this.SynapseAnalyticsClient.GetSqlPool(this.ResourceGroupName, this.WorkspaceName, this.Name);
+                }
+                catch
+                {
+                    existingSqlPool = null;
+                }
 
-            if (existingSqlPool == null)
+                if (existingSqlPool == null)
+                {
+                    throw new AzPSResourceNotFoundCloudException(string.Format(Resources.FailedToDiscoverSqlPool, this.Name, this.ResourceGroupName, this.WorkspaceName));
+                }
+
+                switch (this.ParameterSetName)
+                {
+                    case UpdateByNameParameterSet:
+                    case UpdateByInputObjectParameterSet:
+                    case UpdateByParentObjectParameterSet:
+                    case UpdateByResourceIdParameterSet:
+                        UpdateSqlPool(existingSqlPool);
+                        break;
+
+                    case RenameByNameParameterSet:
+                    case RenameByInputObjectParameterSet:
+                    case RenameByParentObjectParameterSet:
+                    case RenameByResourceIdParameterSet:
+                        RenameSqlPool();
+                        break;
+
+                    default: throw new AzPSInvalidOperationException(string.Format(Resources.InvalidParameterSet, this.ParameterSetName));
+                }
+            }
+        }
+
+        private void UpdateSqlPoolV3(SqlPoolV3 existingSqlPool)
+        {
+            SqlPoolUpdate sqlPoolPatchInfo = new SqlPoolUpdate
             {
-                throw new SynapseException(string.Format(Resources.FailedToDiscoverSqlPool, this.Name, this.ResourceGroupName, this.WorkspaceName));
-            }
+                Tags = this.IsParameterBound(c => c.Tag) ? TagsConversionHelper.CreateTagDictionary(this.Tag, validate: true) : existingSqlPool.Tags,
+                Sku = !this.IsParameterBound(c => c.PerformanceLevel) ? existingSqlPool.Sku : new SkuV3
+                {
+                    Name = this.PerformanceLevel
+                }
+            };
 
-            switch (this.ParameterSetName)
+            if (this.IsParameterBound(c => this.MaxServiceObjectName))
             {
-                case UpdateByNameParameterSet:
-                case UpdateByInputObjectParameterSet:
-                case UpdateByParentObjectParameterSet:
-                case UpdateByResourceIdParameterSet:
-                    UpdateSqlPool(existingSqlPool);
-                    break;
-
-                case PauseByNameParameterSet:
-                case PauseByInputObjectParameterSet:
-                case PauseByParentObjectParameterSet:
-                case PauseByResourceIdParameterSet:
-                    PauseSqlPool();
-                    break;
-
-                case ResumeByNameParameterSet:
-                case ResumeByInputObjectParameterSet:
-                case ResumeByParentObjectParameterSet:
-                case ResumeByResourceIdParameterSet:
-                    ResumeSqlPool();
-                    break;
-
-                case RenameByNameParameterSet:
-                case RenameByInputObjectParameterSet:
-                case RenameByParentObjectParameterSet:
-                case RenameByResourceIdParameterSet:
-                    RenameSqlPool();
-                    break;
-
-                default: throw new SynapseException(string.Format(Resources.InvalidParameterSet, this.ParameterSetName));
+                sqlPoolPatchInfo.MaxServiceObjectiveName = this.MaxServiceObjectName == null ? SynapseConstants.DisableMaxServiceObjectiveName : this.MaxServiceObjectName;
             }
 
+            if (this.IsParameterBound(c => c.AutoPauseTimer))
+            {
+                sqlPoolPatchInfo.AutoPauseTimer = this.AutoPauseTimer;
+            }
+
+            if (this.IsParameterBound(c => c.AutoResume))
+            {
+                sqlPoolPatchInfo.AutoResume = this.AutoResume;
+            }
+
+            if (this.ShouldProcess(this.Name, string.Format(Resources.UpdatingSynapseSqlPool, this.Name, this.ResourceGroupName, this.WorkspaceName)))
+            {
+                this.SynapseAnalyticsClient.UpdateSqlPoolV3(this.ResourceGroupName, this.WorkspaceName, this.Name, sqlPoolPatchInfo);
+                if (this.PassThru.IsPresent)
+                {
+                    var result = this.SynapseAnalyticsClient.GetSqlPoolV3(this.ResourceGroupName, this.WorkspaceName, this.Name);
+                    WriteObject(result);
+                }
+            }
         }
 
         private void UpdateSqlPool(SqlPool existingSqlPool)
@@ -237,32 +264,12 @@ namespace Microsoft.Azure.Commands.Synapse
             }
         }
 
-        private void PauseSqlPool()
-        {
-            if (this.ShouldProcess(this.Name, string.Format(Resources.SuspendingSynapseSqlPool, this.Name, this.ResourceGroupName, this.WorkspaceName)))
-            {
-                this.SynapseAnalyticsClient.PauseSqlPool(this.ResourceGroupName, this.WorkspaceName, this.Name);
-                var result = new PSSynapseSqlPool(this.SynapseAnalyticsClient.GetSqlPool(this.ResourceGroupName, this.WorkspaceName, this.Name));
-                WriteObject(result);
-            }
-        }
-
-        private void ResumeSqlPool()
-        {
-            if (this.ShouldProcess(this.Name, string.Format(Resources.SuspendingSynapseSqlPool, this.Name, this.ResourceGroupName, this.WorkspaceName)))
-            {
-                this.SynapseAnalyticsClient.ResumeSqlPool(this.ResourceGroupName, this.WorkspaceName, this.Name);
-                var result = new PSSynapseSqlPool(this.SynapseAnalyticsClient.GetSqlPool(this.ResourceGroupName, this.WorkspaceName, this.Name));
-                WriteObject(result);
-            }
-        }
-
         private void RenameSqlPool()
         {
             if (this.ShouldProcess(this.Name, string.Format(Resources.UpdatingSynapseSqlPool, this.Name, this.ResourceGroupName, this.WorkspaceName)))
             {
                 this.SynapseAnalyticsClient.RenameSqlPool(this.ResourceGroupName, this.WorkspaceName, this.Name, this.NewName);
-                var result = new PSSynapseSqlPool(this.SynapseAnalyticsClient.GetSqlPool(this.ResourceGroupName, this.WorkspaceName, this.NewName));
+                var result = new PSSynapseSqlPool(this.ResourceGroupName, this.WorkspaceName, this.SynapseAnalyticsClient.GetSqlPool(this.ResourceGroupName, this.WorkspaceName, this.NewName));
                 WriteObject(result);
             }
         }

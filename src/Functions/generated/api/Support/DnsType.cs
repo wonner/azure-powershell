@@ -6,6 +6,7 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>Current DNS type</summary>
     public partial struct DnsType :
         System.IEquatable<DnsType>
     {
@@ -20,7 +21,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="DnsType" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new DnsType(System.Convert.ToString(value));
+            return new DnsType(global::System.Convert.ToString(value));
         }
 
         /// <summary>Creates an instance of the <see cref="DnsType" Enum class./></summary>

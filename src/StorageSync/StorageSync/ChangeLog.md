@@ -18,7 +18,17 @@
         - Additional information about change #1
 -->
 ## Upcoming Release
-* Added a new version StorageSync SDk targetting ApiVersion 2020-03-01
+
+## Version 1.5.0
+* Deprecated `Invoke-AzStorageSyncFileRecall`
+    - Customers should instead use `Invoke-StorageSyncFileRecall`, a cmdlet that is shipped with the Azure File Sync agent.
+* Removed offline data transfer feature in `New-AzStorageSyncServerEndpoint`.
+
+## Version 1.4.0
+* Added Sync tiering policy feature with download policy and local cache mode
+
+## Version 1.3.0
+* Added a new version StorageSync SDK targeting ApiVersion 2020-03-01
 * Added Update Storage Sync Service cmdlet
     - `Set-AzStorageSyncService`
 * Added IncomingTrafficPolicy and PrivateEndpointConnections to StorageSyncService cmdlets.

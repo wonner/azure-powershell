@@ -1,7 +1,7 @@
 ﻿---
 Module Name: Az.EventHub
 Module Guid: 5728d353-7ad5-42d8-b00a-46aaecf07b91
-Download Help Link: https://docs.microsoft.com/en-us/powershell/module/az.eventhub
+Download Help Link: https://docs.microsoft.com/powershell/module/az.eventhub
 Help Version: 4.0.0.0
 Locale: en-US
 ---
@@ -22,6 +22,12 @@ Gets the details of a single Event Hub, or gets a list of Event Hubs.
 
 ### [Get-AzEventHubAuthorizationRule](Get-AzEventHubAuthorizationRule.md)
 Gets the details of an authorization rule, or gets a list of authorization rules.
+
+### [Get-AzEventHubCluster](Get-AzEventHubCluster.md)
+Gets the details of a single Dedicated Event Hub Cluster, or gets a list of Dedicated Event Hub Clusters in given Resourcegroup.
+
+### [Get-AzEventHubClustersAvailableRegion](Get-AzEventHubClustersAvailableRegion.md)
+Gets the list of regions where Dedicated Event Hub Clusters are available
 
 ### [Get-AzEventHubConsumerGroup](Get-AzEventHubConsumerGroup.md)
 Gets the details of a specified Event Hubs consumer group, or gets a list of consumer groups in an Event Hub.
@@ -45,7 +51,10 @@ Creates a new Event Hub.
 Creates a new Event Hubs authorization rule for namespace or eventhub.
 
 ### [New-AzEventHubAuthorizationRuleSASToken](New-AzEventHubAuthorizationRuleSASToken.md)
-Generates a SAS tolen for Azure eventhub authorization rule of namespace/eventhub. 
+Generates a SAS tolen for Azure eventhub authorization rule of namespace/eventhub.
+
+### [New-AzEventHubCluster](New-AzEventHubCluster.md)
+Creates a new Dedicated Eventhub cluster in the given Resource Group and location
 
 ### [New-AzEventHubConsumerGroup](New-AzEventHubConsumerGroup.md)
 Creates a new consumer group for the specified Event Hub.
@@ -74,6 +83,9 @@ Removes the NetworkRuleSet for the Given Namespace
 ### [Remove-AzEventHubAuthorizationRule](Remove-AzEventHubAuthorizationRule.md)
 Removes the specified Event Hub authorization rule.
 
+### [Remove-AzEventHubCluster](Remove-AzEventHubCluster.md)
+Deletes the specified Dedicated Eventhub Cluster from the ResourceGroup
+
 ### [Remove-AzEventHubConsumerGroup](Remove-AzEventHubConsumerGroup.md)
 Deletes the specified Event Hubs consumer group.
 
@@ -88,6 +100,9 @@ Updates the specified Event Hub.
 
 ### [Set-AzEventHubAuthorizationRule](Set-AzEventHubAuthorizationRule.md)
 Updates the specified authorization rule on an Event Hub.
+
+### [Set-AzEventHubCluster](Set-AzEventHubCluster.md)
+Updates the Tags for the given Cluster
 
 ### [Set-AzEventHubConsumerGroup](Set-AzEventHubConsumerGroup.md)
 Updates the specified Event Hubs consumer group.

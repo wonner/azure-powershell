@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Sql.dll-Help.xml
 Module Name: Az.Sql
 ms.assetid: BEE99039-35F7-4E9D-9308-090EAE68292D
-online version: https://docs.microsoft.com/en-us/powershell/module/az.sql/new-azsqldatabasesecondary
+online version: https://docs.microsoft.com/powershell/module/az.sql/new-azsqldatabasesecondary
 schema: 2.0.0
 ---
 
@@ -18,7 +18,8 @@ Creates a secondary database for an existing database and starts data replicatio
 New-AzSqlDatabaseSecondary [-DatabaseName] <String> [-SecondaryServiceObjectiveName <String>]
  [-SecondaryElasticPoolName <String>] [-Tags <Hashtable>] -PartnerResourceGroupName <String>
  -PartnerServerName <String> [-PartnerDatabaseName <String>] [-AllowConnections <AllowConnections>] [-AsJob]
- [-LicenseType <String>] [-ServerName] <String> [-ResourceGroupName] <String>
+ [-LicenseType <String>] [-BackupStorageRedundancy <String>] [-SecondaryType <String>]
+ [-HighAvailabilityReplicaCount <Int32>] [-ServerName] <String> [-ResourceGroupName] <String>
  [-DefaultProfile <IAzureContextContainer>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -26,9 +27,10 @@ New-AzSqlDatabaseSecondary [-DatabaseName] <String> [-SecondaryServiceObjectiveN
 ```
 New-AzSqlDatabaseSecondary [-DatabaseName] <String> [-Tags <Hashtable>] -PartnerResourceGroupName <String>
  -PartnerServerName <String> [-PartnerDatabaseName <String>] [-AllowConnections <AllowConnections>] [-AsJob]
- -SecondaryComputeGeneration <String> -SecondaryVCore <Int32> [-LicenseType <String>] [-ServerName] <String>
- [-ResourceGroupName] <String> [-DefaultProfile <IAzureContextContainer>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+ -SecondaryComputeGeneration <String> -SecondaryVCore <Int32> [-LicenseType <String>]
+ [-BackupStorageRedundancy <String>] [-SecondaryType <String>] [-HighAvailabilityReplicaCount <Int32>]
+ [-ServerName] <String> [-ResourceGroupName] <String> [-DefaultProfile <IAzureContextContainer>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -86,6 +88,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -BackupStorageRedundancy
+The Backup storage redundancy used to store backups for the SQL Database. Options are: Local, Zone and Geo.
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+Accepted values: Local, Zone, Geo
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -DatabaseName
 Specifies the name of the database to act as primary.
 
@@ -108,6 +126,21 @@ The credentials, account, tenant, and subscription used for communication with a
 Type: Microsoft.Azure.Commands.Common.Authentication.Abstractions.Core.IAzureContextContainer
 Parameter Sets: (All)
 Aliases: AzContext, AzureRmContext, AzureCredential
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HighAvailabilityReplicaCount
+The number of readonly secondary replicas associated with the database to which readonly application intent connections may be routed. This property is only settable for Hyperscale edition databases.
+
+```yaml
+Type: System.Int32
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -228,6 +261,22 @@ Specifies the name of the service objective to assign to the secondary database.
 Type: System.String
 Parameter Sets: DtuBasedDatabase
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SecondaryType
+The secondary type of the database if it is a secondary.  Valid values are Geo and Named.
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+Accepted values: Named, Geo
 
 Required: False
 Position: Named

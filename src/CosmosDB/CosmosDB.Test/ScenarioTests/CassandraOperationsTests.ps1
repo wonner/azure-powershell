@@ -19,17 +19,27 @@ Test Cassandra CRUD cmdlets using Name paramter set
 function Test-CassandraCreateUpdateGetCmdlets
 {
   # using a pre-created CosmosDB Account, since account provisioning takes some time
-  $AccountName = "db2725"
-  $rgName = "CosmosDBResourceGroup2510"
+  $AccountName = "cassandra-db2749"
+  $rgName = "CosmosDBResourceGroup49"
   $KeyspaceName = "keyspace1"
   $TableName = "table"
   $KeyspaceName2 = "keyspace2"
   $TableName2 = "table2"
   $ThroughputValue = 500
   $UpdatedThroughputValue = 600
+  $apiKind = "Cassandra"
+  $consistencyLevel = "Session"
+  $location = "East US"
+  $ThroughputValue = 500
+  $UpdatedThroughputValue = 600
+  $locations = @()
+  $locations += New-AzCosmosDBLocationObject -LocationName "East Us" -FailoverPriority 0 -IsZoneRedundant 0
 
   Try {
-      
+
+      $resourceGroup = New-AzResourceGroup -ResourceGroupName $rgName  -Location   $location      
+      $account = New-AzCosmosDBAccount -ResourceGroupName $rgName -LocationObject $locations -Name $AccountName -ApiKind $apiKind -DefaultConsistencyLevel $consistencyLevel
+
       # create a new keyspace
       $NewKeyspace =  New-AzCosmosDBCassandraKeyspace -AccountName $AccountName -ResourceGroupName $rgName -Name $KeyspaceName -Throughput $ThroughputValue
       Assert-AreEqual $NewKeyspace.Name $KeyspaceName
@@ -144,15 +154,23 @@ Test Cassandra CRUD cmdlets using Parent Object and InputObject paramter set
 #>
 function Test-CassandraCreateUpdateGetCmdletsByPiping
 {
-  $AccountName = "db2725"
-  $rgName = "CosmosDBResourceGroup2510"
+  $AccountName = "cassandra-db2745"
+  $rgName = "CosmosDBResourceGroup45"
+  $location = "East US"
   $KeyspaceName = "db2"
   $TableName = "table"
+  $apiKind = "Cassandra"
+  $consistencyLevel = "Session"
   $ThroughputValue = 500
   $UpdatedThroughputValue = 600
+  $locations = @()
+  $locations += New-AzCosmosDBLocationObject -LocationName "East Us" -FailoverPriority 0 -IsZoneRedundant 0
 
   Try{
       #get the CosmosDBAccount object
+      $resourceGroup = New-AzResourceGroup -ResourceGroupName $rgName  -Location   $location
+
+      $account = New-AzCosmosDBAccount -ResourceGroupName $rgName -LocationObject $locations -Name $AccountName -ApiKind $apiKind -DefaultConsistencyLevel $consistencyLevel
       $cosmosDBAccount = Get-AzCosmosDBAccount -ResourceGroupName $rgName -Name $AccountName
 
       #create a new keyspace
@@ -235,12 +253,22 @@ Test Cassandra Throughput cmdlets using all paramter sets
 #>
 function Test-CassandraThroughputCmdlets
 {
-  $AccountName = "db2725"
-  $rgName = "CosmosDBResourceGroup2510"
+  $AccountName = "cassandra-db2748"
+  $rgName = "CosmosDBResourceGroup48"
   $KeyspaceName = "KeyspaceName"
   $TableName = "tableName"
+  $apiKind = "Cassandra"
+  $consistencyLevel = "Session"
+  $location = "East US"
+  $ThroughputValue = 500
+  $UpdatedThroughputValue = 600
+  $locations = @()
+  $locations += New-AzCosmosDBLocationObject -LocationName "East Us" -FailoverPriority 0 -IsZoneRedundant 0
 
   Try{
+  $resourceGroup = New-AzResourceGroup -ResourceGroupName $rgName  -Location   $location
+  $account = New-AzCosmosDBAccount -ResourceGroupName $rgName -LocationObject $locations -Name $AccountName -ApiKind $apiKind -DefaultConsistencyLevel $consistencyLevel
+      
   $Column1 = New-AzCosmosDBCassandraColumn -Name "ColumnA" -Type "int"
   $Column2 = New-AzCosmosDBCassandraColumn -Name "ColumnB" -Type "ascii"
   $clusterkey1 = New-AzCosmosDBCassandraClusterKey -Name "ColumnB" -OrderBy "Asc"
@@ -285,6 +313,68 @@ function Test-CassandraThroughputCmdlets
 
   Remove-AzCosmosDBCassandraTable -InputObject $NewTable 
   Remove-AzCosmosDBCassandraKeyspace -InputObject $NewKeyspace 
+  }
+  Finally{
+      Remove-AzCosmosDBCassandraTable -AccountName $AccountName -ResourceGroupName $rgName -KeyspaceName $KeyspaceName -Name $TableName
+      Remove-AzCosmosDBCassandraKeyspace -AccountName $AccountName -ResourceGroupName $rgName -Name $KeyspaceName
+  }
+}
+
+<#
+.SYNOPSIS
+Test Cassandra migrate throughput cmdlets 
+#>
+function Test-CassandraMigrateThroughputCmdlets
+{
+  $AccountName = "cassandra-db2745"
+  $rgName = "CosmosDBResourceGroup45"
+  $KeyspaceName = "KeyspaceName3"
+  $TableName = "tableName"
+  $apiKind = "Cassandra"
+  $consistencyLevel = "Session"
+  $location = "East US"
+  $locations = @()
+  $locations += New-AzCosmosDBLocationObject -LocationName "East Us" -FailoverPriority 0 -IsZoneRedundant 0
+
+  $ThroughputValue = 1200
+  $TableThroughputValue = 800
+
+  $Autoscale = "Autoscale"
+  $Manual = "Manual"
+
+  Try{
+      $resourceGroup = New-AzResourceGroup -ResourceGroupName $rgName  -Location   $location
+      $account = New-AzCosmosDBAccount -ResourceGroupName $rgName -LocationObject $locations -Name $AccountName -ApiKind $apiKind -DefaultConsistencyLevel $consistencyLevel
+
+      $Column1 = New-AzCosmosDBCassandraColumn -Name "ColumnA" -Type "int"
+      $Column2 = New-AzCosmosDBCassandraColumn -Name "ColumnB" -Type "ascii"
+      $clusterkey1 = New-AzCosmosDBCassandraClusterKey -Name "ColumnB" -OrderBy "Asc"
+      $schema = New-AzCosmosDBCassandraSchema -Column $Column1,$Column2 -ClusterKey $clusterkey1 -PartitionKey "ColumnA"
+
+      $NewKeyspace =  New-AzCosmosDBCassandraKeyspace -AccountName $AccountName -ResourceGroupName $rgName -Name $KeyspaceName -Throughput $ThroughputValue
+      $Throughput = Get-AzCosmosDBCassandraKeyspaceThroughput -AccountName $AccountName -ResourceGroupName $rgName -Name $KeyspaceName
+      Assert-AreEqual $Throughput.Throughput $ThroughputValue
+      Assert-AreEqual $Throughput.AutoscaleSettings.MaxThroughput 0
+
+      $AutoscaleThroughput = Invoke-AzCosmosDBCassandraKeyspaceThroughputMigration -InputObject $NewKeyspace -ThroughputType $Autoscale
+      Assert-AreNotEqual $AutoscaleThroughput.AutoscaleSettings.MaxThroughput 0
+
+      $CosmosDBAccount = Get-AzCosmosDBAccount -ResourceGroupName $rgName -Name $AccountName #get parent object
+      $ManualThroughput = Invoke-AzCosmosDBCassandraKeyspaceThroughputMigration -ParentObject $CosmosDBAccount -Name $KeyspaceName -ThroughputType $Manual
+      Assert-AreEqual $ManualThroughput.AutoscaleSettings.MaxThroughput 0
+
+      $NewTable = New-AzCosmosDBCassandraTable -AccountName $AccountName -ResourceGroupName $rgName -KeyspaceName $KeyspaceName -Name $TableName -Schema $schema -Throughput $TableThroughputValue
+      $TableThroughput = Get-AzCosmosDBCassandraTableThroughput -AccountName $AccountName -ResourceGroupName $rgName -KeyspaceName $KeyspaceName -Name $TableName
+      Assert-AreEqual $TableThroughput.Throughput $TableThroughputValue
+
+      $AutoscaledTableThroughput = Invoke-AzCosmosDBCassandraTableThroughputMigration -AccountName $AccountName -ResourceGroupName $rgName -KeyspaceName $KeyspaceName -Name $TableName -ThroughputType $Autoscale
+      Assert-AreNotEqual $AutoscaledTableThroughput.AutoscaleSettings.MaxThroughput 0
+
+      $ManuaTableThroughput = Invoke-AzCosmosDBCassandraTableThroughputMigration -InputObject $NewTable -ThroughputType $Manual
+      Assert-AreEqual $ManuaTableThroughput.AutoscaleSettings.MaxThroughput 0
+
+      Remove-AzCosmosDBCassandraTable -InputObject $NewTable 
+      Remove-AzCosmosDBCassandraKeyspace -InputObject $NewKeyspace
   }
   Finally{
       Remove-AzCosmosDBCassandraTable -AccountName $AccountName -ResourceGroupName $rgName -KeyspaceName $KeyspaceName -Name $TableName

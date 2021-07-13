@@ -82,14 +82,6 @@ namespace Microsoft.Azure.Commands.Compute.Automation
             return objects;
         }
 
-        public IContainerServicesOperations ContainerServicesClient
-        {
-            get
-            {
-                return ComputeClient.ComputeManagementClient.ContainerServices;
-            }
-        }
-
         public IDedicatedHostGroupsOperations DedicatedHostGroupsClient
         {
             get
@@ -119,6 +111,22 @@ namespace Microsoft.Azure.Commands.Compute.Automation
             get
             {
                 return ComputeClient.ComputeManagementClient.Disks;
+            }
+        }
+
+        public IDiskAccessesOperations DiskAccessesClient
+        {
+            get
+            {
+                return ComputeClient.ComputeManagementClient.DiskAccesses;
+            }
+        }
+
+        public ISshPublicKeysOperations SshPublicKeyClient
+        {
+            get
+            {
+                return ComputeClient.ComputeManagementClient.SshPublicKeys;
             }
         }
 

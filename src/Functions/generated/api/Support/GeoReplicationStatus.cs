@@ -6,6 +6,12 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>
+    /// The status of the secondary location. Possible values are: - Live: Indicates that the secondary location is active and
+    /// operational. - Bootstrap: Indicates initial synchronization from the primary location to the secondary location is in
+    /// progress.This typically occurs when replication is first enabled. - Unavailable: Indicates that the secondary location
+    /// is temporarily unavailable.
+    /// </summary>
     public partial struct GeoReplicationStatus :
         System.IEquatable<GeoReplicationStatus>
     {
@@ -22,7 +28,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="GeoReplicationStatus" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new GeoReplicationStatus(System.Convert.ToString(value));
+            return new GeoReplicationStatus(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type GeoReplicationStatus</summary>

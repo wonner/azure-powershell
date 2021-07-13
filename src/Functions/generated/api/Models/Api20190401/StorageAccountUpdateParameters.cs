@@ -14,41 +14,41 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// Required for storage accounts where kind = BlobStorage. The access tier used for billing.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.AccessTier? AccessTier { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).AccessTier; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).AccessTier = value; }
+        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.AccessTier? AccessTier { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).AccessTier; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).AccessTier = value ?? ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.AccessTier)""); }
 
         /// <summary>Specifies the security identifier (SID) for Azure Storage.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public string ActiveDirectoryPropertyAzureStorageSid { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyAzureStorageSid; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyAzureStorageSid = value; }
+        public string ActiveDirectoryPropertyAzureStorageSid { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyAzureStorageSid; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyAzureStorageSid = value ?? null; }
 
         /// <summary>Specifies the domain GUID.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public string ActiveDirectoryPropertyDomainGuid { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyDomainGuid; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyDomainGuid = value; }
+        public string ActiveDirectoryPropertyDomainGuid { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyDomainGuid; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyDomainGuid = value ?? null; }
 
         /// <summary>Specifies the primary domain that the AD DNS server is authoritative for.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public string ActiveDirectoryPropertyDomainName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyDomainName; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyDomainName = value; }
+        public string ActiveDirectoryPropertyDomainName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyDomainName; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyDomainName = value ?? null; }
 
         /// <summary>Specifies the security identifier (SID).</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public string ActiveDirectoryPropertyDomainSid { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyDomainSid; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyDomainSid = value; }
+        public string ActiveDirectoryPropertyDomainSid { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyDomainSid; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyDomainSid = value ?? null; }
 
         /// <summary>Specifies the Active Directory forest to get.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public string ActiveDirectoryPropertyForestName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyForestName; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyForestName = value; }
+        public string ActiveDirectoryPropertyForestName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyForestName; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyForestName = value ?? null; }
 
         /// <summary>Specifies the NetBIOS domain name.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public string ActiveDirectoryPropertyNetBiosDomainName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyNetBiosDomainName; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyNetBiosDomainName = value; }
+        public string ActiveDirectoryPropertyNetBiosDomainName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyNetBiosDomainName; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).ActiveDirectoryPropertyNetBiosDomainName = value ?? null; }
 
         /// <summary>Indicates the directory service used.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.DirectoryServiceOptions AzureFileIdentityBasedAuthenticationDirectoryServiceOption { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).AzureFileIdentityBasedAuthenticationDirectoryServiceOption; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).AzureFileIdentityBasedAuthenticationDirectoryServiceOption = value; }
+        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.DirectoryServiceOptions? AzureFileIdentityBasedAuthenticationDirectoryServiceOption { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).AzureFileIdentityBasedAuthenticationDirectoryServiceOption; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).AzureFileIdentityBasedAuthenticationDirectoryServiceOption = value ?? ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.DirectoryServiceOptions)""); }
 
         /// <summary>
         /// A boolean indicating whether or not the service encrypts the data as it is stored.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public bool? BlobEnabled { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).BlobEnabled; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).BlobEnabled = value; }
+        public bool? BlobEnabled { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).BlobEnabled; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).BlobEnabled = value ?? default(bool); }
 
         /// <summary>
         /// Gets a rough estimate of the date/time when the encryption was last enabled by the user. Only returned when encryption
@@ -61,29 +61,29 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// Gets or sets the custom domain name assigned to the storage account. Name is the CNAME source.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public string CustomDomainName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).CustomDomainName; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).CustomDomainName = value; }
+        public string CustomDomainName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).CustomDomainName; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).CustomDomainName = value ?? null; }
 
         /// <summary>
         /// Indicates whether indirect CName validation is enabled. Default value is false. This should only be set on updates.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public bool? CustomDomainUseSubDomainName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).CustomDomainUseSubDomainName; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).CustomDomainUseSubDomainName = value; }
+        public bool? CustomDomainUseSubDomainName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).CustomDomainUseSubDomainName; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).CustomDomainUseSubDomainName = value ?? default(bool); }
 
         /// <summary>Allows https traffic only to storage service if sets to true.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public bool? EnableHttpsTrafficOnly { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).EnableHttpsTrafficOnly; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).EnableHttpsTrafficOnly = value; }
+        public bool? EnableHttpsTrafficOnly { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).EnableHttpsTrafficOnly; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).EnableHttpsTrafficOnly = value ?? default(bool); }
 
         /// <summary>
         /// The encryption keySource (provider). Possible values (case-insensitive): Microsoft.Storage, Microsoft.Keyvault
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.KeySource EncryptionKeySource { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).EncryptionKeySource; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).EncryptionKeySource = value; }
+        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.KeySource? EncryptionKeySource { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).EncryptionKeySource; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).EncryptionKeySource = value ?? ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.KeySource)""); }
 
         /// <summary>
         /// A boolean indicating whether or not the service encrypts the data as it is stored.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public bool? FileEnabled { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).FileEnabled; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).FileEnabled = value; }
+        public bool? FileEnabled { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).FileEnabled; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).FileEnabled = value ?? default(bool); }
 
         /// <summary>
         /// Gets a rough estimate of the date/time when the encryption was last enabled by the user. Only returned when encryption
@@ -113,15 +113,15 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
 
         /// <summary>The name of KeyVault key.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public string KeyvaultpropertyKeyName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).KeyvaultpropertyKeyName; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).KeyvaultpropertyKeyName = value; }
+        public string KeyVaultPropertyKeyName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).KeyVaultPropertyKeyName; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).KeyVaultPropertyKeyName = value ?? null; }
 
         /// <summary>The Uri of KeyVault.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public string KeyvaultpropertyKeyVaultUri { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).KeyvaultpropertyKeyVaultUri; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).KeyvaultpropertyKeyVaultUri = value; }
+        public string KeyVaultPropertyKeyVaultUri { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).KeyVaultPropertyKeyVaultUri; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).KeyVaultPropertyKeyVaultUri = value ?? null; }
 
         /// <summary>The version of KeyVault key.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public string KeyvaultpropertyKeyVersion { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).KeyvaultpropertyKeyVersion; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).KeyvaultpropertyKeyVersion = value; }
+        public string KeyVaultPropertyKeyVersion { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).KeyVaultPropertyKeyVersion; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).KeyVaultPropertyKeyVersion = value ?? null; }
 
         /// <summary>Backing field for <see cref="Kind" /> property.</summary>
         private Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.Kind? _kind;
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.LargeFileSharesState? LargeFileSharesState { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).LargeFileSharesState; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).LargeFileSharesState = value; }
+        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.LargeFileSharesState? LargeFileSharesState { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).LargeFileSharesState; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).LargeFileSharesState = value ?? ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.LargeFileSharesState)""); }
 
         /// <summary>
         /// Internal Acessors for AzureFileIdentityBasedAuthenticationActiveDirectoryProperty
@@ -155,8 +155,8 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// <summary>Internal Acessors for Encryption</summary>
         Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IEncryption Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountUpdateParametersInternal.Encryption { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).Encryption; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).Encryption = value; }
 
-        /// <summary>Internal Acessors for EncryptionKeyvaultproperty</summary>
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IKeyVaultProperties Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountUpdateParametersInternal.EncryptionKeyvaultproperty { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).EncryptionKeyvaultproperty; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).EncryptionKeyvaultproperty = value; }
+        /// <summary>Internal Acessors for EncryptionKeyVaultProperty</summary>
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IKeyVaultProperties Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountUpdateParametersInternal.EncryptionKeyVaultProperty { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).EncryptionKeyVaultProperty; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).EncryptionKeyVaultProperty = value; }
 
         /// <summary>Internal Acessors for EncryptionService</summary>
         Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IEncryptionServices Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountUpdateParametersInternal.EncryptionService { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).EncryptionService; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).EncryptionService = value; }
@@ -176,8 +176,8 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// <summary>Internal Acessors for IdentityType</summary>
         string Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountUpdateParametersInternal.IdentityType { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IIdentityInternal)Identity).Type; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IIdentityInternal)Identity).Type = value; }
 
-        /// <summary>Internal Acessors for NetworkAcls</summary>
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.INetworkRuleSet Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountUpdateParametersInternal.NetworkAcls { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkAcls; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkAcls = value; }
+        /// <summary>Internal Acessors for NetworkRuleSet</summary>
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.INetworkRuleSet Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountUpdateParametersInternal.NetworkRuleSet { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkRuleSet; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkRuleSet = value; }
 
         /// <summary>Internal Acessors for Property</summary>
         Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParameters Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountUpdateParametersInternal.Property { get => (this._property = this._property ?? new Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.StorageAccountPropertiesUpdateParameters()); set { {_property = value;} } }
@@ -223,19 +223,19 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// (For example, "Logging, Metrics"), or None to bypass none of those traffics.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.Bypass? NetworkAclsBypass { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkAclsBypass; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkAclsBypass = value; }
+        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.Bypass? NetworkRuleSetBypass { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkRuleSetBypass; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkRuleSetBypass = value ?? ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.Bypass)""); }
 
         /// <summary>Specifies the default action of allow or deny when no other rules match.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.DefaultAction NetworkAclsDefaultAction { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkAclsDefaultAction; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkAclsDefaultAction = value; }
+        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.DefaultAction? NetworkRuleSetDefaultAction { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkRuleSetDefaultAction; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkRuleSetDefaultAction = value ?? ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.DefaultAction)""); }
 
         /// <summary>Sets the IP ACL rules</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IIPRule[] NetworkAclsIPRule { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkAclsIPRule; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkAclsIPRule = value; }
+        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IIPRule[] NetworkRuleSetIPRule { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkRuleSetIPRule; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkRuleSetIPRule = value ?? null /* arrayOf */; }
 
         /// <summary>Sets the virtual network rules</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IVirtualNetworkRule[] NetworkAclsVirtualNetworkRule { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkAclsVirtualNetworkRule; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkAclsVirtualNetworkRule = value; }
+        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IVirtualNetworkRule[] NetworkRuleSetVirtualNetworkRule { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkRuleSetVirtualNetworkRule; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).NetworkRuleSetVirtualNetworkRule = value ?? null /* arrayOf */; }
 
         /// <summary>Backing field for <see cref="Property" /> property.</summary>
         private Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParameters _property;
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// A boolean indicating whether or not the service encrypts the data as it is stored.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public bool? QueueEnabled { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).QueueEnabled; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).QueueEnabled = value; }
+        public bool? QueueEnabled { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).QueueEnabled; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).QueueEnabled = value ?? default(bool); }
 
         /// <summary>
         /// Gets a rough estimate of the date/time when the encryption was last enabled by the user. Only returned when encryption
@@ -289,7 +289,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// called accountType.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.SkuName SkuName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.ISkuInternal)Sku).Name; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.ISkuInternal)Sku).Name = value; }
+        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.SkuName? SkuName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.ISkuInternal)Sku).Name; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.ISkuInternal)Sku).Name = value ?? ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.SkuName)""); }
 
         /// <summary>The type of the resource, usually it is 'storageAccounts'.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
@@ -299,7 +299,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// The restrictions because of which SKU cannot be used. This is empty if there are no restrictions.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IRestriction[] SkuRestriction { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.ISkuInternal)Sku).Restriction; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.ISkuInternal)Sku).Restriction = value; }
+        public Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IRestriction[] SkuRestriction { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.ISkuInternal)Sku).Restriction; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.ISkuInternal)Sku).Restriction = value ?? null /* arrayOf */; }
 
         /// <summary>Gets the SKU tier. This is based on the SKU name.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// A boolean indicating whether or not the service encrypts the data as it is stored.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Origin(Microsoft.Azure.PowerShell.Cmdlets.Functions.PropertyOrigin.Inlined)]
-        public bool? TableEnabled { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).TableEnabled; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).TableEnabled = value; }
+        public bool? TableEnabled { get => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).TableEnabled; set => ((Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParametersInternal)Property).TableEnabled = value ?? default(bool); }
 
         /// <summary>
         /// Gets a rough estimate of the date/time when the encryption was last enabled by the user. Only returned when encryption
@@ -351,7 +351,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.AccessTier? AccessTier { get; set; }
         /// <summary>Specifies the security identifier (SID) for Azure Storage.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.Info(
-        Required = true,
+        Required = false,
         ReadOnly = false,
         Description = @"Specifies the security identifier (SID) for Azure Storage.",
         SerializedName = @"azureStorageSid",
@@ -359,7 +359,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         string ActiveDirectoryPropertyAzureStorageSid { get; set; }
         /// <summary>Specifies the domain GUID.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.Info(
-        Required = true,
+        Required = false,
         ReadOnly = false,
         Description = @"Specifies the domain GUID.",
         SerializedName = @"domainGuid",
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         string ActiveDirectoryPropertyDomainGuid { get; set; }
         /// <summary>Specifies the primary domain that the AD DNS server is authoritative for.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.Info(
-        Required = true,
+        Required = false,
         ReadOnly = false,
         Description = @"Specifies the primary domain that the AD DNS server is authoritative for.",
         SerializedName = @"domainName",
@@ -375,7 +375,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         string ActiveDirectoryPropertyDomainName { get; set; }
         /// <summary>Specifies the security identifier (SID).</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.Info(
-        Required = true,
+        Required = false,
         ReadOnly = false,
         Description = @"Specifies the security identifier (SID).",
         SerializedName = @"domainSid",
@@ -383,7 +383,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         string ActiveDirectoryPropertyDomainSid { get; set; }
         /// <summary>Specifies the Active Directory forest to get.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.Info(
-        Required = true,
+        Required = false,
         ReadOnly = false,
         Description = @"Specifies the Active Directory forest to get.",
         SerializedName = @"forestName",
@@ -391,7 +391,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         string ActiveDirectoryPropertyForestName { get; set; }
         /// <summary>Specifies the NetBIOS domain name.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.Info(
-        Required = true,
+        Required = false,
         ReadOnly = false,
         Description = @"Specifies the NetBIOS domain name.",
         SerializedName = @"netBiosDomainName",
@@ -399,12 +399,12 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         string ActiveDirectoryPropertyNetBiosDomainName { get; set; }
         /// <summary>Indicates the directory service used.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.Info(
-        Required = true,
+        Required = false,
         ReadOnly = false,
         Description = @"Indicates the directory service used.",
         SerializedName = @"directoryServiceOptions",
         PossibleTypes = new [] { typeof(Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.DirectoryServiceOptions) })]
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.DirectoryServiceOptions AzureFileIdentityBasedAuthenticationDirectoryServiceOption { get; set; }
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.DirectoryServiceOptions? AzureFileIdentityBasedAuthenticationDirectoryServiceOption { get; set; }
         /// <summary>
         /// A boolean indicating whether or not the service encrypts the data as it is stored.
         /// </summary>
@@ -430,7 +430,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// Gets or sets the custom domain name assigned to the storage account. Name is the CNAME source.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.Info(
-        Required = true,
+        Required = false,
         ReadOnly = false,
         Description = @"Gets or sets the custom domain name assigned to the storage account. Name is the CNAME source.",
         SerializedName = @"name",
@@ -458,12 +458,12 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// The encryption keySource (provider). Possible values (case-insensitive): Microsoft.Storage, Microsoft.Keyvault
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.Info(
-        Required = true,
+        Required = false,
         ReadOnly = false,
         Description = @"The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.Storage, Microsoft.Keyvault",
         SerializedName = @"keySource",
         PossibleTypes = new [] { typeof(Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.KeySource) })]
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.KeySource EncryptionKeySource { get; set; }
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.KeySource? EncryptionKeySource { get; set; }
         /// <summary>
         /// A boolean indicating whether or not the service encrypts the data as it is stored.
         /// </summary>
@@ -503,7 +503,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         string IdentityTenantId { get;  }
         /// <summary>The identity type.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.Info(
-        Required = true,
+        Required = false,
         ReadOnly = true,
         Description = @"The identity type.",
         SerializedName = @"type",
@@ -516,7 +516,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         Description = @"The name of KeyVault key.",
         SerializedName = @"keyname",
         PossibleTypes = new [] { typeof(string) })]
-        string KeyvaultpropertyKeyName { get; set; }
+        string KeyVaultPropertyKeyName { get; set; }
         /// <summary>The Uri of KeyVault.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.Info(
         Required = false,
@@ -524,7 +524,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         Description = @"The Uri of KeyVault.",
         SerializedName = @"keyvaulturi",
         PossibleTypes = new [] { typeof(string) })]
-        string KeyvaultpropertyKeyVaultUri { get; set; }
+        string KeyVaultPropertyKeyVaultUri { get; set; }
         /// <summary>The version of KeyVault key.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.Info(
         Required = false,
@@ -532,7 +532,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         Description = @"The version of KeyVault key.",
         SerializedName = @"keyversion",
         PossibleTypes = new [] { typeof(string) })]
-        string KeyvaultpropertyKeyVersion { get; set; }
+        string KeyVaultPropertyKeyVersion { get; set; }
         /// <summary>
         /// Optional. Indicates the type of storage account. Currently only StorageV2 value supported by server.
         /// </summary>
@@ -563,15 +563,15 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         Description = @"Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Possible values are any combination of Logging|Metrics|AzureServices (For example, ""Logging, Metrics""), or None to bypass none of those traffics.",
         SerializedName = @"bypass",
         PossibleTypes = new [] { typeof(Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.Bypass) })]
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.Bypass? NetworkAclsBypass { get; set; }
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.Bypass? NetworkRuleSetBypass { get; set; }
         /// <summary>Specifies the default action of allow or deny when no other rules match.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.Info(
-        Required = true,
+        Required = false,
         ReadOnly = false,
         Description = @"Specifies the default action of allow or deny when no other rules match.",
         SerializedName = @"defaultAction",
         PossibleTypes = new [] { typeof(Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.DefaultAction) })]
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.DefaultAction NetworkAclsDefaultAction { get; set; }
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.DefaultAction? NetworkRuleSetDefaultAction { get; set; }
         /// <summary>Sets the IP ACL rules</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.Info(
         Required = false,
@@ -579,7 +579,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         Description = @"Sets the IP ACL rules",
         SerializedName = @"ipRules",
         PossibleTypes = new [] { typeof(Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IIPRule) })]
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IIPRule[] NetworkAclsIPRule { get; set; }
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IIPRule[] NetworkRuleSetIPRule { get; set; }
         /// <summary>Sets the virtual network rules</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.Info(
         Required = false,
@@ -587,7 +587,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         Description = @"Sets the virtual network rules",
         SerializedName = @"virtualNetworkRules",
         PossibleTypes = new [] { typeof(Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IVirtualNetworkRule) })]
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IVirtualNetworkRule[] NetworkAclsVirtualNetworkRule { get; set; }
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IVirtualNetworkRule[] NetworkRuleSetVirtualNetworkRule { get; set; }
         /// <summary>
         /// A boolean indicating whether or not the service encrypts the data as it is stored.
         /// </summary>
@@ -643,12 +643,12 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// called accountType.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.Info(
-        Required = true,
+        Required = false,
         ReadOnly = false,
         Description = @"Gets or sets the SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType.",
         SerializedName = @"name",
         PossibleTypes = new [] { typeof(Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.SkuName) })]
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.SkuName SkuName { get; set; }
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.SkuName? SkuName { get; set; }
         /// <summary>The type of the resource, usually it is 'storageAccounts'.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.Info(
         Required = false,
@@ -733,7 +733,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// <summary>Required if choose AD.</summary>
         Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IActiveDirectoryProperties AzureFileIdentityBasedAuthenticationActiveDirectoryProperty { get; set; }
         /// <summary>Indicates the directory service used.</summary>
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.DirectoryServiceOptions AzureFileIdentityBasedAuthenticationDirectoryServiceOption { get; set; }
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.DirectoryServiceOptions? AzureFileIdentityBasedAuthenticationDirectoryServiceOption { get; set; }
         /// <summary>Provides the identity based authentication settings for Azure Files.</summary>
         Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IAzureFilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
         /// <summary>
@@ -768,9 +768,9 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// <summary>
         /// The encryption keySource (provider). Possible values (case-insensitive): Microsoft.Storage, Microsoft.Keyvault
         /// </summary>
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.KeySource EncryptionKeySource { get; set; }
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.KeySource? EncryptionKeySource { get; set; }
         /// <summary>Properties provided by key vault.</summary>
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IKeyVaultProperties EncryptionKeyvaultproperty { get; set; }
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IKeyVaultProperties EncryptionKeyVaultProperty { get; set; }
         /// <summary>List of services which support encryption.</summary>
         Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IEncryptionServices EncryptionService { get; set; }
         /// <summary>
@@ -791,11 +791,11 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// <summary>The identity type.</summary>
         string IdentityType { get; set; }
         /// <summary>The name of KeyVault key.</summary>
-        string KeyvaultpropertyKeyName { get; set; }
+        string KeyVaultPropertyKeyName { get; set; }
         /// <summary>The Uri of KeyVault.</summary>
-        string KeyvaultpropertyKeyVaultUri { get; set; }
+        string KeyVaultPropertyKeyVaultUri { get; set; }
         /// <summary>The version of KeyVault key.</summary>
-        string KeyvaultpropertyKeyVersion { get; set; }
+        string KeyVaultPropertyKeyVersion { get; set; }
         /// <summary>
         /// Optional. Indicates the type of storage account. Currently only StorageV2 value supported by server.
         /// </summary>
@@ -805,18 +805,18 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// </summary>
         Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.LargeFileSharesState? LargeFileSharesState { get; set; }
         /// <summary>Network rule set</summary>
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.INetworkRuleSet NetworkAcls { get; set; }
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.INetworkRuleSet NetworkRuleSet { get; set; }
         /// <summary>
         /// Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Possible values are any combination of Logging|Metrics|AzureServices
         /// (For example, "Logging, Metrics"), or None to bypass none of those traffics.
         /// </summary>
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.Bypass? NetworkAclsBypass { get; set; }
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.Bypass? NetworkRuleSetBypass { get; set; }
         /// <summary>Specifies the default action of allow or deny when no other rules match.</summary>
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.DefaultAction NetworkAclsDefaultAction { get; set; }
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.DefaultAction? NetworkRuleSetDefaultAction { get; set; }
         /// <summary>Sets the IP ACL rules</summary>
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IIPRule[] NetworkAclsIPRule { get; set; }
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IIPRule[] NetworkRuleSetIPRule { get; set; }
         /// <summary>Sets the virtual network rules</summary>
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IVirtualNetworkRule[] NetworkAclsVirtualNetworkRule { get; set; }
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IVirtualNetworkRule[] NetworkRuleSetVirtualNetworkRule { get; set; }
         /// <summary>The parameters used when updating a storage account.</summary>
         Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401.IStorageAccountPropertiesUpdateParameters Property { get; set; }
         /// <summary>
@@ -856,7 +856,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190401
         /// Gets or sets the SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was
         /// called accountType.
         /// </summary>
-        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.SkuName SkuName { get; set; }
+        Microsoft.Azure.PowerShell.Cmdlets.Functions.Support.SkuName? SkuName { get; set; }
         /// <summary>The type of the resource, usually it is 'storageAccounts'.</summary>
         string SkuResourceType { get; set; }
         /// <summary>

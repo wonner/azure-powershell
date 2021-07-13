@@ -6,6 +6,7 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>The trigger type of the function</summary>
     public partial struct TriggerTypes :
         System.IEquatable<TriggerTypes>
     {
@@ -20,7 +21,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="TriggerTypes" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new TriggerTypes(System.Convert.ToString(value));
+            return new TriggerTypes(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type TriggerTypes</summary>

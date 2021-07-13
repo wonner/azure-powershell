@@ -1,7 +1,7 @@
 ---
 external help file:
 Module Name: Az.ImageBuilder
-online version: https://docs.microsoft.com/en-us/powershell/module/az.imagebuilder/new-AzImageBuilderCustomizerObject
+online version: https://docs.microsoft.com/powershell/module/az.imagebuilder/new-AzImageBuilderCustomizerObject
 schema: 2.0.0
 ---
 
@@ -27,8 +27,8 @@ New-AzImageBuilderCustomizerObject -CustomizerName <String> -FileCustomizer [-De
 ### PowerShellCustomizer
 ```
 New-AzImageBuilderCustomizerObject -CustomizerName <String> -PowerShellCustomizer [-Inline <String[]>]
- [-RunElevated <Boolean>] [-ScriptUri <String>] [-Sha256Checksum <String>] [-ValidExitCode <Int32[]>]
- [<CommonParameters>]
+ [-RunAsSystem <Boolean>] [-RunElevated <Boolean>] [-ScriptUri <String>] [-Sha256Checksum <String>]
+ [-ValidExitCode <Int32[]>] [<CommonParameters>]
 ```
 
 ### RestartCustomizer
@@ -61,11 +61,11 @@ This command creates a windows update customizer.
 
 ### Example 2: Create a file customizer
 ```powershell
-PS C:\> New-AzImageBuilderCustomizerObject -FileCustomizer -CustomizerName 'filecus' -Sha256Checksum 'ade4c5214c3c675e92c66e2d067a870c5b81b9844b3de3cc72c49ff36425fc93' -Destination 'c:\\buildArtifacts\\index.html' -SourceUri 'https://github.com/danielsollondon/azvmimagebuilder/blob/master/quickquickstarts/exampleArtifacts/buildArtifacts/index.html'
+PS C:\> New-AzImageBuilderCustomizerObject -FileCustomizer -CustomizerName 'filecus' -Destination 'c:\\buildArtifacts\\index.html' -SourceUri 'https://github.com/danielsollondon/azvmimagebuilder/blob/master/quickquickstarts/exampleArtifacts/buildArtifacts/index.html'
 
-Name    Type Destination                    Sha256Checksum                                                   SourceUri
-----    ---- -----------                    --------------                                                   ---------
-filecus File c:\\buildArtifacts\\index.html ade4c5214c3c675e92c66e2d067a870c5b81b9844b3de3cc72c49ff36425fc93 https://github.com/danielsollondon/azvmimagebuilder/blob/master/quickquickstarts/exampleArtifacts/buildArtifacts/index.html
+Name    Type Destination                    Sha256Checksum SourceUri
+----    ---- -----------                    -------------- ---------
+filecus File c:\\buildArtifacts\\index.html                https://github.com/danielsollondon/azvmimagebuilder/blob/master/quickquickstarts/exampleArtifacts/buildArtifacts/…
 
 ```
 
@@ -74,11 +74,12 @@ This command creates a file customizer.
 ### Example 3: Create a powershell customizer
 ```powershell
 PS C:\> $inline = @("mkdir c:\\buildActions", "echo Azure-Image-Builder-Was-Here  > c:\\buildActions\\buildActionsOutput.txt")
-PS C:\> New-AzImageBuilderCustomizerObject -PowerShellCustomizer -CustomizerName settingUpMgmtAgtPath -RunElevated $false -Sha256Checksum ade4c5214c3c675e92c66e2d067a870c5b81b9844b3de3cc72c49ff36425fc93 -Inline $inline
+PS C:\> New-AzImageBuilderCustomizerObject -PowerShellCustomizer -CustomizerName settingUpMgmtAgtPath -RunElevated $false -Inline $inline
 
-Name                 Type       Inline                                                                                                  RunElevated ScriptUri Sha256Checksum                                      ValidExitC                                                                                                                                                                                                                                                                                                                                                                                                                                        e
-----                 ----       ------                                                                                                  ----------- --------- --------------                                       --
-settingUpMgmtAgtPath PowerShell {mkdir c:\\buildActions, echo Azure-Image-Builder-Was-Here  > c:\\buildActions\\buildActionsOutput.txt} False                 ade4c5214c3c675e92c66e2d067a870c5b81b9844b3de3cc72c49ff36425fc93
+Name                 Type       Inline                                                                                                  RunElevated ScriptUri Sha256Checksum
+----                 ----       ------                                                                                                  ----------- --------- --------------
+settingUpMgmtAgtPath PowerShell {mkdir c:\\buildActions, echo Azure-Image-Builder-Was-Here  > c:\\buildActions\\buildActionsOutput.txt} False
+
 ```
 
 This command creates a powershell customizer.
@@ -96,11 +97,11 @@ This command creates a restart customizer.
 
 ### Example 5: Create a shell customizer
 ```powershell
-PS C:\> New-AzImageBuilderCustomizerObject -ShellCustomizer -CustomizerName downloadBuildArtifacts -ScriptUri "https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/quickquickstarts/customizeScript2.sh" -Sha256Checksum ade4c5214c3c675e92c66e2d067a870c5b81b9844b3de3cc72c49ff36425fc93 
+PS C:\> New-AzImageBuilderCustomizerObject -ShellCustomizer -CustomizerName downloadBuildArtifacts -ScriptUri "https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/quickquickstarts/customizeScript2.sh" 
 
 Name                   Type  Inline ScriptUri                                                                                                      Sha256Checksum
 ----                   ----  ------ ---------                                                                                                      --------------
-downloadBuildArtifacts Shell        https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/quickquickstarts/customizeScript2.sh ade4c5214c3c675e92c66e2d067a870c5b81b9844b3de3cc72c49ff36425fc93
+downloadBuildArtifacts Shell        https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/quickquickstarts/customizeScript2.sh
 ```
 
 This command creates a shell customizer.
@@ -255,6 +256,22 @@ Restart timeout specified as a string of magnitude and unit, e.g.
 ```yaml
 Type: System.String
 Parameter Sets: RestartCustomizer
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RunAsSystem
+If specified, the PowerShell script will be run with elevated privileges using the Local System user.
+Can only be true when the runElevated field above is set to true.
+
+```yaml
+Type: System.Boolean
+Parameter Sets: PowerShellCustomizer
 Aliases:
 
 Required: False

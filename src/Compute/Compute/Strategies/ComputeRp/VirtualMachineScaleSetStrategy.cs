@@ -15,12 +15,12 @@
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Internal.Resources.Models;
-using Microsoft.Azure.Management.Internal.Network.Version2017_10_01.Models;
+using Microsoft.Azure.PowerShell.Cmdlets.Compute.Helpers.Network.Models;
 using System.Linq;
 using System.Collections.Generic;
 using System;
 using Microsoft.Azure.Commands.Common.Strategies;
-using SubResource = Microsoft.Azure.Management.Compute.Models.SubResource;
+using CM = Microsoft.Azure.Management.Compute.Models;
 
 namespace Microsoft.Azure.Commands.Compute.Strategies.ComputeRp
 {
@@ -54,18 +54,25 @@ namespace Microsoft.Azure.Commands.Compute.Strategies.ComputeRp
             IEnumerable<int> dataDisks,
             IList<string> zones,
             bool ultraSSDEnabled,
-            Func<IEngine, SubResource> proximityPlacementGroup,
+            Func<IEngine, CM.SubResource> proximityPlacementGroup,
+            Func<IEngine, CM.SubResource> hostGroup,
             string priority,
             string evictionPolicy,
             double? maxPrice,
             string[] scaleInPolicy,
-            bool doNotRunExtensionsOnOverprovisionedVMs)
+            bool doNotRunExtensionsOnOverprovisionedVMs,
+            bool encryptionAtHost,
+            int? platformFaultDomainCount,
+            string edgeZone,
+            string orchestrationMode
+            )
             => Strategy.CreateResourceConfig(
                 resourceGroup: resourceGroup,
                 name: name,
                 createModel: engine => new VirtualMachineScaleSet()
                 {
                     Zones = zones,
+                    ExtendedLocation = edgeZone == null ? null : new CM.ExtendedLocation(edgeZone, CM.ExtendedLocationTypes.EdgeZone),
                     UpgradePolicy = new UpgradePolicy
                     {
                         Mode = upgradeMode ?? UpgradeMode.Manual
@@ -78,8 +85,10 @@ namespace Microsoft.Azure.Commands.Compute.Strategies.ComputeRp
                     Identity = identity,
                     SinglePlacementGroup = singlePlacementGroup,
                     AdditionalCapabilities = ultraSSDEnabled ? new AdditionalCapabilities(true) : null,
+                    PlatformFaultDomainCount = platformFaultDomainCount,
                     VirtualMachineProfile = new VirtualMachineScaleSetVMProfile
                     {
+                        SecurityProfile = (encryptionAtHost == true) ? new SecurityProfile(encryptionAtHost: encryptionAtHost) : null,
                         OsProfile = new VirtualMachineScaleSetOSProfile
                         {
                             ComputerNamePrefix = name.Substring(0, Math.Min(name.Length, 9)),
@@ -126,11 +135,13 @@ namespace Microsoft.Azure.Commands.Compute.Strategies.ComputeRp
                         BillingProfile = (maxPrice == null) ? null : new BillingProfile(maxPrice)
                     },
                     ProximityPlacementGroup = proximityPlacementGroup(engine),
+                    HostGroup = hostGroup(engine),
                     ScaleInPolicy = (scaleInPolicy == null) ? null : new ScaleInPolicy
                     {
                         Rules = scaleInPolicy
                     },
-                    DoNotRunExtensionsOnOverprovisionedVMs = doNotRunExtensionsOnOverprovisionedVMs ? true : (bool?)null
+                    DoNotRunExtensionsOnOverprovisionedVMs = doNotRunExtensionsOnOverprovisionedVMs ? true : (bool?)null,
+                    OrchestrationMode = orchestrationMode
                 });
     }
 }

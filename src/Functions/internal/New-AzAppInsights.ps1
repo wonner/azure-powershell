@@ -48,7 +48,7 @@ INPUTOBJECT <IFunctionsIdentity>: Identity Parameter
   [BackupId <String>]: ID of the backup.
   [BaseAddress <String>]: Module base address.
   [BlobServicesName <String>]: The name of the blob Service within the specified storage account. Blob Service Name must be 'default'
-  [CertificateOrderName <String>]: Name of the certificate order.
+  [CertificateOrderName <String>]: Name of the certificate order..
   [ContainerName <String>]: The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number.
   [DeletedSiteId <String>]: The numeric ID of the deleted app, e.g. 12345
   [DetectorName <String>]: Detector Resource Name
@@ -61,7 +61,8 @@ INPUTOBJECT <IFunctionsIdentity>: Identity Parameter
   [GatewayName <String>]: Name of the gateway. Currently, the only supported string is "primary".
   [HostName <String>]: Hostname in the hostname binding.
   [HostingEnvironmentName <String>]: Name of the hosting environment.
-  [Id <String>]: Resource identity path
+  [Id <String>]: Deployment ID.
+  [Id1 <String>]: Resource identity path
   [ImmutabilityPolicyName <String>]: The name of the blob container immutabilityPolicy within the specified storage account. ImmutabilityPolicy Name must be 'default'
   [Instance <String>]: Name of the instance in the multi-role pool.
   [InstanceId <String>]: 
@@ -81,12 +82,12 @@ INPUTOBJECT <IFunctionsIdentity>: Identity Parameter
   [PurgeId <String>]: In a purge status request, this is the Id of the operation the status of which is returned.
   [RelayName <String>]: The relay name for this hybrid connection.
   [ResourceGroupName <String>]: Name of the resource group to which the resource belongs.
-  [ResourceName <String>]: The name of the identity resource.
+  [ResourceName <String>]: The name of the Application Insights component resource.
   [RouteName <String>]: Name of the Virtual Network route.
   [Scope <String>]: The resource provider scope of the resource. Parent resource being extended by Managed Identities.
   [SiteExtensionId <String>]: Site extension name.
   [SiteName <String>]: Site Name
-  [Slot <String>]: Name of the deployment slot. By default, this API returns the production slot.
+  [Slot <String>]: Slot Name
   [SnapshotId <String>]: The ID of the snapshot to read.
   [SourceControlType <String>]: Type of source control
   [SubscriptionId <String>]: Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
@@ -99,16 +100,16 @@ INPUTOBJECT <IFunctionsIdentity>: Identity Parameter
 
 INSIGHTPROPERTY <IApplicationInsightsComponent>: An Application Insights component definition.
   Location <String>: Resource location
-  ApplicationType <ApplicationType>: Type of application being monitored.
   Kind <String>: The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of the following: web, ios, other, store, java, phone.
   [Tag <IComponentsResourceTags>]: Resource tags
     [(Any) <String>]: This indicates any property can be added to this object.
+  [ApplicationType <ApplicationType?>]: Type of application being monitored.
   [FlowType <FlowType?>]: Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to 'Bluefield' when creating/updating a component via the REST API.
   [HockeyAppId <String>]: The unique application ID created when a new application is added to HockeyApp, used for communications with HockeyApp.
   [RequestSource <RequestSource?>]: Describes what tool created this Application Insights component. Customers using this API should set this to the default 'rest'.
   [SamplingPercentage <Double?>]: Percentage of the data produced by the application being monitored that is being sampled for Application Insights telemetry.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.functions/new-azappinsights
+https://docs.microsoft.com/powershell/module/az.functions/new-azappinsights
 #>
 function New-AzAppInsights {
 [OutputType([Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20150501.IApplicationInsightsComponent])]
@@ -126,7 +127,7 @@ param(
     [Parameter(ParameterSetName='CreateExpanded', Mandatory)]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Path')]
     [System.String]
-    # The name of the identity resource.
+    # The name of the Application Insights component resource.
     ${ResourceName},
 
     [Parameter(ParameterSetName='Create')]
@@ -134,7 +135,9 @@ param(
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Path')]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Runtime.DefaultInfo(Script='(Get-AzContext).Subscription.Id')]
     [System.String]
-    # The ID of the target subscription.
+    # Your Azure subscription ID.
+    # This is a GUID-formatted string (e.g.
+    # 00000000-0000-0000-0000-000000000000).
     ${SubscriptionId},
 
     [Parameter(ParameterSetName='CreateViaIdentity', Mandatory, ValueFromPipeline)]

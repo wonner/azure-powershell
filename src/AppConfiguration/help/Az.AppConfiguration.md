@@ -1,7 +1,7 @@
 ---
 Module Name: Az.AppConfiguration
 Module Guid: 3ff16738-381e-4d5a-9d90-c7ef6816f78e
-Download Help Link: https://docs.microsoft.com/en-us/powershell/module/az.appconfiguration
+Download Help Link: https://docs.microsoft.com/powershell/module/az.appconfiguration
 Help Version: 1.0.0.0
 Locale: en-US
 ---
@@ -12,7 +12,7 @@ Microsoft Azure PowerShell: AppConfiguration cmdlets
 
 ## Az.AppConfiguration Cmdlets
 ### [Get-AzAppConfigurationStore](Get-AzAppConfigurationStore.md)
-Gets the properties of the specified configuration store.
+Get or list app configuration stores.
 
 ### [Get-AzAppConfigurationStoreKey](Get-AzAppConfigurationStoreKey.md)
 Lists the access key for the specified configuration store.

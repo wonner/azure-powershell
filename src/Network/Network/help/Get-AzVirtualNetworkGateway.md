@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Network.dll-Help.xml
 Module Name: Az.Network
 ms.assetid: 9CBF592E-734B-4A0C-A45D-358C226D08C7
-online version: https://docs.microsoft.com/en-us/powershell/module/az.network/get-azvirtualnetworkgateway
+online version: https://docs.microsoft.com/powershell/module/az.network/get-azvirtualnetworkgateway
 schema: 2.0.0
 ---
 
@@ -24,15 +24,15 @@ The **Get-AzVirtualNetworkGateway** cmdlet returns the object of your gateway in
 
 ## EXAMPLES
 
-### 1: Get a Virtual Network Gateway
-```
+### Example 1: Get a Virtual Network Gateway
+```powershell
 Get-AzVirtualNetworkGateway -Name myGateway1 -ResourceGroupName myRG
 ```
 
 Returns the object of the Virtual Network Gateway with the name "myGateway1" within the resource group "myRG"
 
-### 2: Get a Virtual Network Gateway
-```
+### Example 2: Get a Virtual Network Gateway
+```powershell
 Get-AzVirtualNetworkGateway -Name myGateway* -ResourceGroupName myRG
 ```
 

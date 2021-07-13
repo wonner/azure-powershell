@@ -47,6 +47,7 @@ namespace Microsoft.Azure.Commands.Network
         [ValidateSet(
          IPv4,
          IPv6,
+         All,
          IgnoreCase = true)]
         public string AddressPrefixType { get; set; }
 
@@ -69,19 +70,20 @@ namespace Microsoft.Azure.Commands.Network
 
             if (connection != null)
             {
-                if (!string.IsNullOrWhiteSpace(this.AddressPrefixType))
+                if ((string.IsNullOrWhiteSpace(this.AddressPrefixType) || AddressTypeUtils.IsIpv4(this.AddressPrefixType)) &&
+                    connection.IPv6CircuitConnectionConfig != null)
                 {
-                    if (this.AddressPrefixType == IPv4)
-                    {
-                        connection.AddressPrefix = null;
-                    }
-                    if (this.AddressPrefixType == IPv6)
-                    {
-                        connection.IPv6CircuitConnectionConfig = null;
-                    }
+                    // call is to remove ipv4 and ipv6 exists
+                    connection.AddressPrefix = null;
                 }
-                else 
+                else if (AddressTypeUtils.IsIpv6(this.AddressPrefixType) && connection.AddressPrefix != null)
                 {
+                    // call is to remove ipv6 and ipv4 exists
+                    connection.IPv6CircuitConnectionConfig = null;
+                }
+                else
+                {
+                    // remove ipv4 call and ipv6 gr is already null OR remove ipv6 call and ipv4 gr is already null OR remove all
                     peering.Connections.Remove(connection);
                 }
             }

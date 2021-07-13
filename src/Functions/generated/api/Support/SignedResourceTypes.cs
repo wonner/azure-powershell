@@ -6,6 +6,11 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>
+    /// The signed resource types that are accessible with the account SAS. Service (s): Access to service-level APIs; Container
+    /// (c): Access to container-level APIs; Object (o): Access to object-level APIs for blobs, queue messages, table entities,
+    /// and files.
+    /// </summary>
     public partial struct SignedResourceTypes :
         System.IEquatable<SignedResourceTypes>
     {
@@ -22,7 +27,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="SignedResourceTypes" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new SignedResourceTypes(System.Convert.ToString(value));
+            return new SignedResourceTypes(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type SignedResourceTypes</summary>

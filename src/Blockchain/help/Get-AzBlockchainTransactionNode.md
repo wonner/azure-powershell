@@ -1,7 +1,7 @@
 ---
 external help file:
 Module Name: Az.Blockchain
-online version: https://docs.microsoft.com/en-us/powershell/module/az.blockchain/get-azblockchaintransactionnode
+online version: https://docs.microsoft.com/powershell/module/az.blockchain/get-azblockchaintransactionnode
 schema: 2.0.0
 ---
 
@@ -187,7 +187,7 @@ To create the parameters described below, construct a hash table containing the 
 INPUTOBJECT <IBlockchainIdentity>: Identity Parameter
   - `[BlockchainMemberName <String>]`: Blockchain member name.
   - `[Id <String>]`: Resource identity path
-  - `[Location <String>]`: Location Name.
+  - `[Location <String>]`: Location name.
   - `[OperationId <String>]`: Operation Id.
   - `[ResourceGroupName <String>]`: The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.
   - `[SubscriptionId <String>]`: Gets the subscription Id which uniquely identifies the Microsoft Azure subscription. The subscription ID is part of the URI for every service call.

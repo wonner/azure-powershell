@@ -32,7 +32,8 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Common
         public const int DefaultHttpPort = 19080;
         public const int DefaultFrontendPortRangeStart = 3389;
         public const int DefaultFrontendPortRangeEnd = 4500;
-        public const int DefaultBackendPort = 3389;
+        public const int DefaultRDPBackendPort = 3389;
+        public const int DefaultSSHBackendPort = 22;
 
         public const int StorageAccountsPerNodeType = 5;
 
@@ -43,9 +44,12 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Common
         public const string ServieFabricTag = "Service Fabric";
         public const string ServiceFabricPublisher = "Microsoft.Azure.ServiceFabric";
         public const string IaaSDiagnostics = "IaaSDiagnostics";
+        public const string LinuxDiagnostic = "LinuxDiagnostic";
 
         public const string ServiceFabricWindowsNodeExtName = "ServiceFabricNode";
         public const string ServiceFabricLinuxNodeExtName = "ServiceFabricLinuxNode";
+        public const string ServiceFabricExtNamePrefix = "ServiceFabric";
+        public const string ServiceFabricExtNameSuffix = "Node";
 
         public const string SecretContentType = "application/x-pkcs12";
 
@@ -63,7 +67,8 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Common
         public const string SecCertificateUrlValue = "secCertificateUrlValue";
 
         public static readonly string WindowsTemplateRelativePath = Path.Combine("Template", "Windows");
-        public static readonly string LinuxTemplateRelativePath = Path.Combine("Template", "Linux");
+        public static readonly string UbuntuServer16TemplateRelativePath = Path.Combine("Template", "Linux");
+        public static readonly string UbuntuServer18TemplateRelativePath = Path.Combine("Template", "Ubuntu18_04");
         public const string ParameterFileName = @"parameter.json";
         public const string TemplateFileName = @"template.json";
 
@@ -74,5 +79,15 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Common
         public const string applicationTypeVersionProvider = "versions";
         public const string applicationProvider = "applications";
         public const string serviceProvider = "services";
+
+        public const string ServiceFabricPrefix = "ServiceFabric";
+        
+        public const string AzureAsyncOperationHeader = "Azure-AsyncOperation";
+
+        // Managed clusters
+        public const string ManagedClusterProvider = "managedClusters";
+        public const string ManagedNodeTypeProvider = "nodeTypes";
+        public const string ManagedClustersFullType = "Microsoft.ServiceFabric/managedClusters";
+        public const string ManagedNodeTypesFullType = "Microsoft.ServiceFabric/managedClusters/nodeTypes";
     }
 }

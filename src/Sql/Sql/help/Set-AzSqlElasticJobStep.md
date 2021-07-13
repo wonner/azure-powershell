@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Sql.dll-Help.xml
 Module Name: Az.Sql
-online version: https://docs.microsoft.com/en-us/powershell/module/Az.sql/set-Azsqlelasticjobstep
+online version: https://docs.microsoft.com/powershell/module/Az.sql/set-Azsqlelasticjobstep
 schema: 2.0.0
 ---
 
@@ -131,7 +131,8 @@ Updates a job step from a job
 
 ### Example 3
 
-```powershell <!-- Aladdin Generated Example --> 
+```powershell
+<!-- Aladdin Generated Example --> 
 Set-AzSqlElasticJobStep -AgentName agent -CommandText 'SELECT 2' -JobName job1 -Name step1 -ResourceGroupName MyResourceGroup -ServerName s1
 ```
 

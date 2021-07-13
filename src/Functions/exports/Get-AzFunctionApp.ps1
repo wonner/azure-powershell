@@ -53,7 +53,7 @@ Functions1-Windows-DoNet Running Windows DotNet  Central US CentralUSPlan  Funct
 .Outputs
 Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190801.ISite
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.functions/get-azfunctionapp
+https://docs.microsoft.com/powershell/module/az.functions/get-azfunctionapp
 #>
 function Get-AzFunctionApp {
 [OutputType([Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190801.ISite])]
@@ -72,7 +72,7 @@ param(
     # The location of the function app.
     ${Location},
 
-    [Parameter(ParameterSetName='ByResourceGroupName')]
+    [Parameter(ParameterSetName='ByResourceGroupName', Mandatory)]
     [Parameter(ParameterSetName='ByName', Mandatory)]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Path')]
     [System.String]
@@ -85,7 +85,7 @@ param(
     # The name of the function app.
     ${Name},
 
-    [Parameter()]
+    [Parameter(ParameterSetName='ByResourceGroupName')]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
     [System.Management.Automation.SwitchParameter]
     # Use to specify whether to include deployment slots in results.

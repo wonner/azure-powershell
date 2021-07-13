@@ -6,7 +6,9 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support
 {
 
-    /// <summary>Argument completer implementation for EventHubDataFormat.</summary>
+    /// <summary>
+    /// The data format of the message. Optionally the data format can be added to each message.
+    /// </summary>
     [System.ComponentModel.TypeConverter(typeof(Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.EventHubDataFormatTypeConverter))]
     public partial struct EventHubDataFormat :
         System.Management.Automation.IArgumentCompleter
@@ -81,6 +83,14 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support
             if (global::System.String.IsNullOrEmpty(wordToComplete) || "ORC".StartsWith(wordToComplete, global::System.StringComparison.InvariantCultureIgnoreCase))
             {
                 yield return new global::System.Management.Automation.CompletionResult("ORC", "ORC", global::System.Management.Automation.CompletionResultType.ParameterValue, "ORC");
+            }
+            if (global::System.String.IsNullOrEmpty(wordToComplete) || "APACHEAVRO".StartsWith(wordToComplete, global::System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                yield return new global::System.Management.Automation.CompletionResult("APACHEAVRO", "APACHEAVRO", global::System.Management.Automation.CompletionResultType.ParameterValue, "APACHEAVRO");
+            }
+            if (global::System.String.IsNullOrEmpty(wordToComplete) || "W3CLOGFILE".StartsWith(wordToComplete, global::System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                yield return new global::System.Management.Automation.CompletionResult("W3CLOGFILE", "W3CLOGFILE", global::System.Management.Automation.CompletionResultType.ParameterValue, "W3CLOGFILE");
             }
         }
     }

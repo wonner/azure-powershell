@@ -300,7 +300,56 @@ function Test-SetAzureRmDiagnosticSetting-LogAnalytics
     }
 }
 
+<#
+.SYNOPSIS
+Test Get diagnostic setting supported categories
+#>
+function Test-GetAzDiagnosticSettingCategory
+{
+	$ResourceGroupName = 'group' + (getAssetName)
+	$SubnetConfigName = 'config' + (getAssetName)
+	$VNetName = 'vn' + (getAssetName)
 
+	try
+	{
+		$rg = New-AzResourceGroup -Name $ResourceGroupName -Location 'eastus'
+		$subnet = New-AzVirtualNetworkSubnetConfig -Name $SubnetConfigName -AddressPrefix "10.0.1.0/24"
+		$vn = New-AzVirtualNetwork -Name $VNetName -ResourceGroupName $ResourceGroupName -Location 'eastus' -AddressPrefix "10.0.0.0/16" -Subnet $subnet
 
+		$id = $vn.Id
+		$log = Get-AzDiagnosticSettingCategory -TargetResourceId $id -Name 'VMProtectionAlerts'
+		$metric = Get-AzDiagnosticSettingCategory -TargetResourceId $id -Name 'AllMetrics'
 
+		Assert-AreEqual 'Logs' $log.CategoryType
+		Assert-AreEqual 'Metrics' $metric.CategoryType
+
+		Remove-AzVirtualNetwork -ResourceGroupName $ResourceGroupName -Name $VNetName -Force
+	}
+	finally
+	{
+		Remove-AzResourceGroup -Name $ResourceGroupName
+	}
+}
+
+<#
+.SYNOPSIS
+This is a live only test and example of how it could be tested.
+#>
+function Test-SubscriptionDiagnosticSetting
+{
+	$list = @()
+	Get-AzSubscriptionDiagnosticSettingCategory | ForEach-Object {
+		$list += (New-AzDiagnosticDetailSetting -Log -Category $_.Name -Enabled)
+	}
+
+	$DiagnosticSettingName = 'setting' + (getAssetName)
+	$SubscriptionId = 'please use your subscription Id here'
+	$WorkspaceId = 'please use your workspace Id here'
+	$setting = New-AzDiagnosticSetting -Name $DiagnosticSettingName -SubscriptionId $SubscriptionId -WorkspaceId $WorkspaceId -Setting $list
+	Set-AzDiagnosticSetting -InputObject $setting
+
+	Get-AzDiagnosticSetting -Name $DiagnosticSettingName -SubscriptionId $SubscriptionId
+
+	Remove-AzDiagnosticDetailSetting -Name $DiagnosticSettingName -SubscriptionId $SubscriptionId
+}
 # TODO add more complicated scenarios after we have a definitive subscription

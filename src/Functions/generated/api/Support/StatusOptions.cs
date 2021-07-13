@@ -6,6 +6,7 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>App Service plan status.</summary>
     public partial struct StatusOptions :
         System.IEquatable<StatusOptions>
     {
@@ -22,7 +23,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="StatusOptions" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new StatusOptions(System.Convert.ToString(value));
+            return new StatusOptions(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type StatusOptions</summary>

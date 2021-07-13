@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.ApiManagement.ServiceManagement.dll-Help.xml
 Module Name: Az.ApiManagement
-online version: https://docs.microsoft.com/en-us/powershell/module/az.apimanagement/remove-azapimanagementcache
+online version: https://docs.microsoft.com/powershell/module/az.apimanagement/remove-azapimanagementcache
 schema: 2.0.0
 ---
 
@@ -189,7 +189,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[New-AzApiManagementCache](./New-AzApiManagementCache)
+[New-AzApiManagementCache](./New-AzApiManagementCache.md)
 
 [Get-AzApiManagementCache](./Get-AzApiManagementCache.md)
 

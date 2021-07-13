@@ -6,6 +6,7 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>The lease status of the container.</summary>
     public partial struct LeaseStatus :
         System.IEquatable<LeaseStatus>
     {
@@ -20,7 +21,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="LeaseStatus" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new LeaseStatus(System.Convert.ToString(value));
+            return new LeaseStatus(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type LeaseStatus</summary>

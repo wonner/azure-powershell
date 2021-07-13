@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Tags.dll-Help.xml
 Module Name: Az.Resources
 ms.assetid: 66B25541-0FA5-46CF-90D8-FE9527BE11C6
-online version: https://docs.microsoft.com/en-us/powershell/module/az.resources/remove-aztag
+online version: https://docs.microsoft.com/powershell/module/az.resources/remove-aztag
 schema: 2.0.0
 ---
 
@@ -74,7 +74,7 @@ If the value has been applied to any resources or resource groups, the command f
 
 ### Example 3: Deletes the entire set of tags on a subscription
 
-``` powershell
+```powershell
 PS C:\>Remove-AzTag -ResourceId /subscriptions/{subId}
 ```
 
@@ -82,7 +82,7 @@ This command deletes the entire set of tags on the subscription with {subId}. It
 
 ### Example 4: Deletes the entire set of tags on a resource
 
-``` powershell
+```powershell
 PS C:\>Remove-AzTag -ResourceId /subscriptions/{subId}/resourcegroups/{rg}/providers/Microsoft.Sql/servers/Server1 -PassThru
 
 Id         : {Id}

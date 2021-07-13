@@ -1,7 +1,7 @@
 ---
 external help file:
 Module Name: Az.Databricks
-online version: https://docs.microsoft.com/en-us/powershell/module/az.databricks/get-azdatabricksworkspace
+online version: https://docs.microsoft.com/powershell/module/az.databricks/get-azdatabricksworkspace
 schema: 2.0.0
 ---
 
@@ -175,6 +175,7 @@ To create the parameters described below, construct a hash table containing the 
 
 INPUTOBJECT <IDatabricksIdentity>: Identity Parameter
   - `[Id <String>]`: Resource identity path
+  - `[PeeringName <String>]`: The name of the workspace vNet peering.
   - `[ResourceGroupName <String>]`: The name of the resource group. The name is case insensitive.
   - `[SubscriptionId <String>]`: The ID of the target subscription.
   - `[WorkspaceName <String>]`: The name of the workspace.

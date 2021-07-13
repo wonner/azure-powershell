@@ -3,39 +3,6 @@ $constants = @{}
 $constants["AllowedStorageTypes"] = @('Standard_GRS', 'Standard_RAGRS', 'Standard_LRS', 'Standard_ZRS', 'Premium_LRS')
 $constants["RequiredStorageEndpoints"] = @('PrimaryEndpointFile', 'PrimaryEndpointQueue', 'PrimaryEndpointTable')
 $constants["DefaultFunctionsVersion"] = '3'
-$constants["NodeDefaultVersion"] = @{
-    '2' = '~10'
-    '3' = '~12'
-}
-$constants["RuntimeToDefaultVersion"] = @{
-    'Linux' = @{
-        '2'= @{
-            'Node' = '10'
-            'DotNet'= '2'
-            'Python' = '3.7'
-        }
-        '3' =  @{
-            'Node' = '10'
-            'DotNet' = '3'
-            'Python' = '3.7'
-            'Java' = '8'
-        }
-    }
-    'Windows' = @{
-        '2'= @{
-            'Node' = '10'
-            'DotNet'= '2'
-            'PowerShell' = '6.2'
-            'Java' = '8'
-        }
-        '3' =  @{
-            'Node' = '10'
-            'DotNet' = '3'
-            'PowerShell' = '6.2'
-            'Java' = '8'
-        }
-    }
-}
 $constants["RuntimeToFormattedName"] = @{
     'node' = 'Node'
     'dotnet' = 'DotNet'
@@ -50,16 +17,6 @@ $constants["RuntimeToDefaultOSType"] = @{
     'PowerShell' = 'Windows'
     'Python' = 'Linux'
 }
-
-# These are used for tab completion for the RuntimeVersion parameter in New-AzFunctionApp.
-$constants["RuntimeVersions"] = @{
-    'DotNet'= @('2', '3')
-    'Node' = @('8', '10', '12')
-    'Java' = @('8', '11')
-    'PowerShell' = @('6.2', '7.0')
-    'Python' = @('3.6', '3.7', '3.8')
-}
-
 $constants["ReservedFunctionAppSettingNames"] = @(
     'FUNCTIONS_WORKER_RUNTIME'
     'DOCKER_CUSTOM_IMAGE_NAME'
@@ -77,87 +34,25 @@ $constants["ReservedFunctionAppSettingNames"] = @(
     'WEBSITE_CONTENTSHARE'
     'APPINSIGHTS_INSTRUMENTATIONKEY'
 )
-
-$constants["DotNetRuntimeVersionToDotNetLinuxFxVersion"] = @{
-    '2' = '2.2'
-    '3' = '3.1'
-}
+$constants["SupportedFunctionsVersion"] = @('3')
+$constants["FunctionsNoV2Version"] = @(
+    "USNat West"
+    "USNat East"
+    "USSec West"
+    "USSec East"
+)
 
 foreach ($variableName in $constants.Keys)
 {
     if (-not (Get-Variable $variableName -ErrorAction SilentlyContinue))
     {
-        Set-Variable $variableName -value $constants[$variableName]
+        Set-Variable $variableName -value $constants[$variableName] -option ReadOnly
     }
-}
-
-function GetDefaultRuntimeVersion
-{
-    param
-    (
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]
-        $FunctionsVersion,
-
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]
-        $Runtime,
-
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]
-        $OSType
-    )
-
-    if ($Runtime -eq "DotNet")
-    {
-        return $FunctionsVersion
-    }
-
-    $defaultVersion = $RuntimeToDefaultVersion[$OSType][$FunctionsVersion][$Runtime]
-
-    if (-not $defaultVersion)
-    {
-        $errorMessage = "$Runtime is not supported in Functions version $FunctionsVersion for $OSType."
-        $exception = [System.InvalidOperationException]::New($errorMessage)
-        ThrowTerminatingError -ErrorId "RuntimeNotSuported" `
-                              -ErrorMessage $errorMessage `
-                              -ErrorCategory ([System.Management.Automation.ErrorCategory]::InvalidOperation) `
-                              -Exception $exception
-    }
-
-    return $defaultVersion
-}
-
-function GetDefaultOSType
-{
-    param
-    (
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]
-        $Runtime
-    )
-
-    $defaultOSType = $RuntimeToDefaultOSType[$Runtime]
-
-    if (-not $defaultOSType)
-    {
-        $errorMessage = "Failed to get default OS type for $Runtime."
-        $exception = [System.InvalidOperationException]::New($errorMessage)
-        ThrowTerminatingError -ErrorId "FailedToGetDefaultOSType" `
-                              -ErrorMessage $errorMessage `
-                              -ErrorCategory ([System.Management.Automation.ErrorCategory]::InvalidOperation) `
-                              -Exception $exception
-    }
-
-    return $defaultOSType
 }
 
 function GetConnectionString
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -244,14 +139,34 @@ function GetConnectionString
                               -Exception $exception
     }
 
+    $suffix = GetEndpointSuffix
     $accountKey = $keys[0].Value
-    $connectionString = "DefaultEndpointsProtocol=https;AccountName=$StorageAccountName;AccountKey=$accountKey"
+
+    $connectionString = "DefaultEndpointsProtocol=https;AccountName=$StorageAccountName;AccountKey=$accountKey" + $suffix
 
     return $connectionString
 }
 
+function GetEndpointSuffix
+{
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
+    param()
+
+    $environmentName = (Get-AzContext).Environment.Name
+
+    switch ($environmentName)
+    {
+        "AzureUSGovernment" { ';EndpointSuffix=core.usgovcloudapi.net' }
+        "AzureChinaCloud"   { ';EndpointSuffix=core.chinacloudapi.cn' }
+        "AzureGermanCloud"  { ';EndpointSuffix=core.cloudapi.de' }
+        "AzureCloud"        { ';EndpointSuffix=core.windows.net' }
+        default { '' }
+    }
+}
+
 function NewAppSetting
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -259,8 +174,7 @@ function NewAppSetting
         [System.String]
         $Name,
 
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
+        [Parameter(Mandatory=$false)]
         [System.String]
         $Value
     )
@@ -274,6 +188,7 @@ function NewAppSetting
 
 function GetServicePlan
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -312,6 +227,7 @@ function GetServicePlan
 
 function GetStorageAccount
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -341,6 +257,7 @@ function GetStorageAccount
 
 function GetApplicationInsightsProject
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -371,6 +288,7 @@ function GetApplicationInsightsProject
 
 function CreateApplicationInsightsProject
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -446,6 +364,7 @@ function CreateApplicationInsightsProject
 
 function ConvertWebAppApplicationSettingToHashtable
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param(
         [Parameter(Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
@@ -465,6 +384,7 @@ function ConvertWebAppApplicationSettingToHashtable
 
 function AddFunctionAppSettings
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param(
         [Parameter(Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
@@ -483,6 +403,11 @@ function AddFunctionAppSettings
 
     $App.AppServicePlan = ($App.ServerFarmId -split "/")[-1]
     $App.OSType = if ($App.kind.ToLower().Contains("linux")){ "Linux" } else { "Windows" }
+
+    if ($App.Type -eq "Microsoft.Web/sites/slots")
+    {
+        return $App
+    }
     
     $currentSubscription = $null
     $resetDefaultSubscription = $false
@@ -551,6 +476,7 @@ function AddFunctionAppSettings
 
 function GetFunctionApps
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -616,6 +542,7 @@ function GetFunctionApps
 
 function AddFunctionAppPlanWorkerType
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param(
         [Parameter(Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
@@ -650,6 +577,7 @@ function AddFunctionAppPlanWorkerType
 
 function GetFunctionAppPlans
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -717,6 +645,7 @@ function GetFunctionAppPlans
 
 function ValidateFunctionName
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -744,6 +673,7 @@ function ValidateFunctionName
 
 function NormalizeSku
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -760,6 +690,7 @@ function NormalizeSku
 
 function CreateFunctionsIdentity
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -787,6 +718,7 @@ function CreateFunctionsIdentity
 
 function GetSkuName
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -828,7 +760,7 @@ function GetSkuName
         return "Isolated"
     }
 
-    $guidanceUrl = 'https://docs.microsoft.com/en-us/azure/azure-functions/functions-premium-plan#plan-and-sku-settings'
+    $guidanceUrl = 'https://docs.microsoft.com/azure/azure-functions/functions-premium-plan#plan-and-sku-settings'
 
     $errorMessage = "Invalid sku (pricing tier), please refer to '$guidanceUrl' for valid values."
     $exception = [System.InvalidOperationException]::New($errorMessage)
@@ -840,6 +772,7 @@ function GetSkuName
 
 function ThrowTerminatingError
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param 
     (
         [Parameter(Mandatory=$true)]
@@ -874,73 +807,9 @@ function ThrowTerminatingError
     throw $errorRecord
 }
 
-function GetFunctionAppDefaultNodeVersion
-{
-    param
-    (
-        [System.String]
-        $FunctionsVersion,
-
-        [System.String]
-        $Runtime,
-
-        [System.String]
-        $RuntimeVersion
-    )
-
-    if ((-not $Runtime) -or ($Runtime -ne "node"))
-    {
-        return $NodeDefaultVersion[$FunctionsVersion]
-    }
-
-    if ($RuntimeVersion)
-    {
-        return "~$RuntimeVersion"
-    }
-
-    return $NodeDefaultVersion[$FunctionsVersion]
-}
-
-function GetLinuxFxVersion
-{
-    param
-    (
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]
-        $FunctionsVersion,
-
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]
-        $Runtime,
-
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]
-        $OSType,
-
-        [System.String]
-        $RuntimeVersion
-    )
-    
-    if (-not $RuntimeVersion)
-    {
-        $RuntimeVersion = $RuntimeToDefaultVersion[$OSType][$FunctionsVersion][$Runtime]
-    }
-
-    if ($Runtime -eq "DotNet")
-    {
-        $RuntimeVersion = $DotNetRuntimeVersionToDotNetLinuxFxVersion[$FunctionsVersion]
-    }
-
-    $runtimeName = $Runtime.ToUpper()
-
-    return "$runtimeName|$RuntimeVersion"
-}
-
 function GetErrorMessage
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -967,6 +836,7 @@ function GetErrorMessage
 
 function GetSupportedRuntimes
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -987,8 +857,225 @@ function GetSupportedRuntimes
     throw "Unknown OS type '$OSType'"
 }
 
-function ValidateRuntimeAndRuntimeVersion
+function ValidateFunctionsVersion
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
+    param
+    (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]
+        $FunctionsVersion
+    )
+
+    if ($SupportedFunctionsVersion -notcontains $FunctionsVersion)
+    {
+        $currentlySupportedFunctionsVersions = $SupportedFunctionsVersion -join ' and '
+        $errorMessage = "Functions version not supported. Currently supported version are: $($currentlySupportedFunctionsVersions)."
+        $exception = [System.InvalidOperationException]::New($errorMessage)
+        ThrowTerminatingError -ErrorId "FunctionsVersionNotSupported" `
+                              -ErrorMessage $errorMessage `
+                              -ErrorCategory ([System.Management.Automation.ErrorCategory]::InvalidOperation) `
+                              -Exception $exception
+    }
+}
+
+function ValidateFunctionsV2NotAvailableLocation
+{
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
+    param
+    (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]
+        $Location
+    )
+
+    $Location = $Location.Trim()
+
+    $locationsWithNoV2Version = $FunctionsNoV2Version
+
+    if (-not $Location.Contains(" "))
+    {
+        $locationsWithNoV2Version = @($FunctionsNoV2Version | ForEach-Object { $_.Replace(" ", "") })
+    }
+
+    if ($locationsWithNoV2Version -contains $Location)
+    {
+        $errorMessage = "Functions version 2 is not supported in this region. To create a version 3 function, specify -FunctionsVersion 3"
+        $exception = [System.InvalidOperationException]::New($errorMessage)
+        ThrowTerminatingError -ErrorId "FunctionsV2IsNotSuportedInThisRegion" `
+                              -ErrorMessage $errorMessage `
+                              -ErrorCategory ([System.Management.Automation.ErrorCategory]::InvalidOperation) `
+                              -Exception $exception
+    }
+}
+
+function GetDefaultOSType
+{
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
+    param
+    (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]
+        $Runtime
+    )
+
+    $defaultOSType = $RuntimeToDefaultOSType[$Runtime]
+
+    if (-not $defaultOSType)
+    {
+        # The specified runtime did not match, error out
+        $runtimeOptions = FormatListToString -List @($RuntimeToDefaultOSType.Keys | Sort-Object)
+        $errorMessage = "Runtime '$Runtime' is not supported. Currently supported runtimes: " + $runtimeOptions + "."
+        ThrowRuntimeNotSupportedException -Message $errorMessage -ErrorId "RuntimeNotSupported"
+    }
+
+    return $defaultOSType
+}
+
+function GetRuntimeJsonDefinition
+{
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
+    param
+    (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]
+        $FunctionsVersion,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]
+        $Runtime,
+
+        [Parameter(Mandatory=$false)]
+        [System.String]
+        $RuntimeVersion,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]
+        $OSType
+    )
+
+    $functionsExtensionVersion = "~$FunctionsVersion"
+    $supportedRuntimes = GetSupportedRuntimes -OSType $OSType
+
+    if (-not $supportedRuntimes.ContainsKey($Runtime))
+    {
+        $runtimeOptions = FormatListToString -List @($supportedRuntimes.Keys | ForEach-Object { $RuntimeToFormattedName[$_]} | Sort-Object)
+        $errorMessage = "Runtime '$Runtime' in Functions version '$FunctionsVersion' on '$OSType' is not supported. Currently supported runtimes: " + $runtimeOptions + "."
+
+        ThrowRuntimeNotSupportedException -Message $errorMessage -ErrorId "RuntimeNotSupported"
+    }
+
+    # If runtime version is not provided, iterate through the SupportedRuntimes to get the default version
+    # based the function extension version, os type and runtime. 
+    if (-not $RuntimeVersion)
+    {
+        $latestVersion = [Version]::new("0.0")
+        $defaultVersionFound = $false
+        $versionIsInt = $false
+
+        foreach ($version in $supportedRuntimes[$Runtime].MajorVersions.Keys)
+        {
+            $majorVersion = $supportedRuntimes[$Runtime].MajorVersions[$version]
+
+            if ($majorVersion.IsDefault -and ($majorVersion.SupportedFunctionsExtensionVersions -contains $functionsExtensionVersion))
+            {
+                if (-not $version.Contains("."))
+                {
+                    $versionIsInt = $true
+                    $version = $version + ".0"
+                }
+
+                $thisVersion = $null
+                [Version]::TryParse($version, [ref]$thisVersion)
+
+                if (($null -ne $thisVersion ) -and ($thisVersion -gt $latestVersion))
+                {
+                    $latestVersion = $thisVersion
+                    $defaultVersionFound = $true
+                }
+            }
+        }
+
+        # Error out if we could not find a default version for the given runtime, functions extension version, and os type
+        if (-not $defaultVersionFound)
+        {
+            $errorMessage = "Runtime '$Runtime' in Functions version '$FunctionsVersion' on '$OSType' is not supported."
+            ThrowRuntimeNotSupportedException -Message $errorMessage -ErrorId "RuntimeVersionNotSupported"
+        }
+
+        if ($versionIsInt)
+        {
+            $RuntimeVersion = $latestVersion.Major
+        }
+        else
+        {
+            $RuntimeVersion = $latestVersion.ToString()
+        }
+
+        Write-Verbose "RuntimeVersion not specified. Setting default runtime version for '$Runtime' to '$RuntimeVersion'." -Verbose
+    }
+
+    # Get the RuntimeJsonDefinition
+    $runtimeJsonDefinition = $supportedRuntimes[$Runtime].MajorVersions[$RuntimeVersion]
+    
+    if ((-not $runtimeJsonDefinition) -or (-not ($runtimeJsonDefinition.SupportedFunctionsExtensionVersions -contains $functionsExtensionVersion)))
+    {
+        $errorMessage = "Runtime '$Runtime' version '$RuntimeVersion' in Functions version '$FunctionsVersion' on '$OSType' is not supported."
+        $supporedVersions = @(GetSupportedRuntimeVersions -FunctionsVersion $FunctionsVersion -Runtime $Runtime -OSType $OSType)
+
+        if ($supporedVersions.Count -gt 0)
+        {
+            $runtimeVersionOptions = FormatListToString -List @($supporedVersions | Sort-Object)
+            $errorMessage += " Currently supported runtime versions for '$($Runtime)' are: $runtimeVersionOptions."
+        }
+
+        ThrowRuntimeNotSupportedException -Message $errorMessage -ErrorId "RuntimeVersionNotSupported"
+    }
+    
+    if ($runtimeJsonDefinition.IsPreview)
+    {
+        # Write a verbose message to the user if the current runtime is in Preview
+        Write-Verbose "Runtime '$Runtime' version '$RuntimeVersion' is in Preview." -Verbose
+    }
+
+    return $runtimeJsonDefinition
+}
+
+function ThrowRuntimeNotSupportedException
+{
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
+    param
+    (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]
+        $Message,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]
+        $ErrorId
+    )
+
+    $Message += [System.Environment]::NewLine
+    $Message += "For supported languages, please visit 'https://docs.microsoft.com/azure/azure-functions/functions-versions#languages'."
+
+    $exception = [System.InvalidOperationException]::New($Message)
+    ThrowTerminatingError -ErrorId $ErrorId `
+                          -ErrorMessage $Message `
+                          -ErrorCategory ([System.Management.Automation.ErrorCategory]::InvalidOperation) `
+                          -Exception $exception
+}
+
+function GetSupportedRuntimeVersions
+{
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -1004,102 +1091,65 @@ function ValidateRuntimeAndRuntimeVersion
         [Parameter(Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [System.String]
-        $RuntimeVersion,
-
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]
         $OSType
     )
 
-    if ($Runtime -eq "DotNet")
+    $functionsExtensionVersion = "~$FunctionsVersion"
+    $supportedRuntimes = GetSupportedRuntimes -OSType $OSType
+
+    $result = @()
+
+    foreach ($runtimeVersion in $supportedRuntimes[$Runtime].MajorVersions.Keys)
+    {
+        $majorVersion = $supportedRuntimes[$Runtime].MajorVersions[$runtimeVersion]
+        if ($majorVersion.SupportedFunctionsExtensionVersions -contains $functionsExtensionVersion)
+        {
+            $result += $runtimeVersion
+        }
+    }
+
+    return ($result | Sort-Object)
+}
+
+function FormatListToString
+{
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
+    param
+    (
+        [Parameter(Mandatory=$true)]
+        [System.String[]]
+        $List
+    )
+    
+    if ($List.Count -eq 0)
     {
         return
     }
 
-    $runtimeVersionIsSupported = $false
-    $supportedRuntimes = GetSupportedRuntimes -OSType $OSType
+    $result = ""
+
+    if ($List.Count -eq 1)
+    {
+        $result = "'" + $List[0] + "'"
+    }
     
-    foreach ($majorVersion in $supportedRuntimes[$Runtime].MajorVersions)
+    else
     {
-        if ($majorVersion.DisplayVersion -eq $RuntimeVersion)
+        for ($index = 0; $index -lt ($List.Count - 1); $index++)
         {
-            # SupportedFunctionsExtensionVersions[0] is of the form '~int'
-            # Add '~' to the begining of FunctionsVersion
-            if ($majorVersion.SupportedFunctionsExtensionVersions -contains "~$FunctionsVersion")
-            {
-                $runtimeVersionIsSupported = $true
-                break
-            }
+            $item = $List[$index]
+            $result += "'" + $item + "', "
         }
+
+        $result += "'" + $List[$List.Count - 1] + "'"
     }
-
-    if (-not $runtimeVersionIsSupported)
-    {
-        $errorMessage = "$Runtime version $RuntimeVersion in Functions version $FunctionsVersion for $OSType is not supported."
-        $errorMessage += " For supported languages, please visit 'https://docs.microsoft.com/en-us/azure/azure-functions/functions-versions#languages'."
-        $errorId = "InvalidRuntimeVersionFor" + $Runtime + "In" + $OSType
-        $exception = [System.InvalidOperationException]::New($errorMessage)
-        ThrowTerminatingError -ErrorId $errorId `
-                              -ErrorMessage $errorMessage `
-                              -ErrorCategory ([System.Management.Automation.ErrorCategory]::InvalidOperation) `
-                              -Exception $exception
-    }
-}
-
-function GetWorkerVersion
-{
-    param
-    (
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]
-        $FunctionsVersion,
-
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]
-        $Runtime,
-
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]
-        $RuntimeVersion,
-
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]
-        $OSType
-    )
-
-    $workerRuntimeVersion = $null
-    $supportedRuntimes = GetSupportedRuntimes -OSType $OSType
-
-    foreach ($majorVersion in $supportedRuntimes[$Runtime].MajorVersions)
-    {
-        if ($majorVersion.DisplayVersion -eq $RuntimeVersion)
-        {
-            $workerRuntimeVersion = $majorVersion.runtimeVersion
-            break
-        }
-    }
-
-    if (-not $workerRuntimeVersion)
-    {
-        $errorMessage = "Falied to get runtime version for $Runtime $RuntimeVersion in Functions version $FunctionsVersion for $OSType."
-        $errorId = "InvalidWorkerRuntimeVersionFor" + $Runtime + "In" + $OSType
-        $exception = [System.InvalidOperationException]::New($errorMessage)
-        ThrowTerminatingError -ErrorId $errorId `
-                              -ErrorMessage $errorMessage `
-                              -ErrorCategory ([System.Management.Automation.ErrorCategory]::InvalidOperation) `
-                              -Exception $exception
-    }
-
-    return $workerRuntimeVersion
+    
+    return $result
 }
 
 function ValidatePlanLocation
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -1160,6 +1210,7 @@ function ValidatePlanLocation
 
 function ValidatePremiumPlanLocation
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -1181,6 +1232,7 @@ function ValidatePremiumPlanLocation
 
 function ValidateConsumptionPlanLocation
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -1202,6 +1254,7 @@ function ValidateConsumptionPlanLocation
 
 function GetParameterKeyValues
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -1231,6 +1284,7 @@ function GetParameterKeyValues
 
 function NewResourceTag
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -1250,6 +1304,7 @@ function NewResourceTag
 
 function ParseDockerImage
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -1274,6 +1329,7 @@ function ParseDockerImage
 
 function GetFunctionAppServicePlanInfo
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -1321,6 +1377,7 @@ function GetFunctionAppServicePlanInfo
 
 function ValidatePlanSwitchCompatibility
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -1346,6 +1403,7 @@ function ValidatePlanSwitchCompatibility
 
 function NewAppSettingObject
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -1370,6 +1428,7 @@ function NewAppSettingObject
 
 function ContainsReservedFunctionAppSettingName
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -1391,6 +1450,7 @@ function ContainsReservedFunctionAppSettingName
 
 function GetFunctionAppByName
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -1437,9 +1497,10 @@ function GetFunctionAppByName
 
     return $existingFunctionApp
 }
-
 function GetAzWebAppConfig
 {
+
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -1508,6 +1569,7 @@ function GetAzWebAppConfig
 
 function NewIdentityUserAssignedIdentity
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
     param
     (
         [Parameter(Mandatory=$true)]
@@ -1528,10 +1590,85 @@ function NewIdentityUserAssignedIdentity
     return $msiUserAssignedIdentities
 }
 
+function GetShareSuffix
+{
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
+    param
+    (
+        [Int]
+        $Length = 8
+    )
+
+    $letters = 'a'..'z'
+    $numbers = 0..9
+    $alphanumericLowerCase = $letters + $numbers
+
+    $suffix = [System.Text.StringBuilder]::new()
+
+    for ($index = 0; $index -lt $Length; $index++)
+    {
+        $value = $alphanumericLowerCase | Get-Random
+        $suffix.Append($value) | Out-Null
+    }
+
+    $suffix.ToString()
+}
+
+function GetShareName
+{
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
+    param
+    (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]
+        $FunctionAppName
+    )
+
+    $FunctionAppName = $FunctionAppName.ToLower()
+
+    if ($env:FunctionsTestMode)
+    {
+        # To support the tests' playback mode, we need to have the same values for each function app creation payload.
+        # Adding this test hook will allows us to have a constant share name when creation an app.
+
+        return $FunctionAppName
+    }
+
+    <#
+    Share name restrictions:
+        - A share name must be a valid DNS name.
+        - Share names must start with a letter or number, and can contain only letters, numbers, and the dash (-) character.
+        - Every dash (-) character must be immediately preceded and followed by a letter or number; consecutive dashes are not permitted in share names.
+        - All letters in a share name must be lowercase.
+        - Share names must be from 3 through 63 characters long.
+
+    Docs: https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-shares--directories--files--and-metadata#share-names
+    #>
+
+    # Share name will be function app name + 8 random char suffix with a max length of 60
+    $MAXLENGTH = 60
+    $SUFFIXLENGTH = 8
+    if (($FunctionAppName.Length + $SUFFIXLENGTH) -lt $MAXLENGTH)
+    {
+        $name = $FunctionAppName
+    }
+    else
+    {
+        $endIndex = $MAXLENGTH - $SUFFIXLENGTH - 1
+        $name = $FunctionAppName.Substring(0, $endIndex)
+    }
+
+    $suffix = GetShareSuffix -Length $SUFFIXLENGTH
+    $shareName = $name + $suffix
+
+    return $shareName
+}
+
 # Set Linux and Windows supported runtimes
 Class Runtime {
     [string]$Name
-    [MajorVersion[]]$MajorVersions
+    [hashtable]$MajorVersions
 }
 
 Class MajorVersion {
@@ -1540,13 +1677,22 @@ Class MajorVersion {
     [string[]]$SupportedFunctionsExtensionVersions
     [hashtable]$AppSettingsDictionary
     [hashtable]$SiteConfigPropertiesDictionary
+    [bool]$IsPreview
+    [bool]$IsDeprecated
+    [bool]$IsHidden
+    [bool]$IsDefault
 }
 
 $LinuxRuntimes = @{}
 $WindowsRuntimes = @{}
+$RuntimeVersions = @{}
 
 function SetLinuxandWindowsSupportedRuntimes
 {
+    [Microsoft.Azure.PowerShell.Cmdlets.Functions.DoNotExportAttribute()]
+    param
+    (
+    )
     foreach ($fileName in @("LinuxFunctionsStacks.json", "WindowsFunctionsStacks.json"))
     {
         $filePath = Join-Path "$PSScriptRoot/FunctionsStack" $fileName
@@ -1562,45 +1708,117 @@ function SetLinuxandWindowsSupportedRuntimes
         {
             $runtime = [Runtime]::new()
             $runtime.name = $stack.name
+            $majorVersions = @{}
 
             foreach ($version in $stack.properties.majorVersions)
             {
+                if ([String]::IsNullOrEmpty($version.displayVersion))
+                {
+                    throw "DisplayVersion cannot be null or empty for '$($runtime.name)."
+                }
+
                 $majorVersion = [MajorVersion]::new()
 
-                $majorVersion.RuntimeVersion = $version.RuntimeVersion
+                # For DotNet, the runtime version is the same as FunctionsVersion, e.g., 3 for 3.1 and 2 for 2.2
+                $displayVersion = $version.displayVersion
+                
+                if ($runtime.name -eq "DotNet")
+                {
+                    $displayVersion = [int]$displayVersion
+                }
+
+                $majorVersion.DisplayVersion = $displayVersion
+                $majorVersion.RuntimeVersion = $version.runtimeVersion
                 $majorVersion.SupportedFunctionsExtensionVersions = $version.supportedFunctionsExtensionVersions
 
-                if ($version.displayVersion)
+                # Add the optional properties if available
+                foreach ($propertyName in @("isPreview", "isDeprecated", "isHidden", "isDefault"))
                 {
-                    $majorVersion.DisplayVersion = $version.displayVersion
-                }
-
-                if ($version.appSettingsDictionary)
-                {
-                    $appSettings = @{}
-
-                    foreach ($property in $version.appSettingsDictionary.PSObject.Properties)
+                    if (-not [String]::IsNullOrEmpty($version.$propertyName))
                     {
-                        $appSettings.Add($property.Name, $property.Value)
+                        $majorVersion.$propertyName = $version.$propertyName
                     }
-
-                    $majorVersion.appSettingsDictionary = $appSettings
                 }
 
-                if ($version.appSettingsDictionary)
+                # Skip deprecated runtimes
+                if ($majorVersion.IsDeprecated)
                 {
-                    $siteConfigProperties = @{}
-
-                    foreach ($property in $version.siteConfigPropertiesDictionary.PSObject.Properties)
-                    {
-                        $siteConfigProperties.Add($property.Name, $property.Value)
-                    }
-
-                    $majorVersion.SiteConfigPropertiesDictionary = $siteConfigProperties
+                    continue
                 }
 
-                $runtime.MajorVersions += $majorVersion
+                # Skip hidden runtimes if $env:FunctionsDisplayHiddenRuntimes is set to false
+                if ($majorVersion.isHidden -and (-not $env:FunctionsDisplayHiddenRuntimes))
+                {
+                    continue
+                }
+
+                # Add AppSettingsDictionary properties
+                if (-not $version.appSettingsDictionary)
+                {
+                    throw "AppSettingsDictionary for $($runtime.name) $($majorVersion.DisplayVersion) cannot be null or empty"
+                }
+
+                $appSettings = @{}
+                foreach ($property in $version.appSettingsDictionary.PSObject.Properties)
+                {
+                    $appSettings.Add($property.Name, $property.Value)
+                }
+
+                $majorVersion.appSettingsDictionary = $appSettings
+
+                # Add siteConfigPropertiesDictionary properties
+                if (-not $version.siteConfigPropertiesDictionary)
+                {
+                    throw "SiteConfigPropertiesDictionary for $($runtime.name) $($majorVersion.DisplayVersion) cannot be null or empty"
+                }
+
+                $siteConfigProperties = @{}
+                foreach ($property in $version.siteConfigPropertiesDictionary.PSObject.Properties)
+                {
+                    $siteConfigProperties.Add($property.Name, $property.Value)
+                }
+
+                $majorVersion.SiteConfigPropertiesDictionary = $siteConfigProperties
+
+                # Add the major version as a key value pair. These properties will be retrieved via $supportedRuntimes[$Runtime].MajorVersions[$RuntimeVersion]
+                $majorVersions[[string]$displayVersion] = $majorVersion
+
+                # Create a dictionary where the key is the runtime and the value is a list of runtime versions.
+                # This will be used to register the tab completer for -RuntimeVersion based on the selection of -Runtime parameter.
+                if ($RuntimeVersions.ContainsKey($runtime.name))
+                {
+                    $list = $RuntimeVersions[$runtime.name]
+                }
+                else
+                {
+                    $list = @()
+                }
+
+                # Sort-Object works differently when sorting strings vs numeric values.
+                # Because of this, if the runtimeVersion value contains a ".", we cast this to [double]; otherwise, we cast it to an [int].
+                # For the case when the Runtime is PowerShell, we cast the value to string. Otherwise, casting 7.0 to [double] results in 7, which is not correct for our scenario. 
+                if ($runtime.name -eq "PowerShell")
+                {
+                    $displayVersion = [string]$displayVersion
+                }
+                elseif (([string]$displayVersion).Contains("."))
+                {
+                    $displayVersion = [double]$displayVersion
+                }
+                else
+                {
+                    $displayVersion = [int]$displayVersion
+                }
+
+                if (-not $list.Contains($displayVersion))
+                {
+                    $list += $displayVersion
+                    $list = @($list | Sort-Object -Descending)
+                    $RuntimeVersions[$runtime.name] = $list
+                }
             }
+
+            $runtime.MajorVersions = $majorVersions
 
             if ($stack.type -like "*LinuxFunctions")
             {
@@ -1633,14 +1851,14 @@ $GetRuntimeVersionCompleter = {
 
     if ($fakeBoundParameters.ContainsKey('Runtime'))
     {
-        # RuntimeVersions is defined at the top of this file
+        # RuntimeVersions is defined in SetLinuxandWindowsSupportedRuntimes
         $RuntimeVersions[$fakeBoundParameters.Runtime] | Where-Object {
             $_ -like "$wordToComplete*"
         } | ForEach-Object { [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_) }
     }
     else
     {
-        $RuntimeVersions.RuntimeVersion | ForEach-Object {$_}
+        $RuntimeVersions.RuntimeVersion | Sort-Object -Descending | ForEach-Object { $_ }
     }
 }
 Register-ArgumentCompleter -CommandName New-AzFunctionApp -ParameterName RuntimeVersion -ScriptBlock $GetRuntimeVersionCompleter

@@ -18,8 +18,10 @@ using System.Management.Automation;
 using System.Text;
 using Microsoft.Azure.Commands.Compute.Common;
 using Microsoft.Azure.Commands.Compute.Models;
+using Microsoft.Azure.Commands.ResourceManager.Common.ArgumentCompleters;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.WindowsAzure.Commands.Common;
+using Microsoft.WindowsAzure.Commands.Utilities.Common;
 
 namespace Microsoft.Azure.Commands.Compute
 {
@@ -35,6 +37,8 @@ namespace Microsoft.Azure.Commands.Compute
         protected const string WindowsDisableVMAgentWinRmHttpsParamSet = "WindowsDisableVMAgentWinRmHttps";
         protected const string LinuxParamSet = "Linux";
 
+        // BREAKING CHANGE
+        // all the parameters are positional including switch parameters. there are over 10 positional parameters. Needs to be fixed.
         [Alias("VMProfile")]
         [Parameter(
             Mandatory = true,
@@ -225,6 +229,47 @@ namespace Microsoft.Azure.Commands.Compute
         [ValidateNotNullOrEmpty]
         public Uri WinRMCertificateUrl { get; set; }
 
+        [Parameter(
+            ParameterSetName = WindowsParamSet,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Choose one of the following settings: 'Manual', 'AutomaticByOS', or 'AutomaticByPlatform'")]
+        [Parameter(
+            ParameterSetName = WinRmHttpsParamSet,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Choose one of the following settings: 'Manual', 'AutomaticByOS', or 'AutomaticByPlatform'")]
+        [Parameter(
+            ParameterSetName = WindowsDisableVMAgentParamSet,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Choose one of the following settings: 'Manual', 'AutomaticByOS', or 'AutomaticByPlatform'")]
+        [Parameter(
+            ParameterSetName = WindowsDisableVMAgentWinRmHttpsParamSet,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Choose one of the following settings: 'Manual', 'AutomaticByOS', or 'AutomaticByPlatform'")]
+        [Parameter(
+            ParameterSetName = LinuxParamSet,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Choose one of the following settings: 'Manual', 'AutomaticByOS', or 'AutomaticByPlatform'")]
+        [PSArgumentCompleter("Manual", "AutomaticByOS", "AutomaticByPlatform")]
+        public string PatchMode { get; set; }
+
+        [Parameter(
+            ParameterSetName = WindowsParamSet,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Enables customers to patch their Azure VMs without requiring a reboot. For enableHotpatching, the 'provisionVMAgent' must be set to true and 'patchMode' must be set to 'AutomaticByPlatform'.")]
+        [Parameter(
+            ParameterSetName = WinRmHttpsParamSet,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Enables customers to patch their Azure VMs without requiring a reboot. For enableHotpatching, the 'provisionVMAgent' must be set to true and 'patchMode' must be set to 'AutomaticByPlatform'.")]
+        [Parameter(
+            ParameterSetName = WindowsDisableVMAgentParamSet,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Enables customers to patch their Azure VMs without requiring a reboot. For enableHotpatching, the 'provisionVMAgent' must be set to true and 'patchMode' must be set to 'AutomaticByPlatform'.")]
+        [Parameter(
+            ParameterSetName = WindowsDisableVMAgentWinRmHttpsParamSet,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Enables customers to patch their Azure VMs without requiring a reboot. For enableHotpatching, the 'provisionVMAgent' must be set to true and 'patchMode' must be set to 'AutomaticByPlatform'.")]
+        public SwitchParameter EnableHotpatching { get; set; }
+
         // Linux Parameter Sets
         [Parameter(
             ParameterSetName = LinuxParamSet,
@@ -233,6 +278,29 @@ namespace Microsoft.Azure.Commands.Compute
             HelpMessage = "Enable WinRM Https protocol")]
         [ValidateNotNullOrEmpty]
         public SwitchParameter DisablePasswordAuthentication { get; set; }
+
+        [Parameter(
+            ParameterSetName = WindowsParamSet,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Automatic assessment mode value for the virtual machine. Possible values are ImageDefault and AutomaticByPlatform.")]
+        [Parameter(
+            ParameterSetName = WinRmHttpsParamSet,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Automatic assessment mode value for the virtual machine. Possible values are ImageDefault and AutomaticByPlatform.")]
+        [Parameter(
+            ParameterSetName = WindowsDisableVMAgentParamSet,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Automatic assessment mode value for the virtual machine. Possible values are ImageDefault and AutomaticByPlatform.")]
+        [Parameter(
+            ParameterSetName = WindowsDisableVMAgentWinRmHttpsParamSet,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Automatic assessment mode value for the virtual machine. Possible values are ImageDefault and AutomaticByPlatform.")]
+        [Parameter(
+            ParameterSetName = LinuxParamSet,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Automatic assessment mode value for the virtual machine. Possible values are ImageDefault and AutomaticByPlatform.")]
+        [PSArgumentCompleter("ImageDefault", "AutomaticByPlatform")]
+        public string AssessmentMode { get; set; }
 
         public override void ExecuteCmdlet()
         {
@@ -256,10 +324,33 @@ namespace Microsoft.Azure.Commands.Compute
                     this.VM.OSProfile.LinuxConfiguration = new LinuxConfiguration();
                 }
 
+                //seting patchmode
+                if (this.IsParameterBound(c => c.PatchMode))
+                {
+                    if (this.VM.OSProfile.LinuxConfiguration.PatchSettings == null)
+                    {
+                        this.VM.OSProfile.LinuxConfiguration.PatchSettings = new LinuxPatchSettings();
+                    }
+                    this.VM.OSProfile.LinuxConfiguration.PatchSettings.PatchMode = this.PatchMode;
+                }
+
                 this.VM.OSProfile.LinuxConfiguration.DisablePasswordAuthentication =
                     (this.DisablePasswordAuthentication.IsPresent)
                     ? (bool?)true
                     : null;
+
+                if (this.IsParameterBound(c => c.AssessmentMode))
+                {
+                    if (this.VM.OSProfile.LinuxConfiguration == null)
+                    {
+                        this.VM.OSProfile.LinuxConfiguration = new LinuxConfiguration();
+                    }
+                    if (this.VM.OSProfile.LinuxConfiguration.PatchSettings == null)
+                    {
+                        this.VM.OSProfile.LinuxConfiguration.PatchSettings = new LinuxPatchSettings();
+                    }
+                    this.VM.OSProfile.LinuxConfiguration.PatchSettings.AssessmentMode = this.AssessmentMode;
+                }
             }
             else
             {
@@ -272,6 +363,19 @@ namespace Microsoft.Azure.Commands.Compute
                 {
                     this.VM.OSProfile.WindowsConfiguration = new WindowsConfiguration();
                     this.VM.OSProfile.WindowsConfiguration.AdditionalUnattendContent = null;
+                }
+
+                if (this.IsParameterBound(c => c.AssessmentMode))
+                {
+                    if (this.VM.OSProfile.WindowsConfiguration == null)
+                    {
+                        this.VM.OSProfile.WindowsConfiguration = new WindowsConfiguration();
+                    }
+                    if (this.VM.OSProfile.WindowsConfiguration.PatchSettings == null)
+                    {
+                        this.VM.OSProfile.WindowsConfiguration.PatchSettings = new PatchSettings();
+                    }
+                    this.VM.OSProfile.WindowsConfiguration.PatchSettings.AssessmentMode = this.AssessmentMode;
                 }
 
                 var listenerList = new List<WinRMListener>();
@@ -294,9 +398,6 @@ namespace Microsoft.Azure.Commands.Compute
                     });
                 }
 
-                // OS Profile
-                this.VM.OSProfile.WindowsConfiguration.ProvisionVMAgent = this.VM.OSProfile.WindowsConfiguration.ProvisionVMAgent;
-
                 if (this.ProvisionVMAgent.IsPresent)
                 {
                     this.VM.OSProfile.WindowsConfiguration.ProvisionVMAgent = true;
@@ -318,6 +419,23 @@ namespace Microsoft.Azure.Commands.Compute
                     {
                         Listeners = listenerList,
                     };
+
+                //seting patchmode
+                if (this.IsParameterBound(c => c.PatchMode))
+                {
+                    if (this.VM.OSProfile.WindowsConfiguration.PatchSettings == null)
+                    {
+                        this.VM.OSProfile.WindowsConfiguration.PatchSettings = new PatchSettings();
+                    }
+                    this.VM.OSProfile.WindowsConfiguration.PatchSettings.PatchMode = this.PatchMode;
+                }
+
+                if (this.IsParameterBound(c => c.EnableHotpatching))
+                {
+                    this.VM.OSProfile.WindowsConfiguration.PatchSettings.EnableHotpatching = this.EnableHotpatching;
+                }
+
+
             }
 
             WriteObject(this.VM);

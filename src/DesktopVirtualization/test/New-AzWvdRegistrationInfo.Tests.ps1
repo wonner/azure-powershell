@@ -25,10 +25,10 @@ Describe 'New-AzWvdRegistrationInfo' {
                             -FriendlyName 'fri' `
                             -MaxSessionLimit 5 `
                             -VMTemplate $null `
-                            -SsoContext $null `
                             -CustomRdpProperty $null `
                             -Ring $null `
-                            -ValidationEnvironment:$false
+                            -ValidationEnvironment:$false `
+                            -PreferredAppGroupType 'Desktop'
         $date = get-date
         $newDate = $(($date).ToUniversalTime().AddDays(1).ToString('yyyy-MM-ddTHH:mm:ss.fffffffZ'))
         $regInfo = New-AzWvdRegistrationInfo -SubscriptionId $env.SubscriptionId `

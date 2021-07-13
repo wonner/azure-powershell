@@ -54,7 +54,7 @@ INPUTOBJECT <IImageBuilderIdentity>: Identity Parameter
   [RunOutputName <String>]: The name of the run output
   [SubscriptionId <String>]: Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription Id forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.imagebuilder/get-azimagebuilderrunoutput
+https://docs.microsoft.com/powershell/module/az.imagebuilder/get-azimagebuilderrunoutput
 #>
 function Get-AzImageBuilderRunOutput {
 [OutputType([Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Models.Api20200214.IRunOutput])]
@@ -256,7 +256,7 @@ INPUTOBJECT <IImageBuilderIdentity>: Identity Parameter
   [RunOutputName <String>]: The name of the run output
   [SubscriptionId <String>]: Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription Id forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.imagebuilder/get-azimagebuildertemplate
+https://docs.microsoft.com/powershell/module/az.imagebuilder/get-azimagebuildertemplate
 #>
 function Get-AzImageBuilderTemplate {
 [OutputType([Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Models.Api20200214.IImageTemplate])]
@@ -426,7 +426,7 @@ INPUTOBJECT <IImageBuilderIdentity>: Identity Parameter
   [RunOutputName <String>]: The name of the run output
   [SubscriptionId <String>]: Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription Id forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.imagebuilder/remove-azimagebuildertemplate
+https://docs.microsoft.com/powershell/module/az.imagebuilder/remove-azimagebuildertemplate
 #>
 function Remove-AzImageBuilderTemplate {
 [OutputType([System.Boolean])]
@@ -609,7 +609,7 @@ INPUTOBJECT <IImageBuilderIdentity>: Identity Parameter
   [RunOutputName <String>]: The name of the run output
   [SubscriptionId <String>]: Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription Id forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.imagebuilder/start-azimagebuildertemplate
+https://docs.microsoft.com/powershell/module/az.imagebuilder/start-azimagebuildertemplate
 #>
 function Start-AzImageBuilderTemplate {
 [OutputType([System.Boolean])]
@@ -804,7 +804,7 @@ INPUTOBJECT <IImageBuilderIdentity>: Identity Parameter
   [RunOutputName <String>]: The name of the run output
   [SubscriptionId <String>]: Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription Id forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.imagebuilder/stop-azimagebuildertemplate
+https://docs.microsoft.com/powershell/module/az.imagebuilder/stop-azimagebuildertemplate
 #>
 function Stop-AzImageBuilderTemplate {
 [OutputType([System.Boolean])]
@@ -970,19 +970,20 @@ Name       Type          Filter                    SearchCriterion              
 ----       ----          ------                    ---------------                -----------
 WindUpdate WindowsUpdate {BrowseOnly, IsInstalled} BrowseOnly=0 and IsInstalled=0 100
 .Example
-PS C:\> New-AzImageBuilderCustomizerObject -FileCustomizer -CustomizerName 'filecus' -Sha256Checksum 'ade4c5214c3c675e92c66e2d067a870c5b81b9844b3de3cc72c49ff36425fc93' -Destination 'c:\\buildArtifacts\\index.html' -SourceUri 'https://github.com/danielsollondon/azvmimagebuilder/blob/master/quickquickstarts/exampleArtifacts/buildArtifacts/index.html'
+PS C:\> New-AzImageBuilderCustomizerObject -FileCustomizer -CustomizerName 'filecus' -Destination 'c:\\buildArtifacts\\index.html' -SourceUri 'https://github.com/danielsollondon/azvmimagebuilder/blob/master/quickquickstarts/exampleArtifacts/buildArtifacts/index.html'
 
-Name    Type Destination                    Sha256Checksum                                                   SourceUri
-----    ---- -----------                    --------------                                                   ---------
-filecus File c:\\buildArtifacts\\index.html ade4c5214c3c675e92c66e2d067a870c5b81b9844b3de3cc72c49ff36425fc93 https://github.com/danielsollondon/azvmimagebuilder/blob/master/quickquickstarts/exampleArtifacts/buildArtifacts/index.html
+Name    Type Destination                    Sha256Checksum SourceUri
+----    ---- -----------                    -------------- ---------
+filecus File c:\\buildArtifacts\\index.html                https://github.com/danielsollondon/azvmimagebuilder/blob/master/quickquickstarts/exampleArtifacts/buildArtifacts/…
 
 .Example
 PS C:\> $inline = @("mkdir c:\\buildActions", "echo Azure-Image-Builder-Was-Here  > c:\\buildActions\\buildActionsOutput.txt")
-PS C:\> New-AzImageBuilderCustomizerObject -PowerShellCustomizer -CustomizerName settingUpMgmtAgtPath -RunElevated $false -Sha256Checksum ade4c5214c3c675e92c66e2d067a870c5b81b9844b3de3cc72c49ff36425fc93 -Inline $inline
+PS C:\> New-AzImageBuilderCustomizerObject -PowerShellCustomizer -CustomizerName settingUpMgmtAgtPath -RunElevated $false -Inline $inline
 
-Name                 Type       Inline                                                                                                  RunElevated ScriptUri Sha256Checksum                                      ValidExitC                                                                                                                                                                                                                                                                                                                                                                                                                                        e
-----                 ----       ------                                                                                                  ----------- --------- --------------                                       --
-settingUpMgmtAgtPath PowerShell {mkdir c:\\buildActions, echo Azure-Image-Builder-Was-Here  > c:\\buildActions\\buildActionsOutput.txt} False                 ade4c5214c3c675e92c66e2d067a870c5b81b9844b3de3cc72c49ff36425fc93
+Name                 Type       Inline                                                                                                  RunElevated ScriptUri Sha256Checksum
+----                 ----       ------                                                                                                  ----------- --------- --------------
+settingUpMgmtAgtPath PowerShell {mkdir c:\\buildActions, echo Azure-Image-Builder-Was-Here  > c:\\buildActions\\buildActionsOutput.txt} False
+
 .Example
 PS C:\> New-AzImageBuilderCustomizerObject -RestartCustomizer -CustomizerName 'restcus' -RestartCommand 'shutdown /f /r /t 0 /c \"packer restart\"' -RestartCheckCommand 'powershell -command "& {Write-Output "restarted."}"' -RestartTimeout '10m'
 
@@ -990,16 +991,16 @@ Name    Type           RestartCheckCommand                                 Resta
 ----    ----           -------------------                                 --------------                            --------------
 restcus WindowsRestart powershell -command "& {Write-Output "restarted."}" shutdown /f /r /t 0 /c \"packer restart\" 10m
 .Example
-PS C:\> New-AzImageBuilderCustomizerObject -ShellCustomizer -CustomizerName downloadBuildArtifacts -ScriptUri "https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/quickquickstarts/customizeScript2.sh" -Sha256Checksum ade4c5214c3c675e92c66e2d067a870c5b81b9844b3de3cc72c49ff36425fc93 
+PS C:\> New-AzImageBuilderCustomizerObject -ShellCustomizer -CustomizerName downloadBuildArtifacts -ScriptUri "https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/quickquickstarts/customizeScript2.sh" 
 
 Name                   Type  Inline ScriptUri                                                                                                      Sha256Checksum
 ----                   ----  ------ ---------                                                                                                      --------------
-downloadBuildArtifacts Shell        https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/quickquickstarts/customizeScript2.sh ade4c5214c3c675e92c66e2d067a870c5b81b9844b3de3cc72c49ff36425fc93
+downloadBuildArtifacts Shell        https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/quickquickstarts/customizeScript2.sh
 
 .Outputs
 Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Models.Api20200214.IImageTemplateCustomizer
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.imagebuilder/new-AzImageBuilderCustomizerObject
+https://docs.microsoft.com/powershell/module/az.imagebuilder/new-AzImageBuilderCustomizerObject
 #>
 function New-AzImageBuilderCustomizerObject {
 [OutputType([Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Models.Api20200214.IImageTemplateCustomizer])]
@@ -1056,6 +1057,13 @@ param(
     [System.Boolean]
     # If specified, the PowerShell script will be run with elevated privileges.
     ${RunElevated},
+
+    [Parameter(ParameterSetName='PowerShellCustomizer')]
+    [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
+    [System.Boolean]
+    # If specified, the PowerShell script will be run with elevated privileges using the Local System user.
+    # Can only be true when the runElevated field above is set to true.
+    ${RunAsSystem},
 
     [Parameter(ParameterSetName='PowerShellCustomizer')]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
@@ -1223,7 +1231,7 @@ outname       SharedImage False             /subscriptions/9e223dbe-3399-4e19-88
 .Outputs
 Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Models.Api20200214.IImageTemplateDistributor
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.imagebuilder/new-AzImageBuilderDistributorObject
+https://docs.microsoft.com/powershell/module/az.imagebuilder/new-AzImageBuilderDistributorObject
 #>
 function New-AzImageBuilderDistributorObject {
 [OutputType([Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Models.Api20200214.IImageTemplateDistributor])]
@@ -1379,7 +1387,7 @@ PlatformImage UbuntuServer Canonical 18.04-LTS latest
 .Outputs
 Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Models.Api20200214.IImageTemplateSource
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.imagebuilder/New-AzImageBuilderSourceObject
+https://docs.microsoft.com/powershell/module/az.imagebuilder/New-AzImageBuilderSourceObject
 #>
 function New-AzImageBuilderSourceObject {
 [OutputType([Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Models.Api20200214.IImageTemplateSource])]
@@ -1401,7 +1409,7 @@ param(
     [Parameter(ParameterSetName='PlatformImage', Mandatory)]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
     [System.Management.Automation.SwitchParameter]
-    # Describes an image source from [Azure Gallery Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages).
+    # Describes an image source from [Azure Gallery Images](https://docs.microsoft.com/rest/api/compute/virtualmachineimages).
     ${SourceTypePlatformImage},
 
     [Parameter(ParameterSetName='PlatformImagePlanInfo', Mandatory)]
@@ -1426,28 +1434,28 @@ param(
     [Parameter(ParameterSetName='PlatformImage')]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
     [System.String]
-    # Image offer from the [Azure Gallery Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages).
+    # Image offer from the [Azure Gallery Images](https://docs.microsoft.com/rest/api/compute/virtualmachineimages).
     ${Offer},
 
     [Parameter(ParameterSetName='PlatformImagePlanInfo')]
     [Parameter(ParameterSetName='PlatformImage')]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
     [System.String]
-    # Image Publisher in [Azure Gallery Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages).
+    # Image Publisher in [Azure Gallery Images](https://docs.microsoft.com/rest/api/compute/virtualmachineimages).
     ${Publisher},
 
     [Parameter(ParameterSetName='PlatformImagePlanInfo')]
     [Parameter(ParameterSetName='PlatformImage')]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
     [System.String]
-    # Image sku from the [Azure Gallery Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages).
+    # Image sku from the [Azure Gallery Images](https://docs.microsoft.com/rest/api/compute/virtualmachineimages).
     ${Sku},
 
     [Parameter(ParameterSetName='PlatformImagePlanInfo')]
     [Parameter(ParameterSetName='PlatformImage')]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
     [System.String]
-    # Image version from the [Azure Gallery Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages).
+    # Image version from the [Azure Gallery Images](https://docs.microsoft.com/rest/api/compute/virtualmachineimages).
     ${Version},
 
     [Parameter(ParameterSetName='SharedImageVersion', Mandatory)]
@@ -1556,11 +1564,11 @@ DISTRIBUTE <IImageTemplateDistributor[]>: The distribution targets where the ima
 SOURCE <IImageTemplateSource>: Describes a virtual machine image source for building, customizing and distributing.
   Type <String>: Specifies the type of source image you want to start with.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.imagebuilder/New-AzImageBuilderTemplate
+https://docs.microsoft.com/powershell/module/az.imagebuilder/New-AzImageBuilderTemplate
 #>
 function New-AzImageBuilderTemplate {
 [OutputType([Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Models.Api20200214.IImageTemplate])]
-[CmdletBinding(DefaultParameterSetName='Name', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
+[CmdletBinding(DefaultParameterSetName='FlattenParameterSet', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(Mandatory)]
     [Alias('Name')]
@@ -1582,118 +1590,79 @@ param(
     # Subscription credentials which uniquely identify Microsoft Azure subscription.
     ${SubscriptionId},
 
-    [Parameter(Mandatory)]
+    [Parameter(ParameterSetName='FlattenParameterSet', Mandatory)]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Models.Api20200214.IImageTemplateDistributor[]]
     # The distribution targets where the image output needs to go to.
     # To construct, see NOTES section for DISTRIBUTE properties and create a hash table.
     ${Distribute},
 
-    [Parameter(Mandatory)]
+    [Parameter(ParameterSetName='FlattenParameterSet', Mandatory)]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Models.Api20200214.IImageTemplateSource]
     # Describes a virtual machine image source for building, customizing and distributing.
     # To construct, see NOTES section for SOURCE properties and create a hash table.
     ${Source},
 
-    [Parameter(Mandatory)]
+    [Parameter(ParameterSetName='FlattenParameterSet', Mandatory)]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Runtime.Info(PossibleTypes=([Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Models.Api20200214.IImageTemplateIdentityUserAssignedIdentities]))]
     [System.String]
     # The id of user assigned identity.
     ${UserAssignedIdentityId},
 
-    [Parameter()]
+    [Parameter(ParameterSetName='FlattenParameterSet')]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
     [System.String]
     # Resource location.
     ${Location},
 
-    [Parameter()]
+    [Parameter(ParameterSetName='FlattenParameterSet')]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
     [System.Int32]
     # Maximum duration to wait while building the image template.
     # Omit or specify 0 to use the default (4 hours).
     ${BuildTimeoutInMinute},
 
-    [Parameter()]
+    [Parameter(ParameterSetName='FlattenParameterSet')]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Models.Api20200214.IImageTemplateCustomizer[]]
     # Specifies the properties used to describe the customization steps of the image, like Image source etc.
     # To construct, see NOTES section for CUSTOMIZE properties and create a hash table.
     ${Customize},
 
-    [Parameter()]
-    [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
-    [System.DateTime]
-    # End time of the last run (UTC).
-    ${LastRunStatusEndTime},
-
-    [Parameter()]
-    [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
-    [System.String]
-    # Verbose information about the last run state.
-    ${LastRunStatusMessage},
-
-    [Parameter()]
-    [ArgumentCompleter([Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Support.RunState])]
-    [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Support.RunState]
-    # State of the last run.
-    ${LastRunStatusRunState},
-
-    [Parameter()]
-    [ArgumentCompleter([Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Support.RunSubState])]
-    [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Support.RunSubState]
-    # Sub-state of the last run.
-    ${LastRunStatusRunSubState},
-
-    [Parameter()]
-    [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
-    [System.DateTime]
-    # Start time of the last run (UTC).
-    ${LastRunStatusStartTime},
-
-    [Parameter()]
-    [ArgumentCompleter([Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Support.ProvisioningErrorCode])]
-    [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Support.ProvisioningErrorCode]
-    # Error code of the provisioning failure.
-    ${ProvisioningErrorCode},
-
-    [Parameter()]
-    [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
-    [System.String]
-    # Verbose error message about the provisioning failure.
-    ${ProvisioningErrorMessage},
-
-    [Parameter()]
+    [Parameter(ParameterSetName='FlattenParameterSet')]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Runtime.Info(PossibleTypes=([Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Models.Api20200214.IResourceTags]))]
     [System.Collections.Hashtable]
     # Resource tags.
     ${Tag},
 
-    [Parameter()]
+    [Parameter(ParameterSetName='FlattenParameterSet')]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
     [System.Int32]
     # Size of the OS disk in GB.
     # Omit or specify 0 to use Azure's default OS disk size.
     ${VMProfileOsdiskSizeInGb},
 
-    [Parameter()]
+    [Parameter(ParameterSetName='FlattenParameterSet')]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
     [System.String]
     # Size of the virtual machine used to build, customize and capture images.
     # Omit or specify empty string to use the default (Standard_D1_v2).
     ${VMProfileVmSize},
 
-    [Parameter()]
+    [Parameter(ParameterSetName='FlattenParameterSet')]
     [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
     [System.String]
     # Resource id of a pre-existing subnet.
     ${VnetConfigSubnetId},
+
+    [Parameter(ParameterSetName='JsonTemplate')]
+    [Microsoft.Azure.PowerShell.Cmdlets.ImageBuilder.Category('Body')]
+    [System.String]
+    # Path of json formated image template file.
+    ${JsonTemplatePath},
 
     [Parameter()]
     [Alias('AzureRMContext', 'AzureCredential')]
@@ -1765,9 +1734,10 @@ begin {
         }
         $parameterSet = $PSCmdlet.ParameterSetName
         $mapping = @{
-            Name = 'Az.ImageBuilder.custom\New-AzImageBuilderTemplate';
+            FlattenParameterSet = 'Az.ImageBuilder.custom\New-AzImageBuilderTemplate';
+            JsonTemplate = 'Az.ImageBuilder.custom\New-AzImageBuilderTemplate';
         }
-        if (('Name') -contains $parameterSet -and -not $PSBoundParameters.ContainsKey('SubscriptionId')) {
+        if (('FlattenParameterSet', 'JsonTemplate') -contains $parameterSet -and -not $PSBoundParameters.ContainsKey('SubscriptionId')) {
             $PSBoundParameters['SubscriptionId'] = (Get-AzContext).Subscription.Id
         }
         $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand(($mapping[$parameterSet]), [System.Management.Automation.CommandTypes]::Cmdlet)

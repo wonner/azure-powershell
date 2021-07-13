@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Attestation.dll-Help.xml
 Module Name: Az.Attestation
-online version: https://docs.microsoft.com/en-us/powershell/module/az.attestation/get-azattestation
+online version: https://docs.microsoft.com/powershell/module/az.attestation/get-azattestation
 schema: 2.0.0
 ---
 
@@ -21,6 +21,12 @@ Get-AzAttestation [-Name] <String> [-ResourceGroupName] <String> [-DefaultProfil
 ### ResourceIdParameterSet
 ```
 Get-AzAttestation [-ResourceId] <String> [-DefaultProfile <IAzureContextContainer>] [<CommonParameters>]
+```
+
+### DefaultProviderParameterSet
+```
+Get-AzAttestation [[-Location] <String>] [-DefaultProvider] [-DefaultProfile <IAzureContextContainer>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -48,6 +54,58 @@ TagsTable         :
 
 Get Attestation Provider *pshtest* in Resource Group *psh-test-rg*.
 
+### Example 2
+```powershell
+PS C:\> Get-AzAttestation -DefaultProvider
+Id                : /providers/Microsoft.Attestation/attestationProviders/sharedeus2
+Location          : East US 2
+ResourceGroupName :
+Name              : sharedeus2
+Status            : Ready
+TrustModel        : AAD
+AttestUri         : https://sharedeus2.eus2.attest.azure.net
+Tags              :
+TagsTable         :
+
+Id                : /providers/Microsoft.Attestation/attestationProviders/sharedcus
+Location          : Central US
+ResourceGroupName :
+Name              : sharedcus
+Status            : Ready
+TrustModel        : AAD
+AttestUri         : https://sharedcus.cus.attest.azure.net
+Tags              :
+TagsTable         :
+
+Id                : /providers/Microsoft.Attestation/attestationProviders/shareduks
+Location          : UK South
+ResourceGroupName :
+Name              : shareduks
+Status            : Ready
+TrustModel        : AAD
+AttestUri         : https://shareduks.uks.attest.azure.net
+Tags              :
+TagsTable         :
+```
+
+Get all available Attestation Default Providers
+
+### Example 3
+```powershell
+PS C:\> Get-AzAttestation -DefaultProvider -Location "East US 2"
+Id                : /providers/Microsoft.Attestation/attestationProviders/sharedeus2
+Location          : East US 2
+ResourceGroupName :
+Name              : sharedeus2
+Status            : Ready
+TrustModel        : AAD
+AttestUri         : https://sharedeus2.eus2.attest.azure.net
+Tags              :
+TagsTable         :
+```
+
+Get Attestation Default Provider from Location *East US 2*
+
 ## PARAMETERS
 
 ### -DefaultProfile
@@ -62,6 +120,36 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultProvider
+Specifies this is the request to a default attestation provider.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: DefaultProviderParameterSet
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Location
+Specifies the Location of the default attestation provider.
+
+```yaml
+Type: System.String
+Parameter Sets: DefaultProviderParameterSet
+Aliases:
+
+Required: False
+Position: 0
+Default value: None
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

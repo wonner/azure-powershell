@@ -1,7 +1,7 @@
 ---
 Module Name: Az.Storage
 Module Guid: da67eaa7-4cb1-4bfa-a194-8bf3faae8ac5
-Download Help Link: https://docs.microsoft.com/en-us/powershell/module/az.storage
+Download Help Link: https://docs.microsoft.com/powershell/module/az.storage
 Help Version: 4.2.3.0
 Locale: en-US
 ---
@@ -23,8 +23,20 @@ Adds an action to the input ManagementPolicy Action Group object, or creates a M
 ### [Close-AzStorageFileHandle](Close-AzStorageFileHandle.md)
 Closes file handles of a file share, a file directory or a file.
 
+### [Copy-AzStorageBlob](Copy-AzStorageBlob.md)
+Copy a blob synchronously.
+
 ### [Disable-AzStorageBlobDeleteRetentionPolicy](Disable-AzStorageBlobDeleteRetentionPolicy.md)
 Disable delete retention policy for the Azure Storage Blob service.
+
+### [Disable-AzStorageBlobLastAccessTimeTracking](Disable-AzStorageBlobLastAccessTimeTracking.md)
+Disable last access time tracking for the Azure Storage Blob service.
+
+### [Disable-AzStorageBlobRestorePolicy](Disable-AzStorageBlobRestorePolicy.md)
+Disables Blob Restore Policy on a Storage account.
+
+### [Disable-AzStorageContainerDeleteRetentionPolicy](Disable-AzStorageContainerDeleteRetentionPolicy.md)
+Disable delete retention policy for Azure Storage blob contatiners.
 
 ### [Disable-AzStorageDeleteRetentionPolicy](Disable-AzStorageDeleteRetentionPolicy.md)
 Disable delete retention policy  for the Azure Storage Blob service.
@@ -34,6 +46,15 @@ Disable static website for the Azure Storage account.
 
 ### [Enable-AzStorageBlobDeleteRetentionPolicy](Enable-AzStorageBlobDeleteRetentionPolicy.md)
 Enable delete retention policy for the Azure Storage Blob service.
+
+### [Enable-AzStorageBlobLastAccessTimeTracking](Enable-AzStorageBlobLastAccessTimeTracking.md)
+Enable last access time tracking for the Azure Storage Blob service.
+
+### [Enable-AzStorageBlobRestorePolicy](Enable-AzStorageBlobRestorePolicy.md)
+Enables Blob Restore Policy on a Storage account.
+
+### [Enable-AzStorageContainerDeleteRetentionPolicy](Enable-AzStorageContainerDeleteRetentionPolicy.md)
+Enable delete retention policy for Azure Storage blob contatiners.
 
 ### [Enable-AzStorageDeleteRetentionPolicy](Enable-AzStorageDeleteRetentionPolicy.md)
 Enable delete retention policy  for the Azure Storage Blob service.
@@ -83,6 +104,12 @@ Downloads a storage blob.
 ### [Get-AzStorageBlobCopyState](Get-AzStorageBlobCopyState.md)
 Gets the copy status of an Azure Storage blob.
 
+### [Get-AzStorageBlobInventoryPolicy](Get-AzStorageBlobInventoryPolicy.md)
+Gets blob inventory policy from a Storage account.
+
+### [Get-AzStorageBlobQueryResult](Get-AzStorageBlobQueryResult.md)
+Applies a simple Structured Query Language (SQL) statement on a blob's contents and save only the queried subset of the data to a local file.
+
 ### [Get-AzStorageBlobServiceProperty](Get-AzStorageBlobServiceProperty.md)
 Gets service properties for Azure Storage Blob services.
 
@@ -95,6 +122,9 @@ Gets the stored access policy or policies for an Azure storage container.
 ### [Get-AzStorageCORSRule](Get-AzStorageCORSRule.md)
 Gets CORS rules for a Storage service type.
 
+### [Get-AzStorageEncryptionScope](Get-AzStorageEncryptionScope.md)
+Get or list encryption scopes from a Storage account.
+
 ### [Get-AzStorageFile](Get-AzStorageFile.md)
 Lists directories and files for a path.
 
@@ -106,6 +136,12 @@ Gets the state of a copy operation.
 
 ### [Get-AzStorageFileHandle](Get-AzStorageFileHandle.md)
 Lists file handles of a file share, a file directory or a file.
+
+### [Get-AzStorageFileServiceProperty](Get-AzStorageFileServiceProperty.md)
+Gets service properties for Azure Storage File services.
+
+### [Get-AzStorageObjectReplicationPolicy](Get-AzStorageObjectReplicationPolicy.md)
+Gets or lists object replication policy of a Storage account.
 
 ### [Get-AzStorageQueue](Get-AzStorageQueue.md)
 Lists storage queues.
@@ -170,6 +206,15 @@ Creates a ManagementPolicy rule object, which can be used in Set-AzStorageAccoun
 ### [New-AzStorageAccountSASToken](New-AzStorageAccountSASToken.md)
 Creates an account-level SAS token.
 
+### [New-AzStorageBlobInventoryPolicyRule](New-AzStorageBlobInventoryPolicyRule.md)
+Creates a blob inventory policy rule object, which can be used in Set-AzStorageBlobInventoryPolicy.
+
+### [New-AzStorageBlobQueryConfig](New-AzStorageBlobQueryConfig.md)
+Creates a blob query configuration object, which can be used in Get-AzStorageBlobQueryResult.
+
+### [New-AzStorageBlobRangeToRestore](New-AzStorageBlobRangeToRestore.md)
+Creates a Blob Range object to restores a Storage account.
+
 ### [New-AzStorageBlobSASToken](New-AzStorageBlobSASToken.md)
 Generates a SAS token for an Azure storage blob.
 
@@ -188,8 +233,14 @@ Creates an Azure Storage context.
 ### [New-AzStorageDirectory](New-AzStorageDirectory.md)
 Creates a directory.
 
+### [New-AzStorageEncryptionScope](New-AzStorageEncryptionScope.md)
+Creates an encryption scope for a Storage account.
+
 ### [New-AzStorageFileSASToken](New-AzStorageFileSASToken.md)
 Generates a shared access signature token for a Storage file.
+
+### [New-AzStorageObjectReplicationPolicyRule](New-AzStorageObjectReplicationPolicyRule.md)
+Creates an object replication policy rule.
 
 ### [New-AzStorageQueue](New-AzStorageQueue.md)
 Creates a storage queue.
@@ -218,6 +269,9 @@ Generates an SAS token for an Azure Storage table.
 ### [New-AzStorageTableStoredAccessPolicy](New-AzStorageTableStoredAccessPolicy.md)
 Creates a stored access policy for an Azure storage table.
 
+### [Remove-AzDataLakeGen2AclRecursive](Remove-AzDataLakeGen2AclRecursive.md)
+Remove ACL recursively on the specified path. 
+
 ### [Remove-AzDataLakeGen2Item](Remove-AzDataLakeGen2Item.md)
 Remove a file or directory.
 
@@ -245,6 +299,9 @@ Remove IpRules or VirtualNetworkRules from the NetWorkRule property of a Storage
 ### [Remove-AzStorageBlob](Remove-AzStorageBlob.md)
 Removes the specified storage blob.
 
+### [Remove-AzStorageBlobInventoryPolicy](Remove-AzStorageBlobInventoryPolicy.md)
+Removes blob inventory policy from a Storage account.
+
 ### [Remove-AzStorageContainer](Remove-AzStorageContainer.md)
 Removes the specified storage container.
 
@@ -259,6 +316,9 @@ Deletes a directory.
 
 ### [Remove-AzStorageFile](Remove-AzStorageFile.md)
 Deletes a file.
+
+### [Remove-AzStorageObjectReplicationPolicy](Remove-AzStorageObjectReplicationPolicy.md)
+Removes the specified object replication policy from a Storage account.
 
 ### [Remove-AzStorageQueue](Remove-AzStorageQueue.md)
 Removes a storage queue.
@@ -278,11 +338,23 @@ Removes a storage table.
 ### [Remove-AzStorageTableStoredAccessPolicy](Remove-AzStorageTableStoredAccessPolicy.md)
 Removes a stored access policy from an Azure storage table.
 
+### [Restore-AzRmStorageShare](Restore-AzRmStorageShare.md)
+Restores a deleted file share.
+
+### [Restore-AzStorageBlobRange](Restore-AzStorageBlobRange.md)
+Restores a Storage account for specific blob ranges.
+
+### [Restore-AzStorageContainer](Restore-AzStorageContainer.md)
+Restores a previously deleted Azure storage blob container.
+
 ### [Revoke-AzStorageAccountUserDelegationKeys](Revoke-AzStorageAccountUserDelegationKeys.md)
 Revoke all User Delegation keys of a Storage account.
 
 ### [Set-AzCurrentStorageAccount](Set-AzCurrentStorageAccount.md)
 Modifies the current Storage account of the specified subscription.
+
+### [Set-AzDataLakeGen2AclRecursive](Set-AzDataLakeGen2AclRecursive.md)
+Set ACL recursively on the specified path. 
 
 ### [Set-AzDataLakeGen2ItemAclObject](Set-AzDataLakeGen2ItemAclObject.md)
 Creates/Updates a DataLake gen2 item ACL object, which can be used in Update-AzDataLakeGen2Item cmdlet.
@@ -299,6 +371,9 @@ Creates or modifies the management policy of an Azure Storage account.
 ### [Set-AzStorageBlobContent](Set-AzStorageBlobContent.md)
 Uploads a local file to an Azure Storage blob.
 
+### [Set-AzStorageBlobInventoryPolicy](Set-AzStorageBlobInventoryPolicy.md)
+Creates or updates blob inventory policy in a Storage account.
+
 ### [Set-AzStorageContainerAcl](Set-AzStorageContainerAcl.md)
 Sets the public access permission to a storage container.
 
@@ -310,6 +385,9 @@ Sets the CORS rules for a type of Storage service.
 
 ### [Set-AzStorageFileContent](Set-AzStorageFileContent.md)
 Uploads the contents of a file.
+
+### [Set-AzStorageObjectReplicationPolicy](Set-AzStorageObjectReplicationPolicy.md)
+Creates or updates the specified object replication policy in a Storage account.
 
 ### [Set-AzStorageQueueStoredAccessPolicy](Set-AzStorageQueueStoredAccessPolicy.md)
 Sets a stored access policy for an Azure storage queue.
@@ -344,6 +422,9 @@ Stops a copy operation.
 ### [Stop-AzStorageFileCopy](Stop-AzStorageFileCopy.md)
 Stops a copy operation to the specified destination file.
 
+### [Update-AzDataLakeGen2AclRecursive](Update-AzDataLakeGen2AclRecursive.md)
+Update ACL recursively on the specified path. 
+
 ### [Update-AzDataLakeGen2Item](Update-AzDataLakeGen2Item.md)
 Update a file or directory on properties, metadata, permission, ACL, and owner.
 
@@ -358,6 +439,12 @@ Update the NetworkRule property of a Storage account
 
 ### [Update-AzStorageBlobServiceProperty](Update-AzStorageBlobServiceProperty.md)
 Modifies the service properties for the Azure Storage Blob service.
+
+### [Update-AzStorageEncryptionScope](Update-AzStorageEncryptionScope.md)
+Modify an encryption scope for a Storage account.
+
+### [Update-AzStorageFileServiceProperty](Update-AzStorageFileServiceProperty.md)
+Modifies the service properties for the Azure Storage File service.
 
 ### [Update-AzStorageServiceProperty](Update-AzStorageServiceProperty.md)
 Modifies the properties for the Azure Storage service.

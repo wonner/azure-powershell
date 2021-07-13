@@ -55,6 +55,22 @@ namespace Microsoft.Azure.Commands.Compute.Automation
                     {
                         BuildPutObject();
                     }
+
+                    // check if image reference is being updated, if not remove image reference from payload for SIG 
+                    if (this.VirtualMachineScaleSet != null
+                            && this.VirtualMachineScaleSet.VirtualMachineProfile != null
+                            && this.VirtualMachineScaleSet.VirtualMachineProfile.StorageProfile != null
+                            && this.VirtualMachineScaleSet.VirtualMachineProfile.StorageProfile.ImageReference != null)
+                    {
+                        var newImageRef = this.VirtualMachineScaleSet.VirtualMachineProfile.StorageProfile.ImageReference;
+                        var currVMSS = VirtualMachineScaleSetsClient.Get(resourceGroupName, vmScaleSetName);
+                        var currImageRef = currVMSS.VirtualMachineProfile.StorageProfile.ImageReference;
+                        if (currImageRef.Id == newImageRef.Id)
+                        {
+                            this.VirtualMachineScaleSet.VirtualMachineProfile.StorageProfile.ImageReference = null;
+                        }
+                    }
+
                     VirtualMachineScaleSetUpdate parametersupdate = this.VirtualMachineScaleSetUpdate;
                     VirtualMachineScaleSet parameters = new VirtualMachineScaleSet();
                     ComputeAutomationAutoMapperProfile.Mapper.Map<PSVirtualMachineScaleSet, VirtualMachineScaleSet>(this.VirtualMachineScaleSet, parameters);
@@ -312,6 +328,11 @@ namespace Microsoft.Azure.Commands.Compute.Automation
         [Parameter(Mandatory = false, HelpMessage = "Run cmdlet in the background")]
         public SwitchParameter AsJob { get; set; }
 
+
+        [Parameter(
+            Mandatory = false)]
+        public bool EncryptionAtHost { get; set; }
+
         private void BuildPatchObject()
         {
             if (this.IsParameterBound(c => c.AutomaticOSUpgrade))
@@ -474,7 +495,6 @@ namespace Microsoft.Azure.Commands.Compute.Automation
                 }
                 this.VirtualMachineScaleSetUpdate.VirtualMachineProfile.OsProfile.WindowsConfiguration.EnableAutomaticUpdates = this.EnableAutomaticUpdate;
             }
-
 
             if (this.IsParameterBound(c => c.IdentityId))
             {
@@ -1090,6 +1110,23 @@ namespace Microsoft.Azure.Commands.Compute.Automation
                 this.VirtualMachineScaleSetUpdate.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers = this.VhdContainer;
             }
 
+            if (this.IsParameterBound(c => c.EncryptionAtHost))
+            {
+                if (this.VirtualMachineScaleSetUpdate == null)
+                {
+                    this.VirtualMachineScaleSetUpdate = new VirtualMachineScaleSetUpdate();
+                }
+                if (this.VirtualMachineScaleSetUpdate.VirtualMachineProfile == null)
+                {
+                    this.VirtualMachineScaleSetUpdate.VirtualMachineProfile = new VirtualMachineScaleSetUpdateVMProfile();
+                }
+                if (this.VirtualMachineScaleSetUpdate.VirtualMachineProfile.SecurityProfile == null)
+                {
+                    this.VirtualMachineScaleSetUpdate.VirtualMachineProfile.SecurityProfile = new SecurityProfile();
+                }
+                this.VirtualMachineScaleSetUpdate.VirtualMachineProfile.SecurityProfile.EncryptionAtHost = this.EncryptionAtHost;
+            }
+
             if (this.VirtualMachineScaleSetUpdate != null
                 && this.VirtualMachineScaleSetUpdate.ProximityPlacementGroup != null
                 && string.IsNullOrEmpty(this.VirtualMachineScaleSetUpdate.ProximityPlacementGroup.Id))
@@ -1700,6 +1737,19 @@ namespace Microsoft.Azure.Commands.Compute.Automation
                 this.VirtualMachineScaleSet.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers = this.VhdContainer;
             }
 
+            if (this.IsParameterBound(c => c.EncryptionAtHost))
+            {
+                if (this.VirtualMachineScaleSet.VirtualMachineProfile == null)
+                {
+                    this.VirtualMachineScaleSet.VirtualMachineProfile = new PSVirtualMachineScaleSetVMProfile();
+                }
+                if (this.VirtualMachineScaleSet.VirtualMachineProfile.SecurityProfile == null)
+                {
+                    this.VirtualMachineScaleSet.VirtualMachineProfile.SecurityProfile = new SecurityProfile();
+                }
+                this.VirtualMachineScaleSet.VirtualMachineProfile.SecurityProfile.EncryptionAtHost = this.EncryptionAtHost;
+            }
+
             if (this.VirtualMachineScaleSet != null
                 && this.VirtualMachineScaleSet.ProximityPlacementGroup != null
                 && string.IsNullOrEmpty(this.VirtualMachineScaleSet.ProximityPlacementGroup.Id))
@@ -1715,6 +1765,7 @@ namespace Microsoft.Azure.Commands.Compute.Automation
             {
                 throw new ArgumentException(Microsoft.Azure.Commands.Compute.Properties.Resources.BothWindowsAndLinuxConfigurationsSpecified);
             }
+
         }
     }
 }

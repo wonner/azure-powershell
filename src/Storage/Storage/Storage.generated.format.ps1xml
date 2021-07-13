@@ -187,6 +187,17 @@
           <TableColumnHeader>
             <Alignment>Left</Alignment>
             <Label>LastModified</Label>
+            <Width>30</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Alignment>Left</Alignment>
+            <Label>IsDeleted</Label>
+            <Width>10</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Alignment>Left</Alignment>
+            <Label>VersionId</Label>
+            <Width>17</Width>
           </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
@@ -204,13 +215,21 @@
                 <Alignment>Left</Alignment>
                 <PropertyName>LastModified</PropertyName>
               </TableColumnItem>
+              <TableColumnItem>
+                <Alignment>Left</Alignment>
+                <PropertyName>IsDeleted</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <Alignment>Left</Alignment>
+                <PropertyName>VersionId</PropertyName>
+              </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>
         </TableRowEntries>
       </TableControl>
       <GroupBy>
-        <ScriptBlock>$_.CloudBlobContainer.ServiceClient.BaseUri</ScriptBlock>
-        <Label>Blob End Point</Label>
+        <ScriptBlock>$_.BlobContainerClient.AccountName</ScriptBlock>
+        <Label>Storage Account Name</Label>
       </GroupBy>
     </View>
     <View>
@@ -253,12 +272,17 @@
           <TableColumnHeader>
             <Alignment>Left</Alignment>
             <Label>SnapshotTime</Label>
-            <Width>20</Width>
+            <Width>28</Width>
           </TableColumnHeader>
           <TableColumnHeader>
             <Alignment>Left</Alignment>
             <Label>IsDeleted</Label>
             <Width>10</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Alignment>Left</Alignment>
+            <Label>VersionId</Label>
+            <Width>30</Width>
           </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
@@ -286,23 +310,27 @@
               </TableColumnItem>
               <TableColumnItem>
                 <Alignment>Left</Alignment>
-                <ScriptBlock>$_.ICloudBlob.Properties.StandardBlobTier</ScriptBlock>
+                <ScriptBlock>$_.AccessTier</ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <Alignment>Left</Alignment>
-                <ScriptBlock>$_.SnapshotTime.UtcDateTime.ToString("u")</ScriptBlock>
+                <ScriptBlock>$_.SnapshotTime.UtcDateTime.ToString("o")</ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <Alignment>Left</Alignment>
                 <PropertyName>IsDeleted</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <Alignment>Left</Alignment>
+                <ScriptBlock>if ($_.IsLatestVersion){$_.VersionId + " *"} else {$_.VersionId}</ScriptBlock>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>
         </TableRowEntries>
       </TableControl>
       <GroupBy>
-        <ScriptBlock>$_.ICloudBlob.Container.Uri</ScriptBlock>
-        <Label>Container Uri</Label>
+        <ScriptBlock>$_.BlobBaseClient.AccountName + ", ContainerName: " + $_.BlobBaseClient.BlobContainerName</ScriptBlock>
+        <Label>AccountName</Label>
       </GroupBy>
     </View>
     <View>
@@ -339,7 +367,7 @@
                 <ScriptBlock>if ($_.CloudFile -eq $null) {"Directory"} else {"File"}</ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-                <ScriptBlock>$_.Properties.Length</ScriptBlock>
+                <ScriptBlock>$_.Length</ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>$_.Name</ScriptBlock>

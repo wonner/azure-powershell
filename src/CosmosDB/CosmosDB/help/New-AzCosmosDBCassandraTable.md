@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.CosmosDB.dll-Help.xml
 Module Name: Az.CosmosDB
-online version: https://docs.microsoft.com/en-us/powershell/module/az.cosmosdb/new-azcosmosdbcassandratable
+online version: https://docs.microsoft.com/powershell/module/az.cosmosdb/new-azcosmosdbcassandratable
 schema: 2.0.0
 ---
 
@@ -16,15 +16,16 @@ Creates a new CosmosDB Cassandra Table.
 ```
 New-AzCosmosDBCassandraTable -ResourceGroupName <String> -AccountName <String> -KeyspaceName <String>
  -Name <String> [-Throughput <Int32>] [-AutoscaleMaxThroughput <Int32>] [-TtlInSeconds <Int32>]
- -Schema <PSCassandraSchema> [-DefaultProfile <IAzureContextContainer>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+ [-AnalyticalStorageTtl <Int32>] -Schema <PSCassandraSchema> [-DefaultProfile <IAzureContextContainer>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### ByParentObjectParameterSet
 ```
 New-AzCosmosDBCassandraTable -Name <String> [-Throughput <Int32>] [-AutoscaleMaxThroughput <Int32>]
- [-TtlInSeconds <Int32>] -Schema <PSCassandraSchema> -ParentObject <PSCassandraKeyspaceGetResults>
- [-DefaultProfile <IAzureContextContainer>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-TtlInSeconds <Int32>] [-AnalyticalStorageTtl <Int32>] -Schema <PSCassandraSchema>
+ -ParentObject <PSCassandraKeyspaceGetResults> [-DefaultProfile <IAzureContextContainer>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -60,7 +61,7 @@ PS C:\>
 Name of the Cosmos DB database account.
 
 ```yaml
-Type: String
+Type: System.String
 Parameter Sets: ByNameParameterSet
 Aliases:
 
@@ -71,11 +72,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AutoscaleMaxThroughput
-Maximum Throughput value if autoscale is enabled.
+### -AnalyticalStorageTtl
+Analytical Storage TTL.
 
 ```yaml
-Type: Int32
+Type: System.Nullable`1[System.Int32]
 Parameter Sets: (All)
 Aliases:
 
@@ -86,13 +87,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
+### -AutoscaleMaxThroughput
+Maximum Throughput value if autoscale is enabled.
 
 ```yaml
-Type: SwitchParameter
+Type: System.Nullable`1[System.Int32]
 Parameter Sets: (All)
-Aliases: cf
+Aliases:
 
 Required: False
 Position: Named
@@ -105,7 +106,7 @@ Accept wildcard characters: False
 The credentials, account, tenant, and subscription used for communication with Azure.
 
 ```yaml
-Type: IAzureContextContainer
+Type: Microsoft.Azure.Commands.Common.Authentication.Abstractions.Core.IAzureContextContainer
 Parameter Sets: (All)
 Aliases: AzContext, AzureRmContext, AzureCredential
 
@@ -120,7 +121,7 @@ Accept wildcard characters: False
 Cassandra Keyspace Name.
 
 ```yaml
-Type: String
+Type: System.String
 Parameter Sets: ByNameParameterSet
 Aliases:
 
@@ -135,7 +136,7 @@ Accept wildcard characters: False
 Cassandra Table Name.
 
 ```yaml
-Type: String
+Type: System.String
 Parameter Sets: (All)
 Aliases:
 
@@ -150,7 +151,7 @@ Accept wildcard characters: False
 Cassandra Keyspace object.
 
 ```yaml
-Type: PSCassandraKeyspaceGetResults
+Type: Microsoft.Azure.Commands.CosmosDB.Models.PSCassandraKeyspaceGetResults
 Parameter Sets: ByParentObjectParameterSet
 Aliases:
 
@@ -165,7 +166,7 @@ Accept wildcard characters: False
 Name of resource group.
 
 ```yaml
-Type: String
+Type: System.String
 Parameter Sets: ByNameParameterSet
 Aliases:
 
@@ -181,7 +182,7 @@ PSCassandraSchema object.
 Use New-AzCosmosDBCassandraSchema to create this object.
 
 ```yaml
-Type: PSCassandraSchema
+Type: Microsoft.Azure.Commands.CosmosDB.Models.PSCassandraSchema
 Parameter Sets: (All)
 Aliases:
 
@@ -197,7 +198,7 @@ The throughput of Cassandra Keyspace (RU/s).
 Default value is 400.
 
 ```yaml
-Type: Int32
+Type: System.Nullable`1[System.Int32]
 Parameter Sets: (All)
 Aliases:
 
@@ -214,9 +215,24 @@ If the value is missing or set to  - 1, items don't expire.
 If the value is set to n, items will expire n seconds after last modified time.
 
 ```yaml
-Type: Int32
+Type: System.Nullable`1[System.Int32]
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
 
 Required: False
 Position: Named
@@ -230,7 +246,7 @@ Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
 ```yaml
-Type: SwitchParameter
+Type: System.Management.Automation.SwitchParameter
 Parameter Sets: (All)
 Aliases: wi
 

@@ -11,9 +11,11 @@ while(-not $mockingPath) {
 }
 . ($mockingPath | Select-Object -First 1).FullName
 
+# !Important: some test cases are skipped and require to be recorded again
+# See https://github.com/Azure/autorest.powershell/issues/580
 Describe 'Restore-AzMySqlServer' {
     It 'GeoRestore' {
-        $replica = Get-AzMySqlServer -ResourceGroupName $env.resourceGroup -ServerName $env.serverName | New-AzMySqlServerReplica -Name $env.replicaName -ResourceGroupName $env.resourceGroup
+        $replica = Get-AzMySqlServer -ResourceGroupName $env.resourceGroup -ServerName $env.serverName | New-AzMySqlReplica -Replica $env.replicaName -ResourceGroupName $env.resourceGroup
         $restoreServer = Restore-AzMySqlServer -Name $env.serverName -ResourceGroupName $env.resourceGroup -InputObject $replica -UseGeoRestore 
         $restoreServer.Name | Should -Be $env.serverName
         $restoreServer.SkuName | Should -Be $env.Sku

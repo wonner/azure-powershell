@@ -33,6 +33,13 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
 
         [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVirtualMachineScaleSetInEdgeZone()
+        {
+            TestRunner.RunTestScript("Test-VirtualMachineScaleSetInEdgeZone");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void TestVirtualMachineScaleSet_ManagedDisks()
         {
             TestRunner.RunTestScript("Test-VirtualMachineScaleSet-ManagedDisks");
@@ -162,6 +169,42 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
         public void TestVirtualMachineScaleSetAutoRepair()
         {
             TestRunner.RunTestScript("Test-VirtualMachineScaleSetAutoRepair");
+        }
+
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVirtualMachineScaleSetImageVersion()
+        {
+            TestRunner.RunTestScript("Test-VirtualMachineScaleSetImageVersion");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVirtualMachineScaleSetNewEncryptionAtHost()
+        {
+            TestRunner.RunTestScript("Test-VirtualMachineScaleSetEncryptionAtHost");
+        }
+        
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVirtualMachineScaleSetOrchestrationVM()
+        {
+            TestRunner.RunTestScript("Test-VirtualMachineScaleSetOrchestrationVM");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVirtualMachineScaleSetAssignedHost()
+        {
+            TestRunner.RunTestScript("Test-VirtualMachineScaleSetAssignedHost");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVirtualMachineScaleSetExtRollingUpgrade()
+        {
+            TestRunner.RunTestScript("Test-VirtualMachineScaleSetExtRollingUpgrade");
         }
     }
 }

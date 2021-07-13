@@ -61,7 +61,7 @@ IotHub East US  testnewkustocluster/mykustodatabase/myiothubdc Microsoft.Kusto/C
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDataConnection
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDataConnection
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -73,15 +73,17 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/update-azkustodataconnection
+https://docs.microsoft.com/powershell/module/az.kusto/update-azkustodataconnection
 #>
 function Update-AzKustoDataConnection {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDataConnection])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDataConnection])]
 [CmdletBinding(DefaultParameterSetName='UpdateExpandedEventHub', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(ParameterSetName='UpdateExpandedEventHub', Mandatory)]
@@ -155,20 +157,6 @@ param(
     # Resource location.
     ${Location},
 
-    [Parameter()]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.EventGridDataFormat]
-    # The data format of the message.
-    # Optionally the data format can be added to each message.
-    ${DataFormat},
-
-    [Parameter()]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [System.String]
-    # The table where the data should be ingested.
-    # Optionally the table information can be added to each message.
-    ${TableName},
-
     [Parameter(ParameterSetName='UpdateExpandedEventHub', Mandatory)]
     [Parameter(ParameterSetName='UpdateExpandedEventGrid', Mandatory)]
     [Parameter(ParameterSetName='UpdateViaIdentityExpandedEventGrid', Mandatory)]
@@ -177,6 +165,13 @@ param(
     [System.String]
     # The resource ID of the event hub to be used to create a data connection / event grid is configured to send events.
     ${EventHubResourceId},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.EventGridDataFormat]
+    # The data format of the message.
+    # Optionally the data format can be added to each message.
+    ${DataFormat},
 
     [Parameter(ParameterSetName='UpdateExpandedEventHub')]
     [Parameter(ParameterSetName='UpdateExpandedIotHub')]
@@ -193,6 +188,13 @@ param(
     # The mapping rule to be used to ingest the data.
     # Optionally the mapping information can be added to each message.
     ${MappingRuleName},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.String]
+    # The table where the data should be ingested.
+    # Optionally the table information can be added to each message.
+    ${TableName},
 
     [Parameter(ParameterSetName='UpdateExpandedEventHub')]
     [Parameter(ParameterSetName='UpdateViaIdentityExpandedEventHub')]
@@ -221,6 +223,20 @@ param(
     [System.String]
     # The resource ID of the storage account where the data resides.
     ${StorageAccountResourceId},
+
+    [Parameter(ParameterSetName='UpdateExpandedEventGrid')]
+    [Parameter(ParameterSetName='UpdateViaIdentityExpandedEventGrid')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.BlobStorageEventType]
+    # The name of blob storage event type to process.
+    ${BlobStorageEventType},
+
+    [Parameter(ParameterSetName='UpdateExpandedEventGrid')]
+    [Parameter(ParameterSetName='UpdateViaIdentityExpandedEventGrid')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.Management.Automation.SwitchParameter]
+    # If set to true, indicates that ingestion should ignore the first record of every file.
+    ${IgnoreFirstRecord},
 
     [Parameter()]
     [Alias('AzureRMContext', 'AzureCredential')]

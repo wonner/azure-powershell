@@ -52,7 +52,7 @@ INPUTOBJECT <IFunctionsIdentity>: Identity Parameter
   [BackupId <String>]: ID of the backup.
   [BaseAddress <String>]: Module base address.
   [BlobServicesName <String>]: The name of the blob Service within the specified storage account. Blob Service Name must be 'default'
-  [CertificateOrderName <String>]: Name of the certificate order.
+  [CertificateOrderName <String>]: Name of the certificate order..
   [ContainerName <String>]: The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number.
   [DeletedSiteId <String>]: The numeric ID of the deleted app, e.g. 12345
   [DetectorName <String>]: Detector Resource Name
@@ -65,7 +65,8 @@ INPUTOBJECT <IFunctionsIdentity>: Identity Parameter
   [GatewayName <String>]: Name of the gateway. Currently, the only supported string is "primary".
   [HostName <String>]: Hostname in the hostname binding.
   [HostingEnvironmentName <String>]: Name of the hosting environment.
-  [Id <String>]: Resource identity path
+  [Id <String>]: Deployment ID.
+  [Id1 <String>]: Resource identity path
   [ImmutabilityPolicyName <String>]: The name of the blob container immutabilityPolicy within the specified storage account. ImmutabilityPolicy Name must be 'default'
   [Instance <String>]: Name of the instance in the multi-role pool.
   [InstanceId <String>]: 
@@ -85,12 +86,12 @@ INPUTOBJECT <IFunctionsIdentity>: Identity Parameter
   [PurgeId <String>]: In a purge status request, this is the Id of the operation the status of which is returned.
   [RelayName <String>]: The relay name for this hybrid connection.
   [ResourceGroupName <String>]: Name of the resource group to which the resource belongs.
-  [ResourceName <String>]: The name of the identity resource.
+  [ResourceName <String>]: The name of the Application Insights component resource.
   [RouteName <String>]: Name of the Virtual Network route.
   [Scope <String>]: The resource provider scope of the resource. Parent resource being extended by Managed Identities.
   [SiteExtensionId <String>]: Site extension name.
   [SiteName <String>]: Site Name
-  [Slot <String>]: Name of the deployment slot. By default, this API returns the production slot.
+  [Slot <String>]: Slot Name
   [SnapshotId <String>]: The ID of the snapshot to read.
   [SourceControlType <String>]: Type of source control
   [SubscriptionId <String>]: Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
@@ -102,13 +103,12 @@ INPUTOBJECT <IFunctionsIdentity>: Identity Parameter
   [WorkerPoolName <String>]: Name of the worker pool.
 
 REQUEST <IBackupRequest>: Description of a backup which will be performed.
-  BackupScheduleFrequencyInterval <Int32>: How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day)
-  BackupScheduleFrequencyUnit <FrequencyUnit>: The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7)
-  BackupScheduleKeepAtLeastOneBackup <Boolean>: True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise.
-  BackupScheduleRetentionPeriodInDay <Int32>: After how many days backups should be deleted.
-  StorageAccountUrl <String>: SAS URL to the container.
   [Kind <String>]: Kind of resource.
   [BackupName <String>]: Name of the backup.
+  [BackupScheduleFrequencyInterval <Int32?>]: How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day)
+  [BackupScheduleFrequencyUnit <FrequencyUnit?>]: The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7)
+  [BackupScheduleKeepAtLeastOneBackup <Boolean?>]: True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise.
+  [BackupScheduleRetentionPeriodInDay <Int32?>]: After how many days backups should be deleted.
   [BackupScheduleStartTime <DateTime?>]: When the schedule should start working.
   [Database <IDatabaseBackupSetting[]>]: Databases included in the backup.
     DatabaseType <DatabaseType>: Database type (e.g. SqlAzure / MySql).
@@ -116,8 +116,9 @@ REQUEST <IBackupRequest>: Description of a backup which will be performed.
     [ConnectionStringName <String>]: Contains a connection string name that is linked to the SiteConfig.ConnectionStrings.         This is used during restore with overwrite connection strings options.
     [Name <String>]: 
   [Enabled <Boolean?>]: True if the backup schedule is enabled (must be included in that case), false if the backup schedule should be disabled.
+  [StorageAccountUrl <String>]: SAS URL to the container.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.functions/backup-azfunctionapp
+https://docs.microsoft.com/powershell/module/az.functions/backup-azfunctionapp
 #>
 function Backup-AzFunctionApp {
 [OutputType([Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190801.IBackupItem])]
@@ -210,6 +211,7 @@ param(
 
     [Parameter(ParameterSetName='BackupExpanded')]
     [Parameter(ParameterSetName='BackupViaIdentityExpanded')]
+    [AllowEmptyCollection()]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190801.IDatabaseBackupSetting[]]
     # Databases included in the backup.

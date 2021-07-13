@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Resources.dll-Help.xml
 Module Name: Az.Resources
 ms.assetid: 66AC5120-80B1-46F2-AA51-132BF361602E
-online version: https://docs.microsoft.com/en-us/powershell/module/az.resources/get-azadapplication
+online version: https://docs.microsoft.com/powershell/module/az.resources/get-azadapplication
 schema: 2.0.0
 ---
 
@@ -250,7 +250,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 [Remove-AzADApplication](./Remove-AzADApplication.md)
 
-[Set-AzADApplication](./Set-AzADApplication.md)
-
 [New-AzADApplication](./New-AzADApplication.md)
+
+[Update-AzADApplication](./Update-AzADApplication.md)
 

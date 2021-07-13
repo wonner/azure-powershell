@@ -28,8 +28,8 @@ using MNM = Microsoft.Azure.Management.Network.Models;
 
 namespace Microsoft.Azure.Commands.Network
 {
-    [GenericBreakingChange("Default behaviour of Zone will be changed", OldWay = "Zone = [] means the Standard Public IP address is zone-redundant",
-        NewWay = "Zone = [] means the Standard Public IP has no zones. If you want to create a zone-redundant Public IP address, please specify all the zones in the region. For example, Zone = [\"1\", \"2\", \"3\"].To learn more visit aka.ms/standardpublicip")]
+    [GenericBreakingChange("Default behaviour of Zone will be changed", OldWay = "Sku = Standard means the Standard Public IP is zone-redundant.",
+        NewWay = "Sku = Standard and Zone = {} means the Standard Public IP has no zones. If you want to create a zone-redundant Public IP address, please specify all the zones in the region. For example, Zone = ['1', '2', '3'].")]
     [Cmdlet("New", ResourceManager.Common.AzureRMConstants.AzureRMPrefix + "PublicIpAddress", SupportsShouldProcess = true),OutputType(typeof(PSPublicIpAddress))]
     public class NewAzurePublicIpAddressCommand : PublicIpAddressBaseCmdlet
     {
@@ -60,6 +60,12 @@ namespace Microsoft.Azure.Commands.Network
         [Parameter(
             Mandatory = false,
             ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The name of the extended location.")]
+        public string EdgeZone { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
             HelpMessage = "The public IP Sku name.")]
         [ValidateNotNullOrEmpty]
         [ValidateSet(
@@ -67,6 +73,17 @@ namespace Microsoft.Azure.Commands.Network
             MNM.PublicIPAddressSkuName.Standard,
             IgnoreCase = true)]
         public string Sku { get; set; }
+
+        [Parameter(
+    Mandatory = false,
+    ValueFromPipelineByPropertyName = true,
+    HelpMessage = "The public IP Sku tier.")]
+        [ValidateNotNullOrEmpty]
+        [ValidateSet(
+    MNM.PublicIPAddressSkuTier.Regional,
+    MNM.PublicIPAddressSkuTier.Global,
+    IgnoreCase = true)]
+        public string Tier { get; set; }
 
         [Parameter(
             Mandatory = true,
@@ -167,10 +184,25 @@ namespace Microsoft.Azure.Commands.Network
             publicIp.Zones = this.Zone?.ToList();
             publicIp.PublicIpPrefix = this.PublicIpPrefix;
 
+            if (!string.IsNullOrEmpty(this.EdgeZone))
+            {
+                publicIp.ExtendedLocation = new PSExtendedLocation(this.EdgeZone);
+            }
+
             if (!string.IsNullOrEmpty(this.Sku))
             {
                 publicIp.Sku = new PSPublicIpAddressSku();
                 publicIp.Sku.Name = this.Sku;
+            }
+
+            if (!string.IsNullOrEmpty(this.Tier))
+            {
+                if(publicIp.Sku == null)
+                {
+                    publicIp.Sku = new PSPublicIpAddressSku();
+                }
+
+                publicIp.Sku.Tier = this.Tier;
             }
 
             if (this.IdleTimeoutInMinutes > 0)

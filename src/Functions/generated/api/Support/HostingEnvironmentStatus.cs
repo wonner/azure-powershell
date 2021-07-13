@@ -6,6 +6,7 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>Current status of the App Service Environment.</summary>
     public partial struct HostingEnvironmentStatus :
         System.IEquatable<HostingEnvironmentStatus>
     {
@@ -24,7 +25,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="HostingEnvironmentStatus" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new HostingEnvironmentStatus(System.Convert.ToString(value));
+            return new HostingEnvironmentStatus(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type HostingEnvironmentStatus</summary>

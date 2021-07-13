@@ -40,6 +40,13 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
 
         [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVirtualMachineInEdgeZone()
+        {
+            TestRunner.RunTestScript("Test-VirtualMachineInEdgeZone");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void TestVirtualMachinePiping()
         {
             TestRunner.RunTestScript("Test-VirtualMachinePiping");
@@ -152,6 +159,13 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
 
         [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVMImageEdgeZoneCmdletOutputFormat()
+        {
+            TestRunner.RunTestScript("Test-VMImageEdgeZoneCmdletOutputFormat");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void TestGetVMSizeFromAllLocations()
         {
             TestRunner.RunTestScript("Test-GetVMSizeFromAllLocations");
@@ -216,9 +230,30 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
 
         [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void VirtualMachineGetStatusWithHealhtExtension()
+        {
+            TestRunner.RunTestScript("Test-VirtualMachineGetStatusWithHealhtExtension");
+        }
+        
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVirtualMachineGetStatusWithAssignedHost()
+        {
+            TestRunner.RunTestScript("Test-VirtualMachineGetStatusWithAssignedHost");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void TestVirtualMachineManagedDiskConversion()
         {
             TestRunner.RunTestScript("Test-VirtualMachineManagedDiskConversion");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVirtualMachineDiskDeleteOption()
+        {
+            TestRunner.RunTestScript("Test-VirtualMachineDiskDeleteOption");
         }
 
         [Fact]
@@ -282,6 +317,104 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
         public void TestLowPriorityVirtualMachine()
         {
             TestRunner.RunTestScript("Test-LowPriorityVirtualMachine");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestEncryptionAtHostVMNull()
+        {
+            TestRunner.RunTestScript("Test-EncryptionAtHostVMNull");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestEncryptionAtHostVM()
+        {
+            TestRunner.RunTestScript("Test-EncryptionAtHostVM");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestEncryptionAtHostVMDefaultParameterSet()
+        {
+            TestRunner.RunTestScript("Test-EncryptionAtHostVMDefaultParamSet");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestSetAzVMOperatingSystem()
+        {
+            TestRunner.RunTestScript("Test-SetAzVMOperatingSystem");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestSetAzVMOperatingSystemError()
+        {
+            TestRunner.RunTestScript("Test-SetAzVMOperatingSystemError");
+        }
+        
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestHostGroupPropertySetOnVirtualMachine()
+        {
+            TestRunner.RunTestScript("Test-HostGroupPropertySetOnVirtualMachine");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVirtualMachineImageListTopOrderExpand()
+        {
+            TestRunner.RunTestScript("Test-VirtualMachineImageListTopOrderExpand");
+        }
+         
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.LiveOnly)]
+        public void TestVirtualMachineBootDiagnostics()
+        {
+            TestRunner.RunTestScript("Test-VirtualMachineBootDiagnostics");
+        }
+        
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVirtualMachineGetVMNameAcrossResourceGroups()
+        {
+            TestRunner.RunTestScript("Test-VirtualMachineGetVMNameAcrossResourceGroups");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVirtualMachineGetVMExtensionPiping()
+        {
+            TestRunner.RunTestScript("Test-VirtualMachineGetVMExtensionPiping");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVirtualMachinePatchAPI()
+        {
+            TestRunner.RunTestScript("Test-VirtualMachinePatchAPI");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestNewAzVMDefaultingSize()
+        {
+            TestRunner.RunTestScript("Test-NewAzVMDefaultingSize");
+        }
+        
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestInvokeAzVMInstallPatch()
+        {
+            TestRunner.RunTestScript("Test-InvokeAzVMInstallPatch");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVirtualMachineAssessmentMode()
+        {
+            TestRunner.RunTestScript("Test-VirtualMachineAssessmentMode");
         }
     }
 }

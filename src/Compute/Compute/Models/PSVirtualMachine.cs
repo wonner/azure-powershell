@@ -54,6 +54,9 @@ namespace Microsoft.Azure.Commands.Compute.Models
         // Gets or sets the property of 'Location'
         public string Location { get; set; }
 
+        // Gets or sets the property of 'EdgeZone'
+        public ExtendedLocation ExtendedLocation { get; set; }
+
         // Gets or sets the license type
         public string LicenseType { get; set; }
 
@@ -77,6 +80,9 @@ namespace Microsoft.Azure.Commands.Compute.Models
 
         // Gets or sets the network profile.
         public NetworkProfile NetworkProfile { get; set; }
+
+        //Gets or sets the security profile 
+        public SecurityProfile SecurityProfile { get; set; }
 
         // Gets or sets the OS profile.
         public OSProfile OSProfile { get; set; }
@@ -121,5 +127,8 @@ namespace Microsoft.Azure.Commands.Compute.Models
 
         // Gets or sets the Priority
         public string Priority { get; set; }
+        
+        // Gets or sets the HostGroup
+        public SubResource HostGroup { get; set; }
     }
 }

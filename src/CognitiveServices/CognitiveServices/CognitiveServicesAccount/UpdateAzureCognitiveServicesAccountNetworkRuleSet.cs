@@ -45,13 +45,13 @@ namespace Microsoft.Azure.Commands.Management.CognitiveServices
 
         [Parameter(
             Mandatory = false,
-            HelpMessage = "Cognitive Services Account NetworkRule DefaultAction.")]
+            HelpMessage = "Cognitive Services Account NetworkRule DefaultAction. Default value `Deny`.")]
         [ValidateNotNullOrEmpty]
         public PSNetWorkRuleDefaultActionEnum DefaultAction
         {
             get
             {
-                return defaultAction == null ? PSNetWorkRuleDefaultActionEnum.Allow : defaultAction.Value;
+                return defaultAction == null ? PSNetWorkRuleDefaultActionEnum.Deny : defaultAction.Value;
             }
             set
             {
@@ -99,7 +99,6 @@ namespace Microsoft.Azure.Commands.Management.CognitiveServices
         private bool isIpRuleSet = false;
         private bool isNetworkRuleSet = false;
 
-
         public override void ExecuteCmdlet()
         {
             base.ExecuteCmdlet();
@@ -111,7 +110,7 @@ namespace Microsoft.Azure.Commands.Management.CognitiveServices
                     throw new System.ArgumentNullException("IpRules, VirtualNetworkRules, DefaultAction", "Request must specify an account NetworkRule property to update.");
                 }
 
-                var account = this.CognitiveServicesClient.Accounts.GetProperties(
+                var account = this.CognitiveServicesClient.Accounts.Get(
                     this.ResourceGroupName,
                     this.Name);
                 NetworkRuleSet accountACL = account.Properties.NetworkAcls;
@@ -119,6 +118,7 @@ namespace Microsoft.Azure.Commands.Management.CognitiveServices
                 if (accountACL == null)
                 {
                     accountACL = new NetworkRuleSet();
+                    accountACL.DefaultAction = NetworkRuleAction.Deny;
                 }
 
                 PSNetworkRuleSet psNetworkRule = PSNetworkRuleSet.Create(accountACL);
@@ -138,18 +138,18 @@ namespace Microsoft.Azure.Commands.Management.CognitiveServices
                     psNetworkRule.DefaultAction = defaultAction.Value;
                 }
 
-                var properties = new CognitiveServicesAccountProperties();
+                var properties = new AccountProperties();
                 properties.NetworkAcls = psNetworkRule.ToNetworkRuleSet();
                 this.CognitiveServicesClient.Accounts.Update(
                     this.ResourceGroupName,
                     this.Name,
-                    new CognitiveServicesAccount()
+                    new Account()
                     {
                         Properties = properties
                     }
                     );
 
-                account = this.CognitiveServicesClient.Accounts.GetProperties(this.ResourceGroupName, this.Name);
+                account = this.CognitiveServicesClient.Accounts.Get(this.ResourceGroupName, this.Name);
 
                 WriteObject(PSNetworkRuleSet.Create(account.Properties.NetworkAcls));
             }

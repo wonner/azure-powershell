@@ -56,6 +56,30 @@ namespace Microsoft.Azure.Commands.Compute.Automation
                             string vmScaleSetName = this.VMScaleSetName;
                             VirtualMachineScaleSet parameters = new VirtualMachineScaleSet();
                             ComputeAutomationAutoMapperProfile.Mapper.Map<PSVirtualMachineScaleSet, VirtualMachineScaleSet>(this.VirtualMachineScaleSet, parameters);
+                            if (parameters?.VirtualMachineProfile?.StorageProfile?.ImageReference?.Version?.ToLower() != "latest")
+                            {
+                                WriteWarning("You are deploying VMSS pinned to a specific image version from Azure Marketplace. \n" +
+                                    "Consider using \"latest\" as the image version. This allows VMSS to auto upgrade when a newer version is available.");
+                            }
+
+                            if (parameters?.OrchestrationMode == "Flexible")
+                            {
+                                if (parameters?.VirtualMachineProfile?.NetworkProfile?.NetworkInterfaceConfigurations != null)
+                                {
+                                    foreach (var nicConfig in parameters.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations)
+                                    {
+                                        if (nicConfig.IpConfigurations != null)
+                                        {
+                                            foreach (var ipConfig in nicConfig.IpConfigurations)
+                                            {
+                                                ipConfig.LoadBalancerInboundNatPools = null;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                parameters.UpgradePolicy = null;
+                            }
 
                             var result = VirtualMachineScaleSetsClient.CreateOrUpdate(resourceGroupName, vmScaleSetName, parameters);
                             var psObject = new PSVirtualMachineScaleSet();

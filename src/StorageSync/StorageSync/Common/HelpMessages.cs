@@ -171,9 +171,13 @@ namespace Microsoft.Azure.Commands.StorageSync.Common
         /// </summary>
         public const string OfflineDataTransferParameter = "Cloud Seeded Data Parameter.";
         /// <summary>
-        /// The cloud seeded data file share URI parameter
+        /// The initial download policy parameter.
         /// </summary>
-        public const string OfflineDataTransferShareNameParameter = "Cloud Seeded Data File Share Uri Parameter.";
+        public const string InitialDownloadPolicyParameter = "Initial Download Policy Parameter.";
+        /// <summary>
+        /// The Local cache mode parameter.
+        /// </summary>
+        public const string LocalCacheModeParameter = "Local Cache Mode Parameter.";
         /// <summary>
         /// The tier files older than days parameter
         /// </summary>

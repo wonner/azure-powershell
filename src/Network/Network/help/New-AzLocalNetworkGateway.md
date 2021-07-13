@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Network.dll-Help.xml
 Module Name: Az.Network
 ms.assetid: 59BE802E-C061-4E25-A446-B00B0BA36019
-online version: https://docs.microsoft.com/en-us/powershell/module/az.network/new-azlocalnetworkgateway
+online version: https://docs.microsoft.com/powershell/module/az.network/new-azlocalnetworkgateway
 schema: 2.0.0
 ---
 
@@ -37,8 +37,8 @@ Address Prefix of the On-Premises network which will be connecting to Azure.
 
 ## EXAMPLES
 
-### 1: Create a Local Network Gateway
-```
+### Example 1: Create a Local Network Gateway
+```powershell
 New-AzLocalNetworkGateway -Name myLocalGW -ResourceGroupName myRG -Location "West US" -GatewayIpAddress 23.99.221.164 -AddressPrefix "10.5.51.0/24"
 ```
 

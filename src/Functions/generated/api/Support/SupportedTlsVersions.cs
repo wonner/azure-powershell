@@ -6,6 +6,7 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>MinTlsVersion: configures the minimum version of TLS required for SSL requests</summary>
     public partial struct SupportedTlsVersions :
         System.IEquatable<SupportedTlsVersions>
     {
@@ -22,7 +23,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="SupportedTlsVersions" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new SupportedTlsVersions(System.Convert.ToString(value));
+            return new SupportedTlsVersions(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type SupportedTlsVersions</summary>

@@ -92,7 +92,11 @@ namespace Microsoft.Azure.Commands.Compute
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "The max price of the billing of a low priority virtual machine")]
         public double MaxPrice { get; set; }
-
+        [Parameter(
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = false,
+            HelpMessage = "EncryptionAtHost property can be used by user in the request to enable or disable the Host Encryption for the virtual machine. This will enable the encryption for all the disks including Resource/Temp disk at host itself.")]
+        public bool EncryptionAtHost { get; set; }
         [Parameter(
             Mandatory = false)]
         [AllowEmptyString]
@@ -130,9 +134,11 @@ namespace Microsoft.Azure.Commands.Compute
                         NetworkProfile = this.VM.NetworkProfile,
                         OsProfile = this.VM.OSProfile,
                         BillingProfile = this.VM.BillingProfile,
+                        SecurityProfile = this.VM.SecurityProfile,
                         Plan = this.VM.Plan,
                         AvailabilitySet = this.VM.AvailabilitySetReference,
                         Location = this.VM.Location,
+                        ExtendedLocation = this.VM.ExtendedLocation,
                         LicenseType = this.VM.LicenseType,
                         Tags = this.Tag != null ? this.Tag.ToDictionary() : this.VM.Tags,
                         Identity = ComputeAutoMapperProfile.Mapper.Map<VirtualMachineIdentity>(this.VM.Identity),
@@ -209,6 +215,20 @@ namespace Microsoft.Azure.Commands.Compute
                             parameters.BillingProfile = new BillingProfile();
                         }
                         parameters.BillingProfile.MaxPrice = this.MaxPrice;
+                    }
+
+                    if (this.IsParameterBound(c => c.EncryptionAtHost))
+                    {
+                        if (parameters.SecurityProfile == null)
+                        {
+                            parameters.SecurityProfile = new SecurityProfile();
+                        }
+                        parameters.SecurityProfile.EncryptionAtHost = this.EncryptionAtHost;
+                    }
+
+                    if (parameters.StorageProfile != null && parameters.StorageProfile.ImageReference != null && parameters.StorageProfile.ImageReference.Id != null)
+                    {
+                        parameters.StorageProfile.ImageReference.Id = null;
                     }
 
                     if (NoWait.IsPresent)

@@ -19,13 +19,13 @@ Get a workspace.
 .Description
 Get a workspace.
 .Example
-PS C:\> Get-AzWvdWorksapce -ResourceGroupName ResourceGroupName -Name WorkspaceName
+PS C:\> Get-AzWvdWorkspace -ResourceGroupName ResourceGroupName -Name WorkspaceName
 
 Location   Name                 Type
 --------   ----                 ----
 eastus     WorkspaceName Microsoft.DesktopVirtualization/workspaces
 .Example
-PS C:\> Get-AzWvdWorksapce -ResourceGroupName ResourceGroupName
+PS C:\> Get-AzWvdWorkspace -ResourceGroupName ResourceGroupName
 
 Location   Name           Type
 --------   ----           ----
@@ -35,7 +35,7 @@ eastus     WorkspaceName2 Microsoft.DesktopVirtualization/workspaces
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Models.IDesktopVirtualizationIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Models.Api20191210Preview.IWorkspace
+Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Models.Api20210201Preview.IWorkspace
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -47,16 +47,18 @@ INPUTOBJECT <IDesktopVirtualizationIdentity>: Identity Parameter
   [DesktopName <String>]: The name of the desktop within the specified desktop group
   [HostPoolName <String>]: The name of the host pool within the specified resource group
   [Id <String>]: Resource identity path
+  [MsixPackageFullName <String>]: The version specific package full name of the MSIX package within specified hostpool
   [ResourceGroupName <String>]: The name of the resource group. The name is case insensitive.
+  [ScalingPlanName <String>]: The name of the scaling plan.
   [SessionHostName <String>]: The name of the session host within the specified host pool
   [SubscriptionId <String>]: The ID of the target subscription.
   [UserSessionId <String>]: The name of the user session within the specified session host
   [WorkspaceName <String>]: The name of the workspace
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.desktopvirtualization/get-azwvdworkspace
+https://docs.microsoft.com/powershell/module/az.desktopvirtualization/get-azwvdworkspace
 #>
 function Get-AzWvdWorkspace {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Models.Api20191210Preview.IWorkspace])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Models.Api20210201Preview.IWorkspace])]
 [CmdletBinding(DefaultParameterSetName='List1', PositionalBinding=$false)]
 param(
     [Parameter(ParameterSetName='Get', Mandatory)]

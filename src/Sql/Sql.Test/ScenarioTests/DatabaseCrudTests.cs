@@ -80,6 +80,13 @@ namespace Microsoft.Azure.Commands.Sql.Test.ScenarioTests
 
         [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestDatabaseCreateWithMaintenanceConfigurationId()
+        {
+            RunPowerShellTest("Test-CreateDatabaseWithMaintenanceConfigurationId");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void TestDatabaseUpdate()
         {
             RunPowerShellTest("Test-UpdateDatabase");
@@ -115,6 +122,14 @@ namespace Microsoft.Azure.Commands.Sql.Test.ScenarioTests
 
         [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestDatabaseUpdateWithMaintenanceConfigurationId()
+        {
+            RunPowerShellTest("Test-UpdateDatabaseWithMaintenanceConfigurationId");
+        }
+
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void TestUpdateServerlessDatabase()
         {
             RunPowerShellTest("Test-UpdateServerlessDatabase");
@@ -143,6 +158,13 @@ namespace Microsoft.Azure.Commands.Sql.Test.ScenarioTests
 
         [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestDatabaseGetWithMaintenanceConfigurationId()
+        {
+            RunPowerShellTest("Test-GetDatabaseWithMaintenanceConfigurationId");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void TestDatabaseRemove()
         {
             RunPowerShellTest("Test-RemoveDatabase");
@@ -153,6 +175,27 @@ namespace Microsoft.Azure.Commands.Sql.Test.ScenarioTests
         public void TestDatabaseCancelOperation()
         {
             RunPowerShellTest("Test-CancelDatabaseOperation");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestDatabaseCreateWithBackupStorageRedundancy()
+        {
+            RunPowerShellTest("Test-CreateDatabaseWithBackupStorageRedundancy");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestDatabaseGetWithBackupStorageRedundancy()
+        {
+            RunPowerShellTest("Test-GetDatabaseWithBackupStorageRedundancy");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestDatabaseCreateWithLedgerEnabled()
+        {
+            RunPowerShellTest("Test-DatabaseCreateWithLedgerEnabled");
         }
     }
 }

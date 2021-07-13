@@ -6,6 +6,7 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>SCM type.</summary>
     public partial struct ScmType :
         System.IEquatable<ScmType>
     {
@@ -44,7 +45,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="ScmType" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new ScmType(System.Convert.ToString(value));
+            return new ScmType(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type ScmType</summary>

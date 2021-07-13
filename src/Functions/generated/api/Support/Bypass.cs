@@ -6,6 +6,10 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>
+    /// Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Possible values are any combination of Logging|Metrics|AzureServices
+    /// (For example, "Logging, Metrics"), or None to bypass none of those traffics.
+    /// </summary>
     public partial struct Bypass :
         System.IEquatable<Bypass>
     {
@@ -31,7 +35,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="Bypass" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new Bypass(System.Convert.ToString(value));
+            return new Bypass(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type Bypass</summary>

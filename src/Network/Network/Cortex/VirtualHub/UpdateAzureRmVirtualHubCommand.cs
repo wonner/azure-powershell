@@ -85,6 +85,8 @@ namespace Microsoft.Azure.Commands.Network
             HelpMessage = "The hub virtual network connections associated with this Virtual Hub.")]
         public PSHubVirtualNetworkConnection[] HubVnetConnection { get; set; }
 
+        public const String RTv1ChangeDesc = "Parameter is being deprecated without being replaced. Use *VHubRouteTable* commands.";
+        [CmdletParameterBreakingChange("RouteTable", ChangeDescription = RTv1ChangeDesc)]
         [Parameter(
             Mandatory = false,
             HelpMessage = "The route table associated with this Virtual Hub.")]
@@ -100,6 +102,15 @@ namespace Microsoft.Azure.Commands.Network
             HelpMessage = "The sku of the Virtual Hub.")]
         [PSArgumentCompleter("Basic", "Standard")]
         public string Sku { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "Preferred Routing Gateway to Route On-Prem traffic from VNET")]
+        [ValidateSet(
+            MNM.PreferredRoutingGateway.ExpressRoute,
+            MNM.PreferredRoutingGateway.VpnGateway,
+            IgnoreCase = true)]
+        public string PreferredRoutingGateway { get; set; }
 
         [Parameter(
             Mandatory = false,
@@ -176,6 +187,11 @@ namespace Microsoft.Azure.Commands.Network
             if (!string.IsNullOrWhiteSpace(this.Sku))
             {
                 virtualHubToUpdate.Sku = this.Sku;
+            }
+
+            if (!string.IsNullOrWhiteSpace(this.PreferredRoutingGateway))
+            {
+                virtualHubToUpdate.PreferredRoutingGateway = this.PreferredRoutingGateway;
             }
 
             //// Update the virtual hub

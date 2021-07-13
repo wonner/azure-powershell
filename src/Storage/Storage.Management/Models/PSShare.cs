@@ -39,6 +39,19 @@ namespace Microsoft.Azure.Commands.Management.Storage.Models
             this.Etag = share.Etag;
             this.LastModifiedTime = share.LastModifiedTime;
             this.QuotaGiB = share.ShareQuota;
+            this.EnabledProtocols = share.EnabledProtocols;
+            this.RootSquash = share.RootSquash;
+            this.Version = share.Version;
+            this.Deleted = share.Deleted;
+            this.DeletedTime = share.DeletedTime;
+            this.RemainingRetentionDays = share.RemainingRetentionDays;
+            this.EnabledProtocols = share.EnabledProtocols;
+            this.RootSquash = share.RootSquash;
+            this.ShareUsageBytes = share.ShareUsageBytes;
+            this.AccessTier = share.AccessTier;
+            this.AccessTierChangeTime = share.AccessTierChangeTime;
+            this.AccessTierStatus = share.AccessTierStatus;
+            this.SnapshotTime = share.SnapshotTime;
         }
 
         public PSShare(FileShareItem share)
@@ -52,33 +65,63 @@ namespace Microsoft.Azure.Commands.Management.Storage.Models
             this.Etag = share.Etag;
             this.LastModifiedTime = share.LastModifiedTime;
             this.QuotaGiB = share.ShareQuota;
+            this.EnabledProtocols = share.EnabledProtocols;
+            this.RootSquash = share.RootSquash;
+            this.Version = share.Version;
+            this.Deleted = share.Deleted;
+            this.DeletedTime = share.DeletedTime;
+            this.RemainingRetentionDays = share.RemainingRetentionDays;
+            this.EnabledProtocols = share.EnabledProtocols;
+            this.RootSquash = share.RootSquash;
+            this.ShareUsageBytes = share.ShareUsageBytes;
+            this.AccessTier = share.AccessTier;
+            this.AccessTierChangeTime = share.AccessTierChangeTime;
+            this.AccessTierStatus = share.AccessTierStatus;
+            this.SnapshotTime = share.SnapshotTime;
         }
 
-        [Ps1Xml(Label = "ResourceGroupName", Target = ViewControl.List, Position = 0)]
+        [Ps1Xml(Label = "ResourceGroupName", Target = ViewControl.Table, Position = 0)]
         public string ResourceGroupName { get; set; }
 
-        [Ps1Xml(Label = "StorageAccountName", Target = ViewControl.List, Position = 1)]
+        [Ps1Xml(Label = "StorageAccountName", Target = ViewControl.Table, Position = 1)]
         public string StorageAccountName { get; set; }
 
         public string Id { get; set; }
 
-        [Ps1Xml(Label = "Name", Target = ViewControl.List, Position = 2)]
+        [Ps1Xml(Label = "Name", Target = ViewControl.Table, Position = 2)]
         public string Name { get; set; }
 
         public string Type { get; set; }
 
-        [Ps1Xml(Label = "Etag", Target = ViewControl.List, Position = 3)]
         public string Etag { get; set; }
 
-        [Ps1Xml(Label = "QuotaGiB", Target = ViewControl.List, Position = 4)]
+        [Ps1Xml(Label = "QuotaGiB", Target = ViewControl.Table, Position = 3)]
         public int? QuotaGiB { get; set; }
 
         public IDictionary<string, string> Metadata { get; set; }       
 
-        [Ps1Xml(Label = "LastModifiedTime", Target = ViewControl.List, ScriptBlock = "$_.LastModifiedTime.ToString(\"u\")", Position = 5)]
         public DateTime? LastModifiedTime { get; set; }
 
-      
+        [Ps1Xml(Label = "Version", Target = ViewControl.List, Position = 7)]
+        public string Version { get; set; }
+
+        public bool? Deleted { get; private set; }
+
+        [Ps1Xml(Label = "DeletedTime", Target = ViewControl.List, ScriptBlock = "$_.DeletedTime.ToString(\"u\")", Position = 6)]
+        public DateTime? DeletedTime { get; private set; }
+
+        public int? RemainingRetentionDays { get; private set; }
+
+        public string EnabledProtocols { get; set; }
+        public string RootSquash { get; set; }
+
+        public string AccessTier { get; set; }
+        public DateTime? AccessTierChangeTime { get; }
+        public string AccessTierStatus { get; }
+
+        public long? ShareUsageBytes { get; }
+
+        public DateTime? SnapshotTime { get; private set; }
         public static string ParseResourceGroupFromId(string idFromServer)
         {
             if (!string.IsNullOrEmpty(idFromServer))

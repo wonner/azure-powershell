@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.KeyVault.dll-Help.xml
 Module Name: Az.KeyVault
 ms.assetid: 363FA51E-D075-4800-A4BE-BFF63FD25C90
-online version: https://docs.microsoft.com/en-us/powershell/module/az.keyvault/get-azkeyvaultcertificate
+online version: https://docs.microsoft.com/powershell/module/az.keyvault/get-azkeyvaultcertificate
 schema: 2.0.0
 ---
 
@@ -76,28 +76,28 @@ The **Get-AzKeyVaultCertificate** cmdlet gets the specified certificate or the v
 ```powershell
 PS C:\> Get-AzKeyVaultCertificate -VaultName "ContosoKV01" -Name "TestCert01"
 Name        : testCert01
-Certificate : [Subject] 
+Certificate : [Subject]
                 CN=contoso.com
 
-              [Issuer] 
+              [Issuer]
                 CN=contoso.com
 
-              [Serial Number] 
+              [Serial Number]
                 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-              [Not Before] 
+              [Not Before]
                 2/8/2016 3:11:45 PM
 
-              [Not After] 
+              [Not After]
                 8/8/2016 4:21:45 PM
 
-              [Thumbprint] 
+              [Thumbprint]
                 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 KeyId       : https://contoso.vault.azure.net:443/keys/TestCert01/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 SecretId    : https://contoso.vault.azure.net:443/secrets/TestCert01/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 Thumbprint  : XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-Tags        : 
+Tags        :
 Enabled     : True
 Created     : 2/8/2016 11:21:45 PM
 Updated     : 2/8/2016 11:21:45 PM
@@ -107,17 +107,11 @@ Updated     : 2/8/2016 11:21:45 PM
 This command gets the certificate named TestCert01 from the key vault named ContosoKV01. To download the certificate as pfx file, run following command. These commands access SecretId and then save the content as a pfx file.
 
 ```powershell
-$cert = Get-AzKeyVaultCertificate -VaultName "ContosoKV01" -Name "TestCert01"
-$secret = Get-AzKeyVaultSecret -VaultName $vaultName -Name $cert.Name
-
-$secretByte = [Convert]::FromBase64String($secret.SecretValueText)
-$x509Cert = new-object System.Security.Cryptography.X509Certificates.X509Certificate2
-$x509Cert.Import($secretByte, "", "Exportable,PersistKeySet")
-$type = [System.Security.Cryptography.X509Certificates.X509ContentType]::Pfx
-$pfxFileByte = $x509Cert.Export($type, $password)
-
+$cert = Get-AzKeyVaultCertificate -VaultName $vaultName -Name $certName
+$secret = Get-AzKeyVaultSecret -VaultName $vaultName -Name $cert.Name -AsPlainText
+$secretByte = [Convert]::FromBase64String($secret)
 # Write to a file
-[System.IO.File]::WriteAllBytes("KeyValt.pfx", $pfxFileByte)
+[System.IO.File]::WriteAllBytes("cert.pfx", $secretByte)
 ```
 
 ### Example 3: Get all the certificates that have been deleted but not purged for this key vault.
@@ -313,7 +307,7 @@ Required: False
 Position: 1
 Default value: None
 Accept pipeline input: False
-Accept wildcard characters: False
+Accept wildcard characters: True
 ```
 
 ```yaml
@@ -325,7 +319,7 @@ Required: True
 Position: 1
 Default value: None
 Accept pipeline input: False
-Accept wildcard characters: False
+Accept wildcard characters: True
 ```
 
 ### -ResourceId
@@ -401,5 +395,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 [Import-AzKeyVaultCertificate](./Import-AzKeyVaultCertificate.md)
 
 [Remove-AzKeyVaultCertificate](./Remove-AzKeyVaultCertificate.md)
-
-[Undo-AzKeyVaultSecretCertificate](./Undo-AzKeyVaultSecretCertificate.md)

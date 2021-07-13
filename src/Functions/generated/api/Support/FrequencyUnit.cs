@@ -6,6 +6,10 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>
+    /// The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval
+    /// should be set to 7)
+    /// </summary>
     public partial struct FrequencyUnit :
         System.IEquatable<FrequencyUnit>
     {
@@ -20,7 +24,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="FrequencyUnit" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new FrequencyUnit(System.Convert.ToString(value));
+            return new FrequencyUnit(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type FrequencyUnit</summary>

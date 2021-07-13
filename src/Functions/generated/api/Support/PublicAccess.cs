@@ -6,6 +6,9 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>
+    /// Specifies whether data in the container may be accessed publicly and the level of access.
+    /// </summary>
     public partial struct PublicAccess :
         System.IEquatable<PublicAccess>
     {
@@ -22,7 +25,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="PublicAccess" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new PublicAccess(System.Convert.ToString(value));
+            return new PublicAccess(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type PublicAccess</summary>

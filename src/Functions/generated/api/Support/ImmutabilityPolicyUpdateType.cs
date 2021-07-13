@@ -6,6 +6,9 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>
+    /// The ImmutabilityPolicy update type of a blob container, possible values include: put, lock and extend.
+    /// </summary>
     public partial struct ImmutabilityPolicyUpdateType :
         System.IEquatable<ImmutabilityPolicyUpdateType>
     {
@@ -24,7 +27,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="ImmutabilityPolicyUpdateType" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new ImmutabilityPolicyUpdateType(System.Convert.ToString(value));
+            return new ImmutabilityPolicyUpdateType(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type ImmutabilityPolicyUpdateType</summary>

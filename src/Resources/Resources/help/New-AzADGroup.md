@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Resources.dll-Help.xml
 Module Name: Az.Resources
-online version: https://docs.microsoft.com/en-us/powershell/module/az.resources/new-azadgroup
+online version: https://docs.microsoft.com/powershell/module/az.resources/new-azadgroup
 schema: 2.0.0
 ---
 
@@ -28,9 +28,9 @@ Creates a new active directory group.Below are the permissions needed:
 
 ## EXAMPLES
 
-### Example 1 - Create a new AD group
+### Example 1: Create a new AD group
 
-```
+```powershell
 PS C:\> New-AzADGroup -DisplayName "MyGroupDisplayName" -MailNickname "MyGroupNick"
 ```
 

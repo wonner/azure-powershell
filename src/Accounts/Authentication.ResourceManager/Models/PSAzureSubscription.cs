@@ -120,11 +120,48 @@ namespace Microsoft.Azure.Commands.Profile.Models
             }
         }
 
+        public string HomeTenantId
+        {
+            get
+            {
+                return this.GetHomeTenant();
+            }
+            set
+            {
+                this.SetHomeTenant(value);
+            }
+        }
+
+        public string[] ManagedByTenantIds
+        {
+            get
+            {
+                return this.GetManagedByTenants();
+            }
+            set
+            {
+                this.SetManagedByTenants(value);
+            }
+        }
+
         public string CurrentStorageAccountName
         {
             get
             {
                 return GetAccountName(CurrentStorageAccount);
+            }
+        }
+
+        private PSAzureSubscriptionPolicy _subscriptionPolicies;
+
+        public PSAzureSubscriptionPolicy SubscriptionPolicies {
+            get
+            {
+                if (this._subscriptionPolicies == null)
+                {
+                    this._subscriptionPolicies= new PSAzureSubscriptionPolicy(this.GetSubscriptionPolicies());
+                }
+                return this._subscriptionPolicies;
             }
         }
 
@@ -172,6 +209,26 @@ namespace Microsoft.Azure.Commands.Profile.Models
             }
 
             return result;
+        }
+
+        public string AuthorizationSource
+        {
+            get
+            {
+                return this.GetProperty(AzureSubscription.Property.AuthorizationSource);
+            }
+        }
+
+        public Dictionary<string, string> Tags
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(this.GetProperty(AzureSubscription.Property.Tags)))
+                {
+                    return this.GetTags();
+                }
+                return null;
+            }
         }
     }
 }

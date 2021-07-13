@@ -68,11 +68,13 @@ $HelpFolders = @()
 
 $resourceManagerPath = "$PSScriptRoot/../artifacts/$BuildConfig/"
 
-$RMpsd1s += Get-ChildItem -Path $resourceManagerPath -Depth 2 | Where-Object { 
-    $_.Name -like "*.psd1" -and $_.FullName -notlike "*dll-Help*" -and $_.Name -ne "SecretManagementExtension.psd1"
+$RMpsd1s += Get-ChildItem -Path $resourceManagerPath -Depth 1 | Where-Object { 
+    $_.Name -like "*.psd1" -and $_.FullName -notlike "*dll-Help*"
 }
 
-$HelpFolders += Get-ChildItem -Path "$PSScriptRoot/../src" -Recurse -Directory | where { $_.Name -eq "help" -and $_.FullName -notlike "*\Stack\*" -and $_.FullName -notlike "*\bin\*"}
+.($PSScriptRoot + "\PreloadToolDll.ps1")
+$HelpFolders += Get-ChildItem -Path "$PSScriptRoot/../src" -Recurse -Directory | where { $_.Name -eq "help" -and (-not [Tools.Common.Utilities.ModuleFilter]::IsAzureStackModule($_.FullName)) -and $_.FullName -notlike "*\bin\*"}
+
 
 # Map the name of the cmdlet to the location of the help file
 $HelpFileMapping = @{}
@@ -97,13 +99,13 @@ $RMpsd1s | ForEach-Object {
 
     $cmdletsToExport = $parsedPsd1.CmdletsToExport | Where-Object { $_ }
     $functionsToExport = $parsedPsd1.FunctionsToExport | Where-Object { $_ }
-    $cmdletsToExport = $cmdletsToExport + $functionsToExport
+    $cmdletsToExport = @() + $cmdletsToExport + $functionsToExport
 
     $cmdletsToExport | ForEach-Object {
         $cmdletHelpFile = $HelpFileMapping["$_.md"]
         if ($cmdletHelpFile -eq $null -and $Target -eq "Latest")
         {
-            throw "No help file found for cmdlet $_"
+            throw "No help file found for cmdlet $_" 
         }
 
         $cmdletLabel = $labelMapping.$_

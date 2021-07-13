@@ -1,7 +1,7 @@
 ---
 external help file:
 Module Name: Az.Kusto
-online version: https://docs.microsoft.com/en-us/powershell/module/az.kusto/update-azkustocluster
+online version: https://docs.microsoft.com/powershell/module/az.kusto/update-azkustocluster
 schema: 2.0.0
 ---
 
@@ -15,11 +15,11 @@ Update a Kusto cluster.
 ### UpdateExpanded (Default)
 ```
 Update-AzKustoCluster -Name <String> -ResourceGroupName <String> [-SubscriptionId <String>]
- [-EnableDiskEncryption] [-EnablePurge] [-EnableStreamingIngest] [-IdentityType <IdentityType>]
- [-IdentityUserAssignedIdentity <Hashtable>] [-KeyVaultPropertyKeyName <String>]
- [-KeyVaultPropertyKeyVaultUri <String>] [-KeyVaultPropertyKeyVersion <String>]
- [-LanguageExtensionValue <ILanguageExtension[]>] [-Location <String>] [-OptimizedAutoscaleIsEnabled]
- [-OptimizedAutoscaleMaximum <Int32>] [-OptimizedAutoscaleMinimum <Int32>]
+ [-IfMatch <String>] [-EnableDiskEncryption] [-EnableDoubleEncryption] [-EnablePurge] [-EnableStreamingIngest]
+ [-EngineType <EngineType>] [-IdentityType <IdentityType>] [-IdentityUserAssignedIdentity <Hashtable>]
+ [-KeyVaultPropertyKeyName <String>] [-KeyVaultPropertyKeyVaultUri <String>]
+ [-KeyVaultPropertyKeyVersion <String>] [-KeyVaultPropertyUserIdentity <String>] [-Location <String>]
+ [-OptimizedAutoscaleIsEnabled] [-OptimizedAutoscaleMaximum <Int32>] [-OptimizedAutoscaleMinimum <Int32>]
  [-OptimizedAutoscaleVersion <Int32>] [-SkuCapacity <Int32>] [-SkuName <AzureSkuName>]
  [-SkuTier <AzureSkuTier>] [-Tag <Hashtable>] [-TrustedExternalTenant <ITrustedExternalTenant[]>]
  [-VirtualNetworkConfigurationDataManagementPublicIPId <String>]
@@ -29,10 +29,11 @@ Update-AzKustoCluster -Name <String> -ResourceGroupName <String> [-SubscriptionI
 
 ### UpdateViaIdentityExpanded
 ```
-Update-AzKustoCluster -InputObject <IKustoIdentity> [-EnableDiskEncryption] [-EnablePurge]
- [-EnableStreamingIngest] [-IdentityType <IdentityType>] [-IdentityUserAssignedIdentity <Hashtable>]
+Update-AzKustoCluster -InputObject <IKustoIdentity> [-IfMatch <String>] [-EnableDiskEncryption]
+ [-EnableDoubleEncryption] [-EnablePurge] [-EnableStreamingIngest] [-EngineType <EngineType>]
+ [-IdentityType <IdentityType>] [-IdentityUserAssignedIdentity <Hashtable>]
  [-KeyVaultPropertyKeyName <String>] [-KeyVaultPropertyKeyVaultUri <String>]
- [-KeyVaultPropertyKeyVersion <String>] [-LanguageExtensionValue <ILanguageExtension[]>] [-Location <String>]
+ [-KeyVaultPropertyKeyVersion <String>] [-KeyVaultPropertyUserIdentity <String>] [-Location <String>]
  [-OptimizedAutoscaleIsEnabled] [-OptimizedAutoscaleMaximum <Int32>] [-OptimizedAutoscaleMinimum <Int32>]
  [-OptimizedAutoscaleVersion <Int32>] [-SkuCapacity <Int32>] [-SkuName <AzureSkuName>]
  [-SkuTier <AzureSkuTier>] [-Tag <Hashtable>] [-TrustedExternalTenant <ITrustedExternalTenant[]>]
@@ -48,7 +49,7 @@ Update a Kusto cluster.
 
 ### Example 1: Update an existing cluster by name
 ```powershell
-PS C:\> Update-AzKustoCluster -ResourceGroupName testrg -Name testnewkustocluster -SkuName Standard_D12_v2 -SkuTier Standard
+PS C:\> Update-AzKustoCluster -ResourceGroupName testrg -Name testnewkustocluster -SkuName Standard_D12_v2 -SkuTier Standard -EngineType 'V2'
 
 Location Name                Type                     Zone
 -------- ----                ----                     ----
@@ -115,6 +116,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -EnableDoubleEncryption
+A boolean value that indicates if double encryption is enabled.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -EnablePurge
 A boolean value that indicates if the purge operations are enabled.
 
@@ -145,8 +161,25 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -EngineType
+The engine type
+
+```yaml
+Type: Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.EngineType
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -IdentityType
-The identity type.
+The type of managed identity used.
+The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities.
+The type 'None' will remove all identities.
 
 ```yaml
 Type: Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.IdentityType
@@ -166,6 +199,23 @@ The user identity dictionary key references will be ARM resource ids in the form
 
 ```yaml
 Type: System.Collections.Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IfMatch
+The ETag of the cluster.
+Omit this value to always overwrite the current cluster.
+Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes.
+
+```yaml
+Type: System.String
 Parameter Sets: (All)
 Aliases:
 
@@ -237,12 +287,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -LanguageExtensionValue
-The list of language extensions.
-To construct, see NOTES section for LANGUAGEEXTENSIONVALUE properties and create a hash table.
+### -KeyVaultPropertyUserIdentity
+The user assigned identity (ARM resource id) that has access to the key.
 
 ```yaml
-Type: Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ILanguageExtension[]
+Type: System.String
 Parameter Sets: (All)
 Aliases:
 
@@ -454,7 +503,7 @@ The cluster's external tenants.
 To construct, see NOTES section for TRUSTEDEXTERNALTENANT properties and create a hash table.
 
 ```yaml
-Type: Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ITrustedExternalTenant[]
+Type: Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ITrustedExternalTenant[]
 Parameter Sets: (All)
 Aliases:
 
@@ -550,7 +599,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ICluster
+### Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICluster
 
 ## NOTES
 
@@ -567,13 +616,12 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   - `[DataConnectionName <String>]`: The name of the data connection.
   - `[DatabaseName <String>]`: The name of the database in the Kusto cluster.
   - `[Id <String>]`: Resource identity path
-  - `[Location <String>]`: Azure location.
+  - `[Location <String>]`: Azure location (region) name.
+  - `[OperationId <String>]`: The Guid of the operation ID
   - `[PrincipalAssignmentName <String>]`: The name of the Kusto principalAssignment.
   - `[ResourceGroupName <String>]`: The name of the resource group containing the Kusto cluster.
+  - `[ScriptName <String>]`: The name of the Kusto database script.
   - `[SubscriptionId <String>]`: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-
-LANGUAGEEXTENSIONVALUE <ILanguageExtension[]>: The list of language extensions.
-  - `[Name <LanguageExtensionName?>]`: The language extension name.
 
 TRUSTEDEXTERNALTENANT <ITrustedExternalTenant[]>: The cluster's external tenants.
   - `[Value <String>]`: GUID representing an external tenant.

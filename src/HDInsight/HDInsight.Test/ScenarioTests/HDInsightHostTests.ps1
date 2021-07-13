@@ -22,15 +22,22 @@ function Test-HostRelatedCommands{
 	# Create some resources that will be used throughout test
 	try
 	{
-		# test create cluster
-		$cluster = Create-Cluster -location "South Central US"
+		# prepare parameter for creating parameter
+		$params= Prepare-ClusterCreateParameter
+
+		# create cluster that will be used throughout test
+		$cluster = New-AzHDInsightCluster -Location $params.location -ResourceGroupName $params.resourceGroupName `
+		-ClusterName $params.clusterName -ClusterSizeInNodes $params.clusterSizeInNodes -ClusterType $params.clusterType `
+		-StorageAccountResourceId $params.storageAccountResourceId -StorageAccountKey $params.storageAccountKey `
+		-HttpCredential $params.httpCredential -SshCredential $params.sshCredential `
+		-MinSupportedTlsVersion $params.minSupportedTlsVersion
 		Assert-NotNull $cluster
 
-		#test Get-AzHDInsightHost
+		# test Get-AzHDInsightHost
 		$result = Get-AzHDInsightHost -ClusterName $cluster.Name
 		Assert-NotNull $result
 		
-		#test Restart-AzHDInsightHost
+		# test Restart-AzHDInsightHost
 		$workernode1= $result|Where-Object {$_.Name -like "wn1*"}
 		$resizeCluster = $workernode1 | Restart-AzHDInsightHost -ClusterName $cluster.Name
 	}

@@ -6,6 +6,10 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>
+    /// <code>Invalid</code> indicates the name provided does not match Azure App Service naming requirements. <code>AlreadyExists</code>
+    /// indicates that the name is already in use and is therefore unavailable.
+    /// </summary>
     public partial struct InAvailabilityReasonType :
         System.IEquatable<InAvailabilityReasonType>
     {
@@ -20,7 +24,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="InAvailabilityReasonType" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new InAvailabilityReasonType(System.Convert.ToString(value));
+            return new InAvailabilityReasonType(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type InAvailabilityReasonType</summary>

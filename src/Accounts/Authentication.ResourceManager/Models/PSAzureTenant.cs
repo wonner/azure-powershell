@@ -105,5 +105,68 @@ namespace Microsoft.Azure.Commands.Profile.Models
         {
             return this.Id;
         }
+
+        public string TenantCategory
+        {
+            get
+            {
+                return this.GetProperty(AzureTenant.Property.TenantCategory);
+            }
+        }
+
+        public string Country
+        {
+            get
+            {
+                return this.GetProperty(AzureTenant.Property.Country);
+            }
+        }
+
+        public string CountryCode
+        {
+            get
+            {
+                return this.GetProperty(AzureTenant.Property.CountryCode);
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return this.GetProperty(AzureTenant.Property.DisplayName);
+            }
+        }
+
+        public string[] Domains
+        {
+            get
+            {
+                return this.GetPropertyAsArray(AzureTenant.Property.Domains);
+            }
+        }
+        public string DefaultDomain
+        {
+            get
+            {
+                return this.GetProperty(AzureTenant.Property.DefaultDomain);
+            }
+        }
+
+        public string TenantType
+        {
+            get
+            {
+                return this.GetProperty(AzureTenant.Property.TenantType);
+            }
+        }
+
+        public string TenantBrandingLogoUrl
+        {
+            get
+            {
+                return this.GetProperty(AzureTenant.Property.TenantBrandingLogoUrl);
+            }
+        }
     }
 }

@@ -87,9 +87,56 @@ namespace Microsoft.Azure.Commands.Management.Storage
         [ValidateNotNull]
         public Hashtable Metadata { get; set; }
 
+
+        [Parameter(
+           Mandatory = false,
+           HelpMessage = "Access tier for specific share. StorageV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium.")]
+        [ValidateSet(ShareAccessTier.TransactionOptimized,
+            ShareAccessTier.Premium,
+            ShareAccessTier.Hot,
+            ShareAccessTier.Cool,
+           IgnoreCase = true)]
+        [ValidateNotNullOrEmpty]
+        public string AccessTier
+        {
+            get
+            {
+                return accessTier;
+            }
+            set
+            {
+                accessTier = value;
+            }
+        }
+        private string accessTier = null;
+
+        [Parameter(Mandatory = false, HelpMessage = "Create a snapshot of existing share with same name.")]
+        public SwitchParameter Snapshot { get; set; }
+        
+        [Parameter(Mandatory = false,
+            HelpMessage = "Sets protocols for file shares. It cannot be changed after file share creation. Possible values include: 'SMB', 'NFS'")]
+        [ValidateSet(EnabledProtocols.NFS,
+            EnabledProtocols.SMB,
+            IgnoreCase = true)]
+        public string EnabledProtocol { get; set; }
+
+        [Parameter(Mandatory = false,
+            HelpMessage = "Sets reduction of the access rights for the remote superuser. Possible values include: 'NoRootSquash', 'RootSquash', 'AllSquash'")]
+        [ValidateSet(RootSquashType.NoRootSquash,
+            RootSquashType.RootSquash,
+            RootSquashType.AllSquash,
+            IgnoreCase = true)]
+        public string RootSquash { get; set; }
+
         public override void ExecuteCmdlet()
         {
             base.ExecuteCmdlet();
+
+            if (!string.IsNullOrWhiteSpace(this.RootSquash)
+                && ! EnabledProtocols.NFS.Equals(this.EnabledProtocol, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException("RootSquash should not be specified when EnabledProtocols is not NFS.", "RootSquash");
+            }
 
             if (ShouldProcess(this.Name, "Create share"))
             {
@@ -105,6 +152,11 @@ namespace Microsoft.Azure.Commands.Management.Storage
                 }
 
                 Dictionary<string, string> MetadataDictionary = CreateMetadataDictionary(Metadata, validate: true);
+                string expand = null;
+                if (this.Snapshot)
+                {
+                    expand = ShareCreateExpand.Snapshots;
+                }
 
                 var share =
                     this.StorageClient.FileShares.Create(
@@ -113,7 +165,11 @@ namespace Microsoft.Azure.Commands.Management.Storage
                             this.Name,
                             new FileShare(
                                 metadata: MetadataDictionary,
-                                shareQuota: shareQuota));
+                                shareQuota: shareQuota,
+                                enabledProtocols: this.EnabledProtocol,
+                                rootSquash: this.RootSquash,
+                                accessTier: accessTier),
+                                expand: expand);
 
                 WriteObject(new PSShare(share));
             }

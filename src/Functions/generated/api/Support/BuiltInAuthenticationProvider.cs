@@ -6,6 +6,11 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>
+    /// The default authentication provider to use when multiple providers are configured.
+    /// This setting is only needed if multiple providers are configured and the unauthenticated client
+    /// action is set to "RedirectToLoginPage".
+    /// </summary>
     public partial struct BuiltInAuthenticationProvider :
         System.IEquatable<BuiltInAuthenticationProvider>
     {
@@ -37,7 +42,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="BuiltInAuthenticationProvider" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new BuiltInAuthenticationProvider(System.Convert.ToString(value));
+            return new BuiltInAuthenticationProvider(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type BuiltInAuthenticationProvider</summary>

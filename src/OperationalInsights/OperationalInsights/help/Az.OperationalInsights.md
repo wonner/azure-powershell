@@ -1,7 +1,7 @@
 ---
 Module Name: Az.OperationalInsights
 Module Guid: e827799a-7abf-4538-a61f-94dc52a48bd4
-Download Help Link: https://docs.microsoft.com/en-us/powershell/module/az.operationalinsights
+Download Help Link: https://docs.microsoft.com/powershell/module/az.operationalinsights
 Help Version: 4.3.2.0
 Locale: en-US
 ---
@@ -40,6 +40,9 @@ Get or list clusters
 
 ### [Get-AzOperationalInsightsDataSource](Get-AzOperationalInsightsDataSource.md)
 Get datasources under Azure Log Analytics workspace.
+
+### [Get-AzOperationalInsightsDeletedWorkspace](Get-AzOperationalInsightsDeletedWorkspace.md)
+List deleted workspaces.
 
 ### [Get-AzOperationalInsightsIntelligencePack](Get-AzOperationalInsightsIntelligencePack.md)
 Gets the available Intelligence Packs.
@@ -133,6 +136,9 @@ Removes a Storage Insight.
 
 ### [Remove-AzOperationalInsightsWorkspace](Remove-AzOperationalInsightsWorkspace.md)
 Removes a workspace.
+
+### [Restore-AzOperationalInsightsWorkspace](Restore-AzOperationalInsightsWorkspace.md)
+Restore a deleted workspace.
 
 ### [Set-AzOperationalInsightsDataSource](Set-AzOperationalInsightsDataSource.md)
 Updates a data source.

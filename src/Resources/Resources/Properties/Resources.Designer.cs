@@ -484,11 +484,29 @@ namespace Microsoft.Azure.Commands.Resources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No AD object was found with the parameters provided please ensure that the display name or GUID is written properly.
+        /// </summary>
+        internal static string NoADObjectFound {
+            get {
+                return ResourceManager.GetString("NoADObjectFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot find any deployments in resource group &apos;{0}&apos;..
         /// </summary>
         internal static string NoDeploymentWereFound {
             get {
                 return ResourceManager.GetString("NoDeploymentWereFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Call to Graph was unsuccesfull, this is likely due to insuficient permissions in Azure AD. Please ensure you have the correct set of permissions..
+        /// </summary>
+        internal static string NotAuthorizedInGraph {
+            get {
+                return ResourceManager.GetString("NotAuthorizedInGraph", resourceCulture);
             }
         }
         
@@ -932,7 +950,7 @@ namespace Microsoft.Azure.Commands.Resources.Properties {
                 return ResourceManager.GetString("ScopeShouldHaveNoEmptyPart", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No new secret was created. This ServicePrincipal will use the password associated with application &apos;{0}&apos;..
         /// </summary>
@@ -1029,6 +1047,15 @@ namespace Microsoft.Azure.Commands.Resources.Properties {
         internal static string UnregisterProviderMessage {
             get {
                 return ResourceManager.GetString("UnregisterProviderMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating role assignment for AD object &apos;{0}&apos; on scope &apos;{1}&apos; with role definition &apos;{2}&apos;.
+        /// </summary>
+        internal static string UpdatingRoleAssignment {
+            get {
+                return ResourceManager.GetString("UpdatingRoleAssignment", resourceCulture);
             }
         }
         

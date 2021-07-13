@@ -47,12 +47,28 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Models
         [Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Origin(Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.PropertyOrigin.Owned)]
         public string Id { get => this._id; set => this._id = value; }
 
+        /// <summary>Backing field for <see cref="MsixPackageFullName" /> property.</summary>
+        private string _msixPackageFullName;
+
+        /// <summary>
+        /// The version specific package full name of the MSIX package within specified hostpool
+        /// </summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Origin(Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.PropertyOrigin.Owned)]
+        public string MsixPackageFullName { get => this._msixPackageFullName; set => this._msixPackageFullName = value; }
+
         /// <summary>Backing field for <see cref="ResourceGroupName" /> property.</summary>
         private string _resourceGroupName;
 
         /// <summary>The name of the resource group. The name is case insensitive.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Origin(Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.PropertyOrigin.Owned)]
         public string ResourceGroupName { get => this._resourceGroupName; set => this._resourceGroupName = value; }
+
+        /// <summary>Backing field for <see cref="ScalingPlanName" /> property.</summary>
+        private string _scalingPlanName;
+
+        /// <summary>The name of the scaling plan.</summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Origin(Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.PropertyOrigin.Owned)]
+        public string ScalingPlanName { get => this._scalingPlanName; set => this._scalingPlanName = value; }
 
         /// <summary>Backing field for <see cref="SessionHostName" /> property.</summary>
         private string _sessionHostName;
@@ -131,6 +147,16 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Models
         SerializedName = @"id",
         PossibleTypes = new [] { typeof(string) })]
         string Id { get; set; }
+        /// <summary>
+        /// The version specific package full name of the MSIX package within specified hostpool
+        /// </summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Runtime.Info(
+        Required = false,
+        ReadOnly = false,
+        Description = @"The version specific package full name of the MSIX package within specified hostpool",
+        SerializedName = @"msixPackageFullName",
+        PossibleTypes = new [] { typeof(string) })]
+        string MsixPackageFullName { get; set; }
         /// <summary>The name of the resource group. The name is case insensitive.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Runtime.Info(
         Required = false,
@@ -139,6 +165,14 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Models
         SerializedName = @"resourceGroupName",
         PossibleTypes = new [] { typeof(string) })]
         string ResourceGroupName { get; set; }
+        /// <summary>The name of the scaling plan.</summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Runtime.Info(
+        Required = false,
+        ReadOnly = false,
+        Description = @"The name of the scaling plan.",
+        SerializedName = @"scalingPlanName",
+        PossibleTypes = new [] { typeof(string) })]
+        string ScalingPlanName { get; set; }
         /// <summary>The name of the session host within the specified host pool</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Runtime.Info(
         Required = false,
@@ -186,8 +220,14 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Models
         string HostPoolName { get; set; }
         /// <summary>Resource identity path</summary>
         string Id { get; set; }
+        /// <summary>
+        /// The version specific package full name of the MSIX package within specified hostpool
+        /// </summary>
+        string MsixPackageFullName { get; set; }
         /// <summary>The name of the resource group. The name is case insensitive.</summary>
         string ResourceGroupName { get; set; }
+        /// <summary>The name of the scaling plan.</summary>
+        string ScalingPlanName { get; set; }
         /// <summary>The name of the session host within the specified host pool</summary>
         string SessionHostName { get; set; }
         /// <summary>The ID of the target subscription.</summary>

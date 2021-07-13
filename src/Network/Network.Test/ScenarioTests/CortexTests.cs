@@ -27,7 +27,7 @@ namespace Commands.Network.Test.ScenarioTests
         {
         }
 
-        [Fact(Skip = "Authentication failed for auxiliary token: The '1' auxiliary tokens contains duplicates which are from the same tenant.")]
+        [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
         [Trait(Category.Owner, NrpTeamAlias.brooklynft)]
         public void TestCortexCRUD()
@@ -44,7 +44,7 @@ namespace Commands.Network.Test.ScenarioTests
         }
 
         [Fact]
-        [Trait(Category.RunType, Category.LiveOnly)]
+        [Trait(Category.AcceptanceType, Category.LiveOnly)]
         [Trait(Category.Owner, NrpTeamAlias.brooklynft)]
         public void TestCortexDownloadConfig()
         {
@@ -89,6 +89,30 @@ namespace Commands.Network.Test.ScenarioTests
         public void TestVHubRouteTableCRUD()
         {
             TestRunner.RunTestScript("Test-VHubRouteTableCRUD");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        [Trait(Category.Owner, NrpTeamAlias.brooklynft)]
+        public void TestVpnGatewayPacketCapture()
+        {
+            TestRunner.RunTestScript("Test-VpnGatewayPacketCapture");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        [Trait(Category.Owner, NrpTeamAlias.brooklynft)]
+        public void TestVpnConnectionPacketCapture()
+        {
+            TestRunner.RunTestScript("Test-VpnConnectionPacketCapture");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        [Trait(Category.Owner, NrpTeamAlias.brooklynft)]
+        public void TestVpnSiteLinkConnectionGetIkeSa()
+        {
+            TestRunner.RunTestScript("Test-VpnSiteLinkConnectionGetIkeSa");
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Commands.Aks.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -61,11 +61,56 @@ namespace Microsoft.Azure.Commands.Aks.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Acr role assignment {0} is already exist..
+        /// </summary>
+        internal static string AcrRoleAssignmentIsAlreadyExist {
+            get {
+                return ResourceManager.GetString("AcrRoleAssignmentIsAlreadyExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please add {0} to your search PATH so the {1} can be found..
         /// </summary>
         internal static string AddDirectoryToPath {
             get {
                 return ResourceManager.GetString("AddDirectoryToPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add-on {0} is not installed for this cluster..
+        /// </summary>
+        internal static string AddonIsNotInstalled {
+            get {
+                return ResourceManager.GetString("AddonIsNotInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WorkspaceResourceId must not be null when enabling add-on Monitoring..
+        /// </summary>
+        internal static string AddonMonitoringShouldWorkWithWorkspaceResourceId {
+            get {
+                return ResourceManager.GetString("AddonMonitoringShouldWorkWithWorkspaceResourceId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add-on {0} is not defined. The accepted add-on names are {1}..
+        /// </summary>
+        internal static string AddonNotDefined {
+            get {
+                return ResourceManager.GetString("AddonNotDefined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SubnetName must not be null when enabling add-on VirtualNode..
+        /// </summary>
+        internal static string AddonVirtualNodeShouldWorkWithSubnetName {
+            get {
+                return ResourceManager.GetString("AddonVirtualNodeShouldWorkWithSubnetName", resourceCulture);
             }
         }
         
@@ -178,11 +223,29 @@ namespace Microsoft.Azure.Commands.Aks.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not create a service principal with the right permissions. Are you an Owner on this project?.
+        ///   Looks up a localized string similar to Could not assign subscription contributor permission to service principal just created. Please make sure you have permission to assign subscription contributor role, or you could use parameter -ClientIdAndSecret to specify one existing service principal id and secret..
+        /// </summary>
+        internal static string CouldNotAssignServicePrincipalWithSubsContributorPermission {
+            get {
+                return ResourceManager.GetString("CouldNotAssignServicePrincipalWithSubsContributorPermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not create a service principal. Do you have enough permission to create service principal? Or you could use parameter -ClientIdAndSecret to specify one existing service principal id and secret..
         /// </summary>
         internal static string CouldNotCreateAServicePrincipalWithTheRightPermissionsAreYouAnOwner {
             get {
                 return ResourceManager.GetString("CouldNotCreateAServicePrincipalWithTheRightPermissionsAreYouAnOwner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not delete &apos;acrpull&apos; role assignment, please make sure you have right permission..
+        /// </summary>
+        internal static string CouldNotDeleteAcrRoleAssignment {
+            get {
+                return ResourceManager.GetString("CouldNotDeleteAcrRoleAssignment", resourceCulture);
             }
         }
         
@@ -205,11 +268,20 @@ namespace Microsoft.Azure.Commands.Aks.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not find SSH public key in {0}. See {1} for help generating a key pair..
+        ///   Looks up a localized string similar to Could not find SSH public key in default path &apos;{0}&apos; which is required for creating k8s cluster. See https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys or https://docs.microsoft.com/en-us/azure/virtual-machines/linux/ssh-from-windows for generating a key pair manually; or you could try to add switch parameter -GenerateSshKey during calling New-AzAksCluster which will automatically generate SSH key file if you have ssh-keygen installed..
         /// </summary>
         internal static string CouldNotFindSshPublicKeyInError {
             get {
                 return ResourceManager.GetString("CouldNotFindSshPublicKeyInError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not get &apos;acrpull&apos; role assignment, please make sure you have right permission..
+        /// </summary>
+        internal static string CouldNotGetAcrRoleAssignment {
+            get {
+                return ResourceManager.GetString("CouldNotGetAcrRoleAssignment", resourceCulture);
             }
         }
         
@@ -241,6 +313,15 @@ namespace Microsoft.Azure.Commands.Aks.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default ssh key file {0} already exists. Please use parameter -SshKeyValue &apos;{0}&apos; instead of -GenerateSshKey..
+        /// </summary>
+        internal static string DefaultSshKeyAlreadyExist {
+            get {
+                return ResourceManager.GetString("DefaultSshKeyAlreadyExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deploying your managed Kubernetes cluster..
         /// </summary>
         internal static string DeployingYourManagedKubeCluster {
@@ -255,6 +336,15 @@ namespace Microsoft.Azure.Commands.Aks.Properties {
         internal static string DidNotFindJob {
             get {
                 return ResourceManager.GetString("DidNotFindJob", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t use -GenerateSshKey and -SshKeyValue at the same time..
+        /// </summary>
+        internal static string DonotUseGenerateSshKeyWithSshKeyValue {
+            get {
+                return ResourceManager.GetString("DonotUseGenerateSshKeyWithSshKeyValue", resourceCulture);
             }
         }
         
@@ -318,6 +408,24 @@ namespace Microsoft.Azure.Commands.Aks.Properties {
         internal static string DoYouWantToOverwriteExistingFile {
             get {
                 return ResourceManager.GetString("DoYouWantToOverwriteExistingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to generate SSH key with detail error: {0}.\nPlease create one issue at https://github.com/Azure/azure-powershell/issues if issue remains..
+        /// </summary>
+        internal static string FailedToGenerateSshKey {
+            get {
+                return ResourceManager.GetString("FailedToGenerateSshKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to run &apos;ssh-keygen&apos; to generate SSH key with detail error: {0}. \nPlease make sure &apos;ssh-keygen&apos; is runable from cmd on Windows or shell on Linux/MacOS, usually you just need to install OpenSSH client which contains &apos;ssh-keygen&apos;, then restart PowerShell and try again..
+        /// </summary>
+        internal static string FailedToRunSshKeyGen {
+            get {
+                return ResourceManager.GetString("FailedToRunSshKeyGen", resourceCulture);
             }
         }
         
@@ -403,6 +511,15 @@ namespace Microsoft.Azure.Commands.Aks.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to NetworkPlugin must be azure if you want to use Windows..
+        /// </summary>
+        internal static string NetworkPluginShouldBeAzure {
+            get {
+                return ResourceManager.GetString("NetworkPluginShouldBeAzure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No config file located at {0}. Creating Kube config..
         /// </summary>
         internal static string NoConfigFileLocatedAtCreatingKubeConfig {
@@ -430,7 +547,7 @@ namespace Microsoft.Azure.Commands.Aks.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No Service Principal found in {0} for this subscription. Creating a new Service Principal..
+        ///   Looks up a localized string similar to No Service Principal found in {0} for current subscription {1}. Trying to create a new Service Principal with Contributor role for the subscription..
         /// </summary>
         internal static string NoServicePrincipalFoundCreatingANewServicePrincipal {
             get {
@@ -453,6 +570,15 @@ namespace Microsoft.Azure.Commands.Aks.Properties {
         internal static string ParameterSetError {
             get {
                 return ResourceManager.GetString("ParameterSetError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent source must not be null or empty..
+        /// </summary>
+        internal static string ParentResourceMustNotBeEmpty {
+            get {
+                return ResourceManager.GetString("ParentResourceMustNotBeEmpty", resourceCulture);
             }
         }
         
@@ -511,6 +637,24 @@ namespace Microsoft.Azure.Commands.Aks.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reseting the credential of the aks cluster..
+        /// </summary>
+        internal static string ResetingTheCredentialOfAksCluster {
+            get {
+                return ResourceManager.GetString("ResetingTheCredentialOfAksCluster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to reset the credential of the aks cluster?.
+        /// </summary>
+        internal static string ResetTheCredentialOfAksCluster {
+            get {
+                return ResourceManager.GetString("ResetTheCredentialOfAksCluster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Retry {0} for {1} after error: {2}.
         /// </summary>
         internal static string RetryAfterActionError {
@@ -534,6 +678,15 @@ namespace Microsoft.Azure.Commands.Aks.Properties {
         internal static string RunningKubectlGetPodsKubeconfigNamespaceSelector {
             get {
                 return ResourceManager.GetString("RunningKubectlGetPodsKubeconfigNamespaceSelector", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plain text of SecureString should match the patten {0}..
+        /// </summary>
+        internal static string SecureStringNotValid {
+            get {
+                return ResourceManager.GetString("SecureStringNotValid", resourceCulture);
             }
         }
         
@@ -700,6 +853,15 @@ namespace Microsoft.Azure.Commands.Aks.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Updating NodePoolMode..
+        /// </summary>
+        internal static string UpdatingNodePoolMode {
+            get {
+                return ResourceManager.GetString("UpdatingNodePoolMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Updating node VM size.
         /// </summary>
         internal static string UpdatingNodeVmSize {
@@ -813,6 +975,15 @@ namespace Microsoft.Azure.Commands.Aks.Properties {
         internal static string WindowsNodePoolNameLengthLimitation {
             get {
                 return ResourceManager.GetString("WindowsNodePoolNameLengthLimitation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WindowsProfileAdminUser and WindowsProfileAdminUserPassword must appear together..
+        /// </summary>
+        internal static string WindowsUserNameAndPasswordShouldAppearTogether {
+            get {
+                return ResourceManager.GetString("WindowsUserNameAndPasswordShouldAppearTogether", resourceCulture);
             }
         }
     }

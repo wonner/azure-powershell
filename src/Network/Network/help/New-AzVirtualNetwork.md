@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Network.dll-Help.xml
 Module Name: Az.Network
 ms.assetid: 81D55C43-C9A3-4DA7-A469-A3A7550FE9A4
-online version: https://docs.microsoft.com/en-us/powershell/module/az.network/new-azvirtualnetwork
+online version: https://docs.microsoft.com/powershell/module/az.network/new-azvirtualnetwork
 schema: 2.0.0
 ---
 
@@ -14,10 +14,10 @@ Creates a virtual network.
 ## SYNTAX
 
 ```
-New-AzVirtualNetwork -Name <String> -ResourceGroupName <String> -Location <String> -AddressPrefix <String[]>
- [-DnsServer <String[]>] [-Subnet <PSSubnet[]>] [-BgpCommunity <String>] [-Tag <Hashtable>]
- [-EnableDdosProtection] [-DdosProtectionPlanId <String>] [-IpAllocation <PSIpAllocation[]>] [-Force] [-AsJob]
- [-DefaultProfile <IAzureContextContainer>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-AzVirtualNetwork -Name <String> -ResourceGroupName <String> -Location <String> [-EdgeZone <String>] -AddressPrefix <String[]>
+ [-DnsServer <String[]>] [-FlowTimeout <Int32>] [-Subnet <PSSubnet[]>] [-BgpCommunity <String>]
+ [-Tag <Hashtable>] [-EnableDdosProtection] [-DdosProtectionPlanId <String>] [-IpAllocation <PSIpAllocation[]>]
+ [-Force] [-AsJob] [-DefaultProfile <IAzureContextContainer>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -25,8 +25,8 @@ The **New-AzVirtualNetwork** cmdlet creates an Azure virtual network.
 
 ## EXAMPLES
 
-### 1:  Create a virtual network with two subnets
-```
+### Example 1: Create a virtual network with two subnets
+```powershell
 New-AzResourceGroup -Name TestResourceGroup -Location centralus
 $frontendSubnet = New-AzVirtualNetworkSubnetConfig -Name frontendSubnet -AddressPrefix "10.0.1.0/24"
 $backendSubnet  = New-AzVirtualNetworkSubnetConfig -Name backendSubnet  -AddressPrefix "10.0.2.0/24"
@@ -40,8 +40,8 @@ is one subnet called frontendSubnet and one subnet called backendSubnet. The
 New-AzVirtualNetwork cmdlet then creates a virtual network using the CIDR 10.0.0.0/16 as the
 address prefix and two subnets.
 
-### 2:  Create a virtual network with DNS settings
-```
+### Example 2: Create a virtual network with DNS settings
+```powershell
 New-AzResourceGroup -Name TestResourceGroup -Location centralus
 $frontendSubnet = New-AzVirtualNetworkSubnetConfig -Name frontendSubnet -AddressPrefix "10.0.1.0/24"
 $backendSubnet  = New-AzVirtualNetworkSubnetConfig -Name backendSubnet  -AddressPrefix "10.0.2.0/24"
@@ -54,8 +54,8 @@ virtual network inherit these DNS servers as defaults. These defaults can be ove
 through a NIC-level setting. If no DNS servers are specified on a VNET and no DNS servers on the
 NICs, then the default Azure DNS servers are used for DNS resolution.
 
-### 3: Create a virtual network with a subnet referencing a network security group
-```
+### Example 3: Create a virtual network with a subnet referencing a network security group
+```powershell
 New-AzResourceGroup -Name TestResourceGroup -Location centralus
 $rdpRule              = New-AzNetworkSecurityRuleConfig -Name rdp-rule -Description "Allow RDP" -Access Allow -Protocol Tcp -Direction Inbound -Priority 100 -SourceAddressPrefix Internet -SourcePortRange * -DestinationAddressPrefix * -DestinationPortRange 3389
 $networkSecurityGroup = New-AzNetworkSecurityGroup -ResourceGroupName TestResourceGroup -Location centralus -Name "NSG-FrontEnd" -SecurityRules $rdpRule
@@ -163,6 +163,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -EdgeZone
+{{ Fill EdgeZone Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -EnableDdosProtection
 A switch parameter which represents if DDoS protection is enabled or not.
 
@@ -175,6 +190,21 @@ Required: False
 Position: Named
 Default value: False
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FlowTimeout
+FlowTimeout enables connection tracking for intra-VM flows. The value should be between 4 and 30 minutes (inclusive) to enable tracking, or null to disable tracking.
+
+```yaml
+Type: System.Nullable`1[System.Int32]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

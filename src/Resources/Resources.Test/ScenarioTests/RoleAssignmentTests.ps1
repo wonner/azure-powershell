@@ -223,6 +223,8 @@ function Test-RaByResourceGroup
     Assert-AreEqual $definitionName $newAssignment.RoleDefinitionName
     Assert-AreEqual $users[0].DisplayName $newAssignment.DisplayName
 
+    #Start-Sleep -Seconds 300
+
     VerifyRoleAssignmentDeleted $newAssignment
 }
 
@@ -249,6 +251,7 @@ function Test-RaByResource
                         -ResourceType $resource.ResourceType `
                         -ResourceName $resource.Name `
                         -RoleAssignmentId db6e0231-1be9-4bcd-bf16-79de537439fe
+
 
     # cleanup
     DeleteRoleAssignment $newAssignment
@@ -355,6 +358,8 @@ function Test-RaByServicePrincipal
     Assert-AreEqual $definitionName $newAssignment2.RoleDefinitionName
     Assert-AreEqual $scope $newAssignment2.Scope
     Assert-AreEqual $servicePrincipals[0].DisplayName $newAssignment2.DisplayName
+    
+    #Start-Sleep -Seconds 300
 
     VerifyRoleAssignmentDeleted $newAssignment1
     VerifyRoleAssignmentDeleted $newAssignment2
@@ -707,18 +712,337 @@ function Test-RaCreatedBySP
     #Setup
     # Conect to azure with SP
     # If you need to re-record replace this setup
-    $passwd = ConvertTo-SecureString 'MCg1SVb3MX' -AsPlainText -Force
-    $pscredential = New-Object System.Management.Automation.PSCredential('c82180ed-2f4b-4cb2-965f-ec5088751710' , $passwd)
-    $tenantId = '1462fd46-afe5-491b-a340-31ebae81d1ce'
+    $passwd = ConvertTo-SecureString 'password' -AsPlainText -Force
+    $pscredential = New-Object System.Management.Automation.PSCredential('0b0f065d-6d84-4ba0-a6ea-efefa3f54365' , $passwd)
+    $tenantId = '01fd65cb-2dca-4aa4-8d2a-62b40c9d27d3'
     Connect-AzAccount -ServicePrincipal -Credential $pscredential -Tenant $tenantId
 
     # Create role assignment
-    $testUser = '1d2121a7-1943-4c7a-a872-b1b2069db55a'
-    $data = New-AzRoleAssignmentWithId `
+    $testUser = '7aa123be-80d1-4aa8-8813-d6a34a6a52d0'
+    $data = {New-AzRoleAssignmentWithId `
     -ObjectId $testUser `
-    -RoleDefinitionName 'Contributor' `
-    -Scope '/subscriptions/3e123c33-5ffc-400f-a9f8-a073bf35f8ca/resourceGroups/daorozco_bug_repro' `
-    -RoleAssignmentId f0f113bd-7ff9-4eb6-b949-5de18d1b38ca
+    -RoleDefinitionName 'Reader' `
+    -Scope '/subscriptions/7ada13d9-fa86-4ea3-bcdc-7545cc0f1bb6' `
+    -RoleAssignmentId f0f113bd-7ff9-4eb6-b949-5de18d1b38ca}
 
     Assert-NotNull $data
+}
+
+<#
+.SYNOPSIS
+Create role assignment with v1 conditions
+#>
+function Test-RaWithV1Conditions{
+
+    #Given
+    $RoleDefinitionId = "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+    $PrincipalId ="7aa123be-80d1-4aa8-8813-d6a34a6a52d0"
+    $Scope = '/subscriptions/7ada13d9-fa86-4ea3-bcdc-7545cc0f1bb6'
+    $Description = "This test should not fail"
+    $Condition = "@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'"
+    $ConditionVersion = "1.0"
+    
+    #When
+    $data = {New-AzRoleAssignmentWithId `
+    -ObjectId $PrincipalId `
+    -Scope $Scope `
+    -RoleDefinitionId $RoleDefinitionId `
+    -Description $Description `
+    -Condition $Condition `
+    -ConditionVersion $ConditionVersion `
+    -RoleAssignmentId 734de5f5-c680-41c0-8beb-67b98c3539d1}
+    
+    #Then
+    Assert-Throws $data "Argument -ConditionVersion must be greater or equal than 2.0"
+}
+
+<#
+.SYNOPSIS
+Create role assignment with v2 conditions
+#>
+function Test-RaWithV2Conditions{
+    #Given
+    $RoleDefinitionId = "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+    $PrincipalId ="7aa123be-80d1-4aa8-8813-d6a34a6a52d0"
+    $Scope = '/subscriptions/7ada13d9-fa86-4ea3-bcdc-7545cc0f1bb6'
+    $Description = "This test should not fail"
+    $Condition = "@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:Name] StringEqualsIgnoreCase 'foo_storage_container'"
+    $ConditionVersion = "2.0"
+
+    #When
+    $data = New-AzRoleAssignmentWithId `
+    -ObjectId $PrincipalId `
+    -Scope $Scope `
+    -RoleDefinitionId $RoleDefinitionId `
+    -Description $Description `
+    -Condition $Condition `
+    -ConditionVersion $ConditionVersion `
+    -RoleAssignmentId 734de5f5-c680-41c0-8beb-67b98c3539d2
+
+    #Then
+    Assert-NotNull $data "The role assignment was not created succesfully"
+    Assert-AreEqual $RoleDefinitionId $data.RoleDefinitionId "Assertion failed because expected RoleDefinitionId '$RoleDefinitionId' does not match actual '$data.RoleDefinitionId'"
+    Assert-AreEqual $PrincipalId $data.ObjectId "Assertion failed because expected PrincipalId '$PrincipalId' does not match actual '$data.ObjectId'"
+    Assert-AreEqual $Scope $data.Scope "Assertion failed because expected Scope '$Scope' does not match actual '$data.Scope'"
+    Assert-AreEqual $Description $data.Description "Assertion failed because expected Description '$Description' does not match actual '$data.Description'"
+    Assert-AreEqual $Condition $data.Condition "Assertion failed because expected Condition '$Condition' does not match actual '$data.Condition'"
+    Assert-AreEqual $ConditionVersion $data.ConditionVersion "Assertion failed because expected ConditionVersion '$ConditionVersion' does not match actual '$data.ConditionVersion'"
+
+    #Cleanup
+    $data = Remove-AzRoleAssignment -InputObject $data
+
+    Assert-Null $data "Role assignment was not deleted properly"
+}
+
+<#
+.SYNOPSIS
+Create role assignment with v2 conditions
+#>
+function Test-RaWithV2ConditionsOnly{
+    #Given
+    $RoleDefinitionId = "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+    $PrincipalId ="7aa123be-80d1-4aa8-8813-d6a34a6a52d0"
+    $Scope = '/subscriptions/7ada13d9-fa86-4ea3-bcdc-7545cc0f1bb6'
+    $Description = "This test should not fail"
+    $Condition = "@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:Name] StringEqualsIgnoreCase 'foo_storage_container'"
+
+    #When
+    $data = New-AzRoleAssignmentWithId `
+    -ObjectId $PrincipalId `
+    -Scope $Scope `
+    -RoleDefinitionId $RoleDefinitionId `
+    -Description $Description `
+    -Condition $Condition `
+    -RoleAssignmentId 734de5f5-c680-41c0-8beb-67b98c3539d2
+
+    #Then
+    Assert-NotNull $data "The role assignment was not created succesfully"
+    Assert-AreEqual $RoleDefinitionId $data.RoleDefinitionId "Assertion failed because expected RoleDefinitionId '$RoleDefinitionId' does not match actual '$data.RoleDefinitionId'"
+    Assert-AreEqual $PrincipalId $data.ObjectId "Assertion failed because expected PrincipalId '$PrincipalId' does not match actual '$data.ObjectId'"
+    Assert-AreEqual $Scope $data.Scope "Assertion failed because expected Scope '$Scope' does not match actual '$data.Scope'"
+    Assert-AreEqual $Description $data.Description "Assertion failed because expected Description '$Description' does not match actual '$data.Description'"
+    Assert-AreEqual $Condition $data.Condition "Assertion failed because expected Condition '$Condition' does not match actual '$data.Condition'"
+    Assert-AreEqual "2.0" $data.ConditionVersion "Assertion failed because expected ConditionVersion '$ConditionVersion' does not match actual '$data.ConditionVersion'"
+
+    #Cleanup
+    $data = Remove-AzRoleAssignment -InputObject $data
+
+    Assert-Null $data "Role assignment was not deleted properly"
+}
+
+<#
+.SYNOPSIS
+Create role assignment with v2 conditions
+#>
+function Test-RaWithV2ConditionVersionOnly{
+    #Given
+    $RoleDefinitionId = "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+    $PrincipalId ="7aa123be-80d1-4aa8-8813-d6a34a6a52d0"
+    $Scope = '/subscriptions/7ada13d9-fa86-4ea3-bcdc-7545cc0f1bb6'
+    $Description = "This test should not fail"
+    $ConditionVersion = "2.0"
+
+    #When
+    $data = {New-AzRoleAssignmentWithId `
+    -ObjectId $PrincipalId `
+    -Scope $Scope `
+    -RoleDefinitionId $RoleDefinitionId `
+    -Description $Description `
+    -ConditionVersion $ConditionVersion `
+    -RoleAssignmentId 734de5f5-c680-41c0-8beb-67b98c3539d2}
+
+    #Then
+    Assert-Throws $data "If -ConditionVersion is set -Condition can not be empty."
+}
+
+<#
+.SYNOPSIS
+update role assignment with v2 conditions
+#>
+function Test-UpdateRa{
+
+    # Given
+    $RoleDefinitionId = "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+    $PrincipalId ="7aa123be-80d1-4aa8-8813-d6a34a6a52d0"
+    $Scope = '/subscriptions/7ada13d9-fa86-4ea3-bcdc-7545cc0f1bb6'
+    $Description1 = "This test should not fail"
+    $Condition1 = "@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:Name] StringEqualsIgnoreCase 'foo_storage_container'"
+    $ConditionVersion = "2.0"
+    $Description2 = "This test should have completed"
+    $Condition2 = "@Resource[Microsoft.Storage/storageAccounts/blobServices/containers/blobs:Path] StringEqualsIgnoreCase 'foo_storage_container'"
+
+    # When
+    $dataOld = New-AzRoleAssignmentWithId `
+    -ObjectId $PrincipalId `
+    -Scope $Scope `
+    -RoleDefinitionId $RoleDefinitionId `
+    -Description $Description1 `
+    -Condition $Condition1 `
+    -ConditionVersion $ConditionVersion `
+    -RoleAssignmentId 734de5f5-c680-41c0-8beb-67b98c3539d2
+    
+    $dataNew = New-AzRoleAssignmentWithId `
+    -ObjectId $PrincipalId `
+    -Scope $Scope `
+    -RoleDefinitionId $RoleDefinitionId `
+    -Description $Description1 `
+    -Condition $Condition1 `
+    -ConditionVersion $ConditionVersion `
+    -RoleAssignmentId 734de5f5-c680-41c0-8beb-67b98c3539d2
+
+    $dataNew.Description = $Description2
+    $dataNew.Condition = $Condition2
+
+    $dataNew = Set-AzRoleAssignment `
+    -InputObject $dataNew `
+    -PassThru
+    
+
+    # Then
+    # Assert intended target changed
+    Assert-AreNotEqual $dataOld.Description $dataNew.Description "Test failed: description didn't change after update call"
+    Assert-AreNotEqual $dataOld.Condition $dataNew.Condition "Test failed: condition didn't change after update call"
+
+    # Assert there where no unintended changes
+    Assert-AreEqual $dataOld.ObjectId $dataNew.ObjectId "Test failed: ObjectId shouldn't have changed after update call"
+    Assert-AreEqual $dataOld.Scope $dataNew.Scope "Test failed: Scope shouldn't have changed after update call"
+    Assert-AreEqual $dataOld.RoleDefinitionId $dataNew.RoleDefinitionId "Test failed: RoleDefinitionId shouldn't have changed after update call"
+    # Consider deleting  bellow assert for certain tests as we might overwrite vondition version behind the seams
+    Assert-AreEqual $dataOld.ConditionVersion $dataNew.ConditionVersion "Test failed: ConditionVersion shouldn't have changed after update call"
+    Assert-AreEqual $dataOld.RoleAssignmentId $dataNew.RoleAssignmentId "Test failed: RoleAssignmentId shouldn't have changed after update call"
+
+    #Cleanup
+    $data = Remove-AzRoleAssignment -InputObject $dataNew
+
+    Assert-Null $data "Role assignment was not deleted properly"
+}
+
+<#
+.SYNOPSIS
+Verifies that role assignment maps to a group
+#>
+function Test-CreateRAForGroup
+{    
+    #Given
+    $RoleDefinitionId = "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+    $PrincipalId ="7aa123be-80d1-4aa8-8813-d6a34a6a52d0"
+    $Scope = '/subscriptions/7ada13d9-fa86-4ea3-bcdc-7545cc0f1bb6'
+
+    #When
+    $data = New-AzRoleAssignmentWithId `
+    -ObjectId $PrincipalId `
+    -Scope $Scope `
+    -RoleDefinitionId $RoleDefinitionId `
+    -RoleAssignmentId 734de5f5-c680-41c0-8beb-67b98c3539d1
+
+    Assert-True {$data.ObjectType -eq "Group"}
+}
+
+<#
+.SYNOPSIS
+Verifies that role assignment maps to a user (not "Guest")
+#>
+function Test-CreateRAForGuest
+{    
+    #Given
+    $RoleDefinitionId = "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+    $PrincipalId ="7aa123be-80d1-4aa8-8813-d6a34a6a52d0"
+    $Scope = '/subscriptions/7ada13d9-fa86-4ea3-bcdc-7545cc0f1bb6'
+
+    #When
+    $data = New-AzRoleAssignmentWithId `
+    -ObjectId $PrincipalId `
+    -Scope $Scope `
+    -RoleDefinitionId $RoleDefinitionId `
+    -RoleAssignmentId 734de5f5-c680-41c0-8beb-67b98c3539d2
+
+    Assert-True {$data.ObjectType -eq "User"}
+}
+
+<#
+.SYNOPSIS
+Verifies that role assignment maps to a user (not "Member")
+#>
+function Test-CreateRAForMember
+{    
+    #Given
+    $RoleDefinitionId = "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+    $PrincipalId ="7aa123be-80d1-4aa8-8813-d6a34a6a52d0"
+    $Scope = '/subscriptions/7ada13d9-fa86-4ea3-bcdc-7545cc0f1bb6'
+
+    #When
+    $data = New-AzRoleAssignmentWithId `
+    -ObjectId $PrincipalId `
+    -Scope $Scope `
+    -RoleDefinitionId $RoleDefinitionId `
+    -RoleAssignmentId 734de5f5-c680-41c0-8beb-67b98c3539d3
+
+    Assert-True {$data.ObjectType -eq "User"}
+}
+
+<#
+.SYNOPSIS
+Verifies that role assignment maps to a ServicePrincipal
+#>
+function Test-CreateRAForServicePrincipal
+{    
+    #Given
+    $RoleDefinitionId = "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+    $PrincipalId ="7aa123be-80d1-4aa8-8813-d6a34a6a52d0"
+    $Scope = '/subscriptions/7ada13d9-fa86-4ea3-bcdc-7545cc0f1bb6'
+
+    #When
+    $data = New-AzRoleAssignmentWithId `
+    -ObjectId $PrincipalId `
+    -Scope $Scope `
+    -RoleDefinitionId $RoleDefinitionId `
+    -RoleAssignmentId 734de5f5-c680-41c0-8beb-67b98c3539d4
+
+    Assert-True {$data.ObjectType -eq "ServicePrincipal"}
+}
+
+<#
+.SYNOPSIS
+Verifies that role assignment gets created properly when using objectype
+#>
+function Test-CreateRAWithObjectType
+{    
+    #Given
+    $RoleDefinitionId = "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+    $PrincipalId ="7aa123be-80d1-4aa8-8813-d6a34a6a52d0"
+    $subscription =  (Get-AzContext).Subscription.Id
+    $Scope = "/subscriptions/$subscription"
+    $ObjectType = "User"
+
+    #When
+    $data = New-AzRoleAssignmentWithId `
+    -ObjectId $PrincipalId `
+    -ObjectType $ObjectType `
+    -Scope $Scope `
+    -RoleDefinitionId $RoleDefinitionId `
+    -RoleAssignmentId 734de5f5-c680-41c0-8beb-67b98c3539d9
+
+    Assert-True {$data.ObjectType -eq "User"}
+}
+
+<#
+.SYNOPSIS
+Verifies that role assignment does not get created for a principal ID that doesn't exist'
+#>
+function Test-CreateRAWhenIdNotExist
+{    
+    #Given
+    $RoleDefinitionId = "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+    $PrincipalId ="6d764d35-6b3b-49ea-83f8-5c223b56eac5"
+    $Scope = '/subscriptions/70cff36b-c4f8-46ea-9655-9cfd44664763'
+    $ExpectedError = 'Exception calling "ExecuteCmdlet" with "0" argument(s): "Principal 6d764d356b3b49ea83f85c223b56eac5 does not exist in the directory 395544B0-BF41-429D-921F-E1CA2252FCF4."'
+
+    #When
+    $function = {New-AzRoleAssignmentWithId `
+    -ObjectId $PrincipalId `
+    -Scope $Scope `
+    -RoleDefinitionId $RoleDefinitionId `
+    -RoleAssignmentId 734de5f5-c680-41c0-8beb-67b98c3539d5}
+
+    Assert-Throws $function $ExpectedError
 }

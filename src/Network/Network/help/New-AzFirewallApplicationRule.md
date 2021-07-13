@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Network.dll-Help.xml
 Module Name: Az.Network
 ms.assetid: C0E1D4DF-232F-49C6-BE4C-05C8E8038329
-online version: https://docs.microsoft.com/en-us/powershell/module/az.network/new-azfirewallapplicationrule
+online version: https://docs.microsoft.com/powershell/module/az.network/new-azfirewallapplicationrule
 schema: 2.0.0
 ---
 
@@ -32,15 +32,15 @@ The **New-AzFirewallApplicationRule** cmdlet creates an application rule for Azu
 
 ## EXAMPLES
 
-### 1:  Create a rule to allow all HTTPS traffic from 10.0.0.0
-```
+### Example 1: Create a rule to allow all HTTPS traffic from 10.0.0.0
+```powershell
 New-AzFirewallApplicationRule -Name "https-rule" -Protocol "https:443" -TargetFqdn "*" -SourceAddress "10.0.0.0"
 ```
 
 This example creates a rule which will allow all HTTPS traffic on port 443 from 10.0.0.0.
 
-### 2:  Create a rule to allow WindowsUpdate for 10.0.0.0/24 subnet
-```
+### Example 2: Create a rule to allow WindowsUpdate for 10.0.0.0/24 subnet
+```powershell
 New-AzFirewallApplicationRule -Name "windows-update-rule" -FqdnTag WindowsUpdate -SourceAddress "10.0.0.0/24"
 ```
 

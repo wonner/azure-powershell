@@ -18,6 +18,17 @@
         - Additional information about change #1
 -->
 ## Upcoming Release
+
+## Version 0.10.0
+* Allowed update of attestation information (e.g. keys, certificates) for exsting device enrollments and enrollment groups
+
+## Version 0.9.0
+* Allow tags in IoT Device Provisioning Service create cmdlet.
+
+## Version 0.8.0
+* Update devices provisioning service sdk
+
+## Version 0.7.4
 * Fixed debug: Enrollment does not retain/assign linked IotHubs while choosing Custom allocation policy. [#12154]
 
 ## Version 0.7.3

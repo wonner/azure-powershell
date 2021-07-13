@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Sql.dll-Help.xml
 Module Name: Az.Sql
-online version: https://docs.microsoft.com/en-us/powershell/module/az.sql/new-azsqlsyncgroup
+online version: https://docs.microsoft.com/powershell/module/az.sql/new-azsqlsyncgroup
 schema: 2.0.0
 ---
 
@@ -297,7 +297,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[Set-AzSqlSyncGroup](./Set-AzSqlSyncGroup.md)
+[Update-AzSqlSyncGroup](./Update-AzSqlSyncGroup.md)
 
 [Remove-AzSqlSyncGroup](./Remove-AzSqlSyncGroup.md)
 

@@ -6,7 +6,7 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Support
 {
 
-    /// <summary>Argument completer implementation for HostPoolType.</summary>
+    /// <summary>HostPool type for desktop.</summary>
     [System.ComponentModel.TypeConverter(typeof(Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Support.HostPoolTypeTypeConverter))]
     public partial struct HostPoolType :
         System.Management.Automation.IArgumentCompleter
@@ -33,6 +33,10 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.DesktopVirtualization.Support
             if (global::System.String.IsNullOrEmpty(wordToComplete) || "Pooled".StartsWith(wordToComplete, global::System.StringComparison.InvariantCultureIgnoreCase))
             {
                 yield return new global::System.Management.Automation.CompletionResult("Pooled", "Pooled", global::System.Management.Automation.CompletionResultType.ParameterValue, "Pooled");
+            }
+            if (global::System.String.IsNullOrEmpty(wordToComplete) || "BYODesktop".StartsWith(wordToComplete, global::System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                yield return new global::System.Management.Automation.CompletionResult("BYODesktop", "BYODesktop", global::System.Management.Automation.CompletionResultType.ParameterValue, "BYODesktop");
             }
         }
     }

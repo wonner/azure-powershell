@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.CosmosDB.dll-Help.xml
 Module Name: Az.CosmosDB
-online version: https://docs.microsoft.com/en-us/powershell/module/az.cosmosdb/get-azcosmosdbsqlcontainerthroughput
+online version: https://docs.microsoft.com/powershell/module/az.cosmosdb/get-azcosmosdbsqlcontainerthroughput
 schema: 2.0.0
 ---
 
@@ -18,7 +18,7 @@ Get-AzCosmosDBSqlContainerThroughput -ResourceGroupName <String> -AccountName <S
  [-Name <String>] [-DefaultProfile <IAzureContextContainer>] [<CommonParameters>]
 ```
 
-### ByParentObjectParameterSet
+### ByObjectParameterSet
 ```
 Get-AzCosmosDBSqlContainerThroughput [-Name <String>] -InputObject <PSSqlContainerGetResults>
  [-DefaultProfile <IAzureContextContainer>] [<CommonParameters>]
@@ -49,7 +49,7 @@ Tags                :
 Name of the Cosmos DB database account.
 
 ```yaml
-Type: String
+Type: System.String
 Parameter Sets: ByNameParameterSet
 Aliases:
 
@@ -64,7 +64,7 @@ Accept wildcard characters: False
 Database name.
 
 ```yaml
-Type: String
+Type: System.String
 Parameter Sets: ByNameParameterSet
 Aliases:
 
@@ -79,7 +79,7 @@ Accept wildcard characters: False
 The credentials, account, tenant, and subscription used for communication with Azure.
 
 ```yaml
-Type: IAzureContextContainer
+Type: Microsoft.Azure.Commands.Common.Authentication.Abstractions.Core.IAzureContextContainer
 Parameter Sets: (All)
 Aliases: AzContext, AzureRmContext, AzureCredential
 
@@ -94,8 +94,8 @@ Accept wildcard characters: False
 Sql Container object.
 
 ```yaml
-Type: PSSqlContainerGetResults
-Parameter Sets: ByParentObjectParameterSet
+Type: Microsoft.Azure.Commands.CosmosDB.Models.PSSqlContainerGetResults
+Parameter Sets: ByObjectParameterSet
 Aliases:
 
 Required: True
@@ -109,7 +109,7 @@ Accept wildcard characters: False
 Container name.
 
 ```yaml
-Type: String
+Type: System.String
 Parameter Sets: (All)
 Aliases:
 
@@ -124,7 +124,7 @@ Accept wildcard characters: False
 Name of resource group.
 
 ```yaml
-Type: String
+Type: System.String
 Parameter Sets: ByNameParameterSet
 Aliases:
 

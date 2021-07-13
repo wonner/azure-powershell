@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.AnalysisServices.dll-Help.xml
 Module Name: Az.AnalysisServices
-online version: https://docs.microsoft.com/en-us/powershell/module/az.analysisservices/set-azanalysisservicesserver
+online version: https://docs.microsoft.com/powershell/module/az.analysisservices/set-azanalysisservicesserver
 schema: 2.0.0
 ---
 
@@ -237,7 +237,7 @@ Accept wildcard characters: False
 
 ### -Sku
 The name of the Sku for the server.
-The supported values are 'S0', 'S1', 'S2', 'S4' for the Standard tier; 'B1', 'B2' for the Basic tier and 'D1' for Development tier.
+The supported values are 'S0', 'S1', 'S2', 'S4', 'S8', 'S9', 'S8v2', 'S9v2' for the Standard tier; 'B1', 'B2' for the Basic tier and 'D1' for Development tier.
 
 ```yaml
 Type: System.String

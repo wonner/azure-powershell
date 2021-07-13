@@ -6,6 +6,7 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>Current order status.</summary>
     public partial struct CertificateOrderStatus :
         System.IEquatable<CertificateOrderStatus>
     {
@@ -43,7 +44,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="CertificateOrderStatus" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new CertificateOrderStatus(System.Convert.ToString(value));
+            return new CertificateOrderStatus(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type CertificateOrderStatus</summary>

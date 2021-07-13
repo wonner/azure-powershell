@@ -36,6 +36,41 @@ namespace Microsoft.Azure.Commands.Management.Storage.Test.ScenarioTests
         public void TestStorageFileShare()
         {
             TestController.NewInstance.RunPsTest(_logger, "Test-StorageFileShare");
-        }      
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestStorageFileShareGetUsage()
+        {
+            TestController.NewInstance.RunPsTest(_logger, "Test-StorageFileShareGetUsage");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestShareSoftDeletee()
+        {
+            TestController.NewInstance.RunPsTest(_logger, "Test-ShareSoftDelete");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestShareSnapshot()
+        {
+            TestController.NewInstance.RunPsTest(_logger, "Test-ShareSnapshot");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestFileServiceProperties()
+        {
+            TestController.NewInstance.RunPsTest(_logger, "Test-FileServiceProperties");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestAzureStorageShareNFS()
+        {
+            TestController.NewInstance.RunPsTest(_logger, "Test-AzureStorageShareNFS");
+        }        
     }
 }

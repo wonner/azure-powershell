@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.CognitiveServices.dll-Help.xml
 Module Name: Az.CognitiveServices
-online version: https://docs.microsoft.com/en-us/powershell/module/az.cognitiveservices/update-azcognitiveservicesaccountnetworkruleset
+online version: https://docs.microsoft.com/powershell/module/az.cognitiveservices/update-azcognitiveservicesaccountnetworkruleset
 schema: 2.0.0
 ---
 
@@ -50,7 +50,7 @@ This command clean up rules of NetworkRule of a Cognitive Services account (othe
 ## PARAMETERS
 
 ### -DefaultAction
-Cognitive Services Account NetworkRule DefaultAction.
+Cognitive Services Account NetworkRule DefaultAction. Default value `Deny`.
 
 ```yaml
 Type: Microsoft.Azure.Commands.Management.CognitiveServices.Models.PSNetWorkRuleDefaultActionEnum

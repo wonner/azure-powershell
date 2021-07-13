@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Synapse.dll-Help.xml
 Module Name: Az.Synapse
-online version: https://docs.microsoft.com/en-us/powershell/module/az.synapse/new-azsynapseworkspace
+online version: https://docs.microsoft.com/powershell/module/az.synapse/new-azsynapseworkspace
 schema: 2.0.0
 ---
 
@@ -15,8 +15,10 @@ Creates a Synapse Analytics workspace.
 ```
 New-AzSynapseWorkspace -ResourceGroupName <String> -Name <String> -Location <String> [-Tag <Hashtable>]
  -DefaultDataLakeStorageAccountName <String> -DefaultDataLakeStorageFilesystem <String>
- -SqlAdministratorLoginCredential <PSCredential> [-ManagedVirtualNetwork <String>] [-AsJob]
- [-DefaultProfile <IAzureContextContainer>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ -SqlAdministratorLoginCredential <PSCredential> [-ManagedVirtualNetwork <PSManagedVirtualNetworkSettings>]
+ [-EncryptionKeyName <String>] [-EncryptionKeyIdentifier <String>] [-AsJob]
+ [-ManagedResourceGroupName <String>] [-DefaultProfile <IAzureContextContainer>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -32,6 +34,16 @@ PS C:\> New-AzSynapseWorkspace -ResourceGroupName ContosoResourceGroup -Name Con
 ```
 
 This command creates a Synapse Analytics workspace named ContosoWorkspace that uses the ContosoAdlGenStorage Data Store, in the resource group named ContosoResourceGroup.
+
+### Example 2
+```powershell
+PS C:\> $config = New-AzSynapseManagedVirtualNetworkConfig -PreventDataExfiltration -AllowedAadTenantIdsForLinking ContosoTenantId
+PS C:\> $password = ConvertTo-SecureString "Password123!" -AsPlainText -Force
+PS C:\> $creds = New-Object System.Management.Automation.PSCredential ("ContosoUser", $password)
+PS C:\> New-AzSynapseWorkspace -ResourceGroupName ContosoResourceGroup -Name ContosoWorkspace -Location northeurope -DefaultDataLakeStorageAccountName ContosoAdlGen2Storage -DefaultDataLakeStorageFilesystem ContosoFileSystem -SqlAdministratorLoginCredential $creds -ManagedVirtualNetwork $config
+```
+
+The first command creates a managed virtual network configuration. Then the rest methods uses the configuration to creates a new Synapse workspace.
 
 ## PARAMETERS
 
@@ -95,6 +107,36 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -EncryptionKeyIdentifier
+Key identifier should be in the format of: https://{keyvaultname}.vault.azure.net/keys/{keyname}.
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EncryptionKeyName
+The workspace encryption key name.
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Location
 Azure region where the resource should be created.
 
@@ -110,14 +152,28 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -ManagedVirtualNetwork
-Name of a Synapse-managed virtual network dedicated for the Azure Synapse workspace.
+### -ManagedResourceGroupName
+A container that holds ancillary resources. Created by default while the name can be specified. Note that this field must not be the same with ResearchGroupName
 
 ```yaml
 Type: System.String
 Parameter Sets: (All)
 Aliases:
-Accepted values: default
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ManagedVirtualNetwork
+Name of a Synapse-managed virtual network dedicated for the Azure Synapse workspace.
+
+```yaml
+Type: Microsoft.Azure.Commands.Synapse.Models.PSManagedVirtualNetworkSettings
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named

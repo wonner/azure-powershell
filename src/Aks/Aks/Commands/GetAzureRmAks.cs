@@ -12,19 +12,24 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using Microsoft.Azure.Management.ContainerService;
+
 using Microsoft.Azure.Commands.Aks.Models;
 using Microsoft.Azure.Commands.Aks.Properties;
+using Microsoft.Azure.Commands.Common.Exceptions;
 using Microsoft.Azure.Commands.ResourceManager.Common.ArgumentCompleters;
+using Microsoft.Azure.Management.ContainerService;
 using Microsoft.Azure.Management.Internal.Resources.Utilities.Models;
+using Microsoft.Rest;
+using Microsoft.WindowsAzure.Commands.Common.CustomAttributes;
 
 namespace Microsoft.Azure.Commands.Aks
 {
-    [Cmdlet("Get", ResourceManager.Common.AzureRMConstants.AzureRMPrefix + "Aks", DefaultParameterSetName = ResourceGroupParameterSet)]
+    [CmdletDeprecation(ReplacementCmdletName = "Get-AzAksCluster")]
+    [Cmdlet("Get", ResourceManager.Common.AzureRMConstants.AzureRMPrefix + "AksCluster", DefaultParameterSetName = ResourceGroupParameterSet)]
+    [Alias("Get-" + ResourceManager.Common.AzureRMConstants.AzureRMPrefix + "Aks")]
     [OutputType(typeof(PSKubernetesCluster))]
     public class GetAzureRmAks : KubeCmdletBase
     {
@@ -74,25 +79,42 @@ namespace Microsoft.Azure.Commands.Aks
 
             RunCmdLet(() =>
             {
-                switch (ParameterSetName)
+                try
                 {
-                    case NameParameterSet:
-                        var kubeCluster = Client.ManagedClusters.Get(ResourceGroupName, Name);
-                        WriteObject(PSMapper.Instance.Map<PSKubernetesCluster>(kubeCluster), true);
-                        break;
-                    case IdParameterSet:
-                        var resource = new ResourceIdentifier(Id);
-                        var idCluster = Client.ManagedClusters.Get(resource.ResourceGroupName, resource.ResourceName);
-                        WriteObject(PSMapper.Instance.Map<PSKubernetesCluster>(idCluster), true);
-                        break;
-                    case ResourceGroupParameterSet:
-                        var kubeClusters = string.IsNullOrEmpty(ResourceGroupName)
-                            ? Client.ManagedClusters.List()
-                            : Client.ManagedClusters.ListByResourceGroup(ResourceGroupName);
-                        WriteObject(kubeClusters.Select(PSMapper.Instance.Map<PSKubernetesCluster>), true);
-                        break;
-                    default:
-                        throw new ArgumentException(Resources.ParameterSetError);
+                    switch (ParameterSetName)
+                    {
+                        case NameParameterSet:
+                            var kubeCluster = Client.ManagedClusters.Get(ResourceGroupName, Name);
+                            WriteObject(PSMapper.Instance.Map<PSKubernetesCluster>(kubeCluster), true);
+                            break;
+                        case IdParameterSet:
+                            var resource = new ResourceIdentifier(Id);
+                            var idCluster = Client.ManagedClusters.Get(resource.ResourceGroupName, resource.ResourceName);
+                            WriteObject(PSMapper.Instance.Map<PSKubernetesCluster>(idCluster), true);
+                            break;
+                        case ResourceGroupParameterSet:
+                            var kubeClusterList = string.IsNullOrEmpty(ResourceGroupName)
+                                        ? ListPaged(() => Client.ManagedClusters.List(),
+                                            nextPageLink => Client.ManagedClusters.ListNext(nextPageLink))
+                                        : ListPaged(() => Client.ManagedClusters.ListByResourceGroup(ResourceGroupName),
+                                            nextPageLink => Client.ManagedClusters.ListNext(nextPageLink));
+
+                            WriteObject(kubeClusterList.Select(PSMapper.Instance.Map<PSKubernetesCluster>), true);
+                            break;
+                        default:
+                            throw new AzPSArgumentException(Resources.ParameterSetError, "InvalidParameterSet", null, Resources.ParameterSetError);
+                    }
+                }
+                catch (ValidationException e)
+                {
+                    var sdkApiParameterMap = new Dictionary<string, CmdletParameterNameValuePair>()
+                                {
+                                    { Constants.DotNetApiParameterResourceGroupName, new CmdletParameterNameValuePair(nameof(ResourceGroupName), ResourceGroupName) },
+                                    { Constants.DotNetApiParameterResourceName, new CmdletParameterNameValuePair(nameof(Name), Name) },
+                                };
+
+                    if (!HandleValidationException(e, sdkApiParameterMap))
+                        throw;
                 }
             });
         }

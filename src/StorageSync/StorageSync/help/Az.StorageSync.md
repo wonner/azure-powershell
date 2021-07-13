@@ -1,7 +1,7 @@
 ---
 Module Name: Az.StorageSync
 Module Guid: 001b4bbc-9d7d-43b2-9e95-7a70325e9509
-Download Help Link: https://docs.microsoft.com/en-us/powershell/module/az.storagesync
+Download Help Link: https://docs.microsoft.com/powershell/module/az.storagesync
 Help Version: 1.0.0.0
 Locale: en-US
 ---
@@ -31,9 +31,6 @@ This command can be used to manually initiate the detection of namespaces change
 
 ### [Invoke-AzStorageSyncCompatibilityCheck](Invoke-AzStorageSyncCompatibilityCheck.md)
 Checks for potential compatibility issues between your system and Azure File Sync.
-
-### [Invoke-AzStorageSyncFileRecall](Invoke-AzStorageSyncFileRecall.md)
-This command recalls all tiered files back to local disk.
 
 ### [New-AzStorageSyncCloudEndpoint](New-AzStorageSyncCloudEndpoint.md)
 This command creates an Azure File Sync cloud endpoint in a sync group.

@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Security.dll-Help.xml
 Module Name: Az.Security
-online version: https://docs.microsoft.com/en-us/powershell/module/az.security/get-azsecurityadvancedthreatprotection
+online version: https://docs.microsoft.com/powershell/module/az.security/get-azsecurityadvancedthreatprotection
 schema: 2.0.0
 ---
 
@@ -23,7 +23,7 @@ To use this cmdlet, specify the *ResourceId* parameter.
 
 ## EXAMPLES
 
-### Example 1 : Storage Account
+### Example 1: Storage Account
 ```powershell
 PS C:\> Get-AzSecurityAdvancedThreatProtection -ResourceId "/subscriptions/xxxxxxx-xxxx-xxxx-xxxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/myStorageAccount/"
 
@@ -34,7 +34,7 @@ IsEnabled Id
 
 This command gets the advanced threat protection policy for resource id `"/subscriptions/xxxxxxx-xxxx-xxxx-xxxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/myStorageAccount/"`.
 
-### Example 2 : CosmosDB Account
+### Example 2: CosmosDB Account
 ```powershell
 PS C:\> Get-AzSecurityAdvancedThreatProtection -ResourceId "/subscriptions/xxxxxxx-xxxx-xxxx-xxxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.DocumentDb/databaseAccounts/myCosmosDBAccount/"
 

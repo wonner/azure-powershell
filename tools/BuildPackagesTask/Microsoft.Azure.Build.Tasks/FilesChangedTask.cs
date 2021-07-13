@@ -15,6 +15,7 @@
 namespace Microsoft.WindowsAzure.Build.Tasks
 {
     using System;
+    using System.IO;
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
     using Microsoft.Build.Framework;
@@ -44,7 +45,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         public string PullRequestNumber { get; set; }
 
         /// <summary>
-        /// Gets or set the TargetModule, e.g. Az.Storage
+        /// Gets or set the TargetModule, e.g. Storage
         /// </summary>
         public string TargetModule { get; set; }
 
@@ -137,17 +138,20 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
                 FilesChanged = filesChanged.ToArray();
             }
-            else if(!string.IsNullOrEmpty(TargetModule))
-            {
-                //Add one FAKE changed file for TargetModule, so TargetModule will be included for FilterTask
-                FilesChanged = new string[] { $"src/{TargetModule}/changeLog.md" };
-            }
             else
             {
                 FilesChanged = new string[] { };
             }
 
+            SerializeChangedFilesToFile(FilesChanged);
+
             return true;
+        }
+
+        // This method will record the changed files into FilesChanged.txt under root folder for other task to consum.
+        private void SerializeChangedFilesToFile(string[] FilesChanged)
+        {
+            File.WriteAllLines("FilesChanged.txt", FilesChanged);
         }
     }
 }

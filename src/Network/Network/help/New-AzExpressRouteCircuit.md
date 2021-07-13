@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Network.dll-Help.xml
 Module Name: Az.Network
 ms.assetid: E40CAF2F-ED57-4AC1-8B9A-E48042DD8F91
-online version: https://docs.microsoft.com/en-us/powershell/module/az.network/new-azexpressroutecircuit
+online version: https://docs.microsoft.com/powershell/module/az.network/new-azexpressroutecircuit
 schema: 2.0.0
 ---
 
@@ -37,7 +37,7 @@ The **New-AzExpressRouteCircuit** cmdlet creates an Azure express route circuit.
 ## EXAMPLES
 
 ### Example 1: Create a new ExpressRoute circuit
-```
+```powershell
 $parameters = @{
     Name='ExpressRouteCircuit'
     ResourceGroupName='ExpressRouteResourceGroup'
@@ -52,7 +52,7 @@ New-AzExpressRouteCircuit @parameters
 ```
 
 ### Example 2: Create a new ExpressRoute circuit on ExpressRoutePort
-```
+```powershell
 $parameters = @{
     Name='ExpressRouteCircuit'
     ResourceGroupName='ExpressRouteResourceGroup'

@@ -6,6 +6,7 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>Management information availability state for the app.</summary>
     public partial struct SiteAvailabilityState :
         System.IEquatable<SiteAvailabilityState>
     {
@@ -22,7 +23,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="SiteAvailabilityState" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new SiteAvailabilityState(System.Convert.ToString(value));
+            return new SiteAvailabilityState(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type SiteAvailabilityState</summary>

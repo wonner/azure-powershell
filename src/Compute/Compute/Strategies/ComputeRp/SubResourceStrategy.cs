@@ -14,7 +14,7 @@
 
 using Microsoft.Azure.Commands.Common.Strategies;
 using Microsoft.Azure.Management.Compute.Models;
-using N = Microsoft.Azure.Management.Internal.Network.Version2017_10_01.Models;
+using N = Microsoft.Azure.PowerShell.Cmdlets.Compute.Helpers.Network.Models;
 
 namespace Microsoft.Azure.Commands.Compute.Strategies.ComputeRp
 {
@@ -31,6 +31,10 @@ namespace Microsoft.Azure.Commands.Compute.Strategies.ComputeRp
         public static SubResource GetReference(
             this IEngine engine, ResourceConfig<ProximityPlacementGroup> proximityPlacementGroup)
             => engine.GetSubResourceReference(proximityPlacementGroup);
+
+        public static SubResource GetReference(
+            this IEngine engine, ResourceConfig<DedicatedHostGroup> dedicatedHostGroup)
+            => engine.GetSubResourceReference(dedicatedHostGroup);
 
         public static SubResource GetReference(
             this IEngine engine, ResourceConfig<N.NetworkSecurityGroup> networkSecurityGroup)

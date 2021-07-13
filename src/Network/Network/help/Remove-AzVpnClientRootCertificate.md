@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Network.dll-Help.xml
 Module Name: Az.Network
 ms.assetid: 5D857FF6-A27D-4031-948D-8A69D24B4AD4
-online version: https://docs.microsoft.com/en-us/powershell/module/az.network/remove-azvpnclientrootcertificate
+online version: https://docs.microsoft.com/powershell/module/az.network/remove-azvpnclientrootcertificate
 schema: 2.0.0
 ---
 
@@ -29,10 +29,10 @@ For more information about the text representation of a certificate see the *Pub
 ## EXAMPLES
 
 ### Example 1: Remove a client root certificate from a virtual network gateway
-```
+```powershell
 PS C:\>$Text = Get-Content -Path "C:\Azure\Certificates\ExportedCertificate.cer"
 PS C:\> $CertificateText = for ($i=1; $i -lt $Text.Length -1 ; $i++){$Text[$i]}
-PS C:\> Remove-AzVpnClientRootCertificate -PublicCertData $CertificateText -ResourceGroupName "ContosoResourceGroup" -VirtualNetworkGatewayName "ContosoVirtualGateway"-VpnClientRootCertificateName "ContosoRootCertificate"
+PS C:\> Remove-AzVpnClientRootCertificate -PublicCertData $CertificateText -ResourceGroupName "ContosoResourceGroup" -VirtualNetworkGatewayName "ContosoVirtualGateway" -VpnClientRootCertificateName "ContosoRootCertificate"
 ```
 
 This example removes a client root certificate named ContosoRootCertificate from the virtual network gateway ContosoVirtualGateway.

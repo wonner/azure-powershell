@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Network.dll-Help.xml
 Module Name: Az.Network
-online version: https://docs.microsoft.com/en-us/powershell/module/az.network/remove-azvpnclientipsecparameter
+online version: https://docs.microsoft.com/powershell/module/az.network/remove-azvpnclientipsecparameter
 schema: 2.0.0
 ---
 
@@ -36,8 +36,8 @@ The **Remove-AzVpnClientIpsecParameter** cmdlet removes the vpn custom ipsec par
 
 ## EXAMPLES
 
-### 1: Deletes the set vpn ipsec parameters set on the Virtual Network Gateway
-```
+### Example 1: Deletes the set vpn ipsec parameters set on the Virtual Network Gateway
+```powershell
 PS C:\> $delete = Remove-AzVpnClientIpsecParameter -VirtualNetworkGatewayName myGateway -ResourceGroupName myRG
 ```
 

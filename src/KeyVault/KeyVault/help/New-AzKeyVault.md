@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.KeyVault.dll-Help.xml
 Module Name: Az.KeyVault
 ms.assetid: 4C40DAC9-5C0B-4AFD-9BDB-D407E0B9F701
-online version: https://docs.microsoft.com/en-us/powershell/module/az.keyvault/new-azkeyvault
+online version: https://docs.microsoft.com/powershell/module/az.keyvault/new-azkeyvault
 schema: 2.0.0
 ---
 
@@ -15,8 +15,8 @@ Creates a key vault.
 
 ```
 New-AzKeyVault [-Name] <String> [-ResourceGroupName] <String> [-Location] <String> [-EnabledForDeployment]
- [-EnabledForTemplateDeployment] [-EnabledForDiskEncryption] [-DisableSoftDelete] [-EnablePurgeProtection]
- [-SoftDeleteRetentionInDays <Int32>] [-Sku <SkuName>] [-Tag <Hashtable>]
+ [-EnabledForTemplateDeployment] [-EnabledForDiskEncryption] [-EnablePurgeProtection]
+ [-EnableRbacAuthorization] [-SoftDeleteRetentionInDays <Int32>] [-Sku <String>] [-Tag <Hashtable>]
  [-NetworkRuleSet <PSKeyVaultNetworkRuleSet>] [-DefaultProfile <IAzureContextContainer>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
@@ -135,21 +135,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DisableSoftDelete
-If specified, 'soft delete' functionality is disabled for this key vault.
-
-```yaml
-Type: System.Management.Automation.SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -EnabledForDeployment
 Enables the Microsoft.Compute resource provider to retrieve secrets from this key vault when this
 key vault is referenced in resource creation, for example when creating a virtual machine.
@@ -211,8 +196,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -EnableRbacAuthorization
+If specified, enables to authorize data actions by Role Based Access Control (RBAC), and then the access policies specified in vault properties will be ignored. Note that management actions are always authorized with RBAC.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Location
-Specifies the Azure region in which to create the key vault. Use the command [Get-AzLocation](https://docs.microsoft.com/powershell/module/Azure/Get-AzLocation) to see your choices.
+Specifies the Azure region in which to create the key vault. Use the command [Get-AzLocation](/powershell/module/az.resources/get-azlocation) to see your choices.
 
 ```yaml
 Type: System.String
@@ -275,10 +275,9 @@ Accept wildcard characters: False
 Specifies the SKU of the key vault instance. For information about which features are available for each SKU, see the Azure Key Vault Pricing website (https://go.microsoft.com/fwlink/?linkid=512521).
 
 ```yaml
-Type: Microsoft.Azure.Management.KeyVault.Models.SkuName
+Type: System.String
 Parameter Sets: (All)
 Aliases:
-Accepted values: Standard, Premium
 
 Required: False
 Position: Named

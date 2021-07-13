@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Sql.dll-Help.xml
 Module Name: Az.Sql
-online version: https://docs.microsoft.com/en-us/powershell/module/az.sql/new-azsqlsyncmember
+online version: https://docs.microsoft.com/powershell/module/az.sql/new-azsqlsyncmember
 schema: 2.0.0
 ---
 
@@ -415,7 +415,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 [Get-AzSqlSyncMember](./Get-AzSqlSyncMember.md)
 
-[Set-AzSqlSyncMember](./Set-AzSqlSyncMember.md)
+[Update-AzSqlSyncMember](./Update-AzSqlSyncMember.md)
 
 [Remove-AzSqlSyncMember](./Remove-AzSqlSyncMember.md)
 

@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Network.dll-Help.xml
 Module Name: Az.Network
 ms.assetid: 61C34433-A16A-4ACF-A318-1C7D9E49579F
-online version: https://docs.microsoft.com/en-us/powershell/module/az.network/new-azloadbalancerinboundnatpoolconfig
+online version: https://docs.microsoft.com/powershell/module/az.network/new-azloadbalancerinboundnatpoolconfig
 schema: 2.0.0
 ---
 
@@ -34,8 +34,8 @@ The **New-AzLoadBalancerInboundNatPoolConfig** cmdlet creates an inbound NAT poo
 
 ## EXAMPLES
 
-### 1: New
-```
+### Example 1: New
+```powershell
 PS C:\> $slb = Get-AzLoadBalancer -Name "MyLoadBalancer" -ResourceGroupName "MyResourceGroup"
 PS C:\> $feIpConfig = Get-AzLoadBalancerFrontendIpConfig -Name "FrontendName" -Loadbalancer $slb
 PS C:\> New-AzLoadBalancerInboundNatPoolConfig -Name "myInboundNatPool" -FrontendIpConfigurationId $feIpConfig.Id -Protocol TCP -FrontendPortRangeStart 1001 -FrontendPortRangeEnd 2000 -BackendPort 1001

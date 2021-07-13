@@ -335,7 +335,7 @@ namespace Microsoft.Azure.Commands.AlertsManagement
                                 endTime: SuppressionEndTime.Split(' ')[1]
                                 );
 
-                            if (ReccurentValue.Length > 0)
+                            if (ReccurentValue?.Length > 0)
                             {
                                 config.Schedule.RecurrenceValues = ReccurentValue.OfType<int?>().ToList();
                             }
@@ -489,7 +489,7 @@ namespace Microsoft.Azure.Commands.AlertsManagement
 
             if (TargetResourceTypeCondition != null)
             {
-                conditions.MonitorCondition = new Condition(
+                conditions.TargetResourceType = new Condition(
                         operatorProperty: TargetResourceTypeCondition.Split(':')[0],
                         values: TargetResourceTypeCondition.Split(':')[1].Split(','));
             }

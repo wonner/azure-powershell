@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Network.dll-Help.xml
 Module Name: Az.Network
-online version: https://docs.microsoft.com/en-us/powershell/module/az.network/get-azprivatednszonegroup
+online version: https://docs.microsoft.com/powershell/module/az.network/get-azprivatednszonegroup
 schema: 2.0.0
 ---
 
@@ -29,7 +29,7 @@ The **Get-AzPrivateDnsZoneGroup** cmdlet gets one or more private DNS zone group
 
 ## EXAMPLES
 
-### Retrieve private DNS zone group
+### Example 1: Retrieve private DNS zone group
 ```powershell
 PS C:\> Get-AzPrivateDnsZoneGroup -ResourceGroupName "rg" -PrivateEndpointName "test-pr-endpoint" -name "dnsgroup1"
 Name                  : dnsgroup1

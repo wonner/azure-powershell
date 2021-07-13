@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Monitor.dll-Help.xml
 Module Name: Az.Monitor
 ms.assetid: B5F2388E-0136-4F8A-8577-67CE2A45671E
-online version: https://docs.microsoft.com/en-us/powershell/module/az.monitor/disable-azactivitylogalert
+online version: https://docs.microsoft.com/powershell/module/az.monitor/disable-azactivitylogalert
 schema: 2.0.0
 ---
 
@@ -192,6 +192,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 [New-AzActionGroup](./New-AzActionGroup.md)
 
-[New-AzActivityLogAlertCondition](./Get-AzActivityLogAlertCondition.md)
+[New-AzActivityLogAlertCondition](./New-AzActivityLogAlertCondition.md)
 
 [Enable-AzActivityLogAlert](./Enable-AzActivityLogAlert.md)

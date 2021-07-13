@@ -6,6 +6,9 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>
+    /// Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled.
+    /// </summary>
     public partial struct LargeFileSharesState :
         System.IEquatable<LargeFileSharesState>
     {
@@ -20,7 +23,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="LargeFileSharesState" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new LargeFileSharesState(System.Convert.ToString(value));
+            return new LargeFileSharesState(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type LargeFileSharesState</summary>

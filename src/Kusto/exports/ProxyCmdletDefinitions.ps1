@@ -36,15 +36,17 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 
 VALUE <ILanguageExtension[]>: The list of language extensions.
   [Name <LanguageExtensionName?>]: The language extension name.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/add-azkustoclusterlanguageextension
+https://docs.microsoft.com/powershell/module/az.kusto/add-azkustoclusterlanguageextension
 #>
 function Add-AzKustoClusterLanguageExtension {
 [OutputType([System.Boolean])]
@@ -79,7 +81,7 @@ param(
 
     [Parameter()]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ILanguageExtension[]]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ILanguageExtension[]]
     # The list of language extensions.
     # To construct, see NOTES section for VALUE properties and create a hash table.
     ${Value},
@@ -220,7 +222,7 @@ AppId Email                   Fqn                                               
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabasePrincipal
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabasePrincipal
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -232,9 +234,11 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 
 VALUE <IDatabasePrincipal[]>: The list of Kusto database principals.
@@ -245,10 +249,10 @@ VALUE <IDatabasePrincipal[]>: The list of Kusto database principals.
   [Email <String>]: Database principal email if exists.
   [Fqn <String>]: Database principal fully qualified name.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/add-azkustodatabaseprincipal
+https://docs.microsoft.com/powershell/module/az.kusto/add-azkustodatabaseprincipal
 #>
 function Add-AzKustoDatabasePrincipal {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabasePrincipal])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabasePrincipal])]
 [CmdletBinding(DefaultParameterSetName='AddExpanded', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(ParameterSetName='AddExpanded', Mandatory)]
@@ -286,7 +290,7 @@ param(
 
     [Parameter()]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabasePrincipal[]]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabasePrincipal[]]
     # The list of Kusto database principals.
     # To construct, see NOTES section for VALUE properties and create a hash table.
     ${Value},
@@ -414,7 +418,7 @@ testnewkustoclusterf/myfollowerconfiguration Microsoft.Kusto/Clusters/AttachedDa
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IAttachedDatabaseConfiguration
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IAttachedDatabaseConfiguration
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -426,15 +430,17 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/get-azkustoattacheddatabaseconfiguration
+https://docs.microsoft.com/powershell/module/az.kusto/get-azkustoattacheddatabaseconfiguration
 #>
 function Get-AzKustoAttachedDatabaseConfiguration {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IAttachedDatabaseConfiguration])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IAttachedDatabaseConfiguration])]
 [CmdletBinding(DefaultParameterSetName='List', PositionalBinding=$false)]
 param(
     [Parameter(ParameterSetName='Get', Mandatory)]
@@ -590,12 +596,12 @@ AttachedDatabaseConfigurationName ClusterResourceId                             
 myfollowerconfiguration             /subscriptions/xxxxxxxx-xxxxx-xxxx-xxxx-xxxxxxxxx/resourceGroups/testrg/providers/Microsoft.Kusto/Clusters/testnewkustoclusterf mykustodatabase
 
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IFollowerDatabaseDefinition
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IFollowerDatabaseDefinition
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/get-azkustoclusterfollowerdatabase
+https://docs.microsoft.com/powershell/module/az.kusto/get-azkustoclusterfollowerdatabase
 #>
 function Get-AzKustoClusterFollowerDatabase {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IFollowerDatabaseDefinition])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IFollowerDatabaseDefinition])]
 [CmdletBinding(DefaultParameterSetName='List', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(Mandatory)]
@@ -733,12 +739,12 @@ R
 PYTHON
 
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ILanguageExtension
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ILanguageExtension
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/get-azkustoclusterlanguageextension
+https://docs.microsoft.com/powershell/module/az.kusto/get-azkustoclusterlanguageextension
 #>
 function Get-AzKustoClusterLanguageExtension {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ILanguageExtension])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ILanguageExtension])]
 [CmdletBinding(DefaultParameterSetName='List', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(Mandatory)]
@@ -883,7 +889,7 @@ testnewkustocluster/kustoprincipal1 Microsoft.Kusto/Clusters/PrincipalAssignment
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IClusterPrincipalAssignment
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IClusterPrincipalAssignment
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -895,15 +901,17 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/get-azkustoclusterprincipalassignment
+https://docs.microsoft.com/powershell/module/az.kusto/get-azkustoclusterprincipalassignment
 #>
 function Get-AzKustoClusterPrincipalAssignment {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IClusterPrincipalAssignment])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IClusterPrincipalAssignment])]
 [CmdletBinding(DefaultParameterSetName='List', PositionalBinding=$false)]
 param(
     [Parameter(ParameterSetName='Get', Mandatory)]
@@ -1101,14 +1109,14 @@ Microsoft.Kusto/clusters
 ...
 
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IAzureResourceSku
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IAzureResourceSku
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ISkuDescription
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ISkuDescription
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/get-azkustoclustersku
+https://docs.microsoft.com/powershell/module/az.kusto/get-azkustoclustersku
 #>
 function Get-AzKustoClusterSku {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ISkuDescription], [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IAzureResourceSku])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ISkuDescription], [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IAzureResourceSku])]
 [CmdletBinding(DefaultParameterSetName='List', PositionalBinding=$false)]
 param(
     [Parameter()]
@@ -1255,7 +1263,7 @@ East US  testnewkustocluster Microsoft.Kusto/Clusters
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ICluster
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICluster
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -1267,15 +1275,17 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/get-azkustocluster
+https://docs.microsoft.com/powershell/module/az.kusto/get-azkustocluster
 #>
 function Get-AzKustoCluster {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ICluster])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICluster])]
 [CmdletBinding(DefaultParameterSetName='List1', PositionalBinding=$false)]
 param(
     [Parameter(ParameterSetName='Get', Mandatory)]
@@ -1436,7 +1446,7 @@ testnewkustocluster/mykustodatabase/kustoprincipal1 Microsoft.Kusto/Clusters/Dat
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabasePrincipalAssignment
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabasePrincipalAssignment
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -1448,15 +1458,17 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/get-azkustodatabaseprincipalassignment
+https://docs.microsoft.com/powershell/module/az.kusto/get-azkustodatabaseprincipalassignment
 #>
 function Get-AzKustoDatabasePrincipalAssignment {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabasePrincipalAssignment])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabasePrincipalAssignment])]
 [CmdletBinding(DefaultParameterSetName='List', PositionalBinding=$false)]
 param(
     [Parameter(ParameterSetName='Get', Mandatory)]
@@ -1619,12 +1631,12 @@ AppId Email                   Fqn                                               
       otheruser@microsoft.com aaduser=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx;xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx Other User  Admin Microsoft  User
 
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabasePrincipal
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabasePrincipal
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/get-azkustodatabaseprincipal
+https://docs.microsoft.com/powershell/module/az.kusto/get-azkustodatabaseprincipal
 #>
 function Get-AzKustoDatabasePrincipal {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabasePrincipal])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabasePrincipal])]
 [CmdletBinding(DefaultParameterSetName='List', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(Mandatory)]
@@ -1776,7 +1788,7 @@ ReadWrite East US  testnewkustocluster/mykustodatabase Microsoft.Kusto/Clusters/
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabase
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabase
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -1788,15 +1800,17 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/get-azkustodatabase
+https://docs.microsoft.com/powershell/module/az.kusto/get-azkustodatabase
 #>
 function Get-AzKustoDatabase {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabase])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabase])]
 [CmdletBinding(DefaultParameterSetName='List', PositionalBinding=$false)]
 param(
     [Parameter(ParameterSetName='Get', Mandatory)]
@@ -1960,7 +1974,7 @@ EventHub East US  testnewkustocluster/mykustodatabase/mykustodataconnection Micr
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDataConnection
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDataConnection
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -1972,15 +1986,17 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/get-azkustodataconnection
+https://docs.microsoft.com/powershell/module/az.kusto/get-azkustodataconnection
 #>
 function Get-AzKustoDataConnection {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDataConnection])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDataConnection])]
 [CmdletBinding(DefaultParameterSetName='List', PositionalBinding=$false)]
 param(
     [Parameter(ParameterSetName='Get', Mandatory)]
@@ -2132,6 +2148,366 @@ end {
 
 <#
 .Synopsis
+Returns operation results.
+.Description
+Returns operation results.
+.Example
+PS C:\> {{ Add code here }}
+
+{{ Add output here }}
+.Example
+PS C:\> {{ Add code here }}
+
+{{ Add output here }}
+
+.Inputs
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
+.Outputs
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IOperationResult
+.Notes
+COMPLEX PARAMETER PROPERTIES
+
+To create the parameters described below, construct a hash table containing the appropriate properties. For information on hash tables, run Get-Help about_Hash_Tables.
+
+INPUTOBJECT <IKustoIdentity>: Identity Parameter
+  [AttachedDatabaseConfigurationName <String>]: The name of the attached database configuration.
+  [ClusterName <String>]: The name of the Kusto cluster.
+  [DataConnectionName <String>]: The name of the data connection.
+  [DatabaseName <String>]: The name of the database in the Kusto cluster.
+  [Id <String>]: Resource identity path
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
+  [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
+  [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
+  [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+.Link
+https://docs.microsoft.com/powershell/module/az.kusto/get-azkustooperationsresult
+#>
+function Get-AzKustoOperationsResult {
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IOperationResult])]
+[CmdletBinding(DefaultParameterSetName='Get', PositionalBinding=$false)]
+param(
+    [Parameter(ParameterSetName='Get', Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # Azure location (region) name.
+    ${Location},
+
+    [Parameter(ParameterSetName='Get', Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The Guid of the operation ID
+    ${OperationId},
+
+    [Parameter(ParameterSetName='Get')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.DefaultInfo(Script='(Get-AzContext).Subscription.Id')]
+    [System.String[]]
+    # Gets subscription credentials which uniquely identify Microsoft Azure subscription.
+    # The subscription ID forms part of the URI for every service call.
+    ${SubscriptionId},
+
+    [Parameter(ParameterSetName='GetViaIdentity', Mandatory, ValueFromPipeline)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity]
+    # Identity Parameter
+    # To construct, see NOTES section for INPUTOBJECT properties and create a hash table.
+    ${InputObject},
+
+    [Parameter()]
+    [Alias('AzureRMContext', 'AzureCredential')]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Azure')]
+    [System.Management.Automation.PSObject]
+    # The credentials, account, tenant, and subscription used for communication with Azure.
+    ${DefaultProfile},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Wait for .NET debugger to attach
+    ${Break},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.SendAsyncStep[]]
+    # SendAsync Pipeline Steps to be appended to the front of the pipeline
+    ${HttpPipelineAppend},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.SendAsyncStep[]]
+    # SendAsync Pipeline Steps to be prepended to the front of the pipeline
+    ${HttpPipelinePrepend},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Uri]
+    # The URI for the proxy server to use
+    ${Proxy},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.PSCredential]
+    # Credentials for a proxy server to use for the remote call
+    ${ProxyCredential},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Use the default credentials for the proxy
+    ${ProxyUseDefaultCredentials}
+)
+
+begin {
+    try {
+        $outBuffer = $null
+        if ($PSBoundParameters.TryGetValue('OutBuffer', [ref]$outBuffer)) {
+            $PSBoundParameters['OutBuffer'] = 1
+        }
+        $parameterSet = $PSCmdlet.ParameterSetName
+        $mapping = @{
+            Get = 'Az.Kusto.private\Get-AzKustoOperationsResult_Get';
+            GetViaIdentity = 'Az.Kusto.private\Get-AzKustoOperationsResult_GetViaIdentity';
+        }
+        if (('Get') -contains $parameterSet -and -not $PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $PSBoundParameters['SubscriptionId'] = (Get-AzContext).Subscription.Id
+        }
+        $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand(($mapping[$parameterSet]), [System.Management.Automation.CommandTypes]::Cmdlet)
+        $scriptCmd = {& $wrappedCmd @PSBoundParameters}
+        $steppablePipeline = $scriptCmd.GetSteppablePipeline($MyInvocation.CommandOrigin)
+        $steppablePipeline.Begin($PSCmdlet)
+    } catch {
+        throw
+    }
+}
+
+process {
+    try {
+        $steppablePipeline.Process($_)
+    } catch {
+        throw
+    }
+}
+
+end {
+    try {
+        $steppablePipeline.End()
+    } catch {
+        throw
+    }
+}
+}
+
+# ----------------------------------------------------------------------------------
+#
+# Copyright Microsoft Corporation
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ----------------------------------------------------------------------------------
+
+<#
+.Synopsis
+Gets a Kusto cluster database script.
+.Description
+Gets a Kusto cluster database script.
+.Example
+PS C:\> {{ Add code here }}
+
+{{ Add output here }}
+.Example
+PS C:\> {{ Add code here }}
+
+{{ Add output here }}
+
+.Inputs
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
+.Outputs
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IScript
+.Notes
+COMPLEX PARAMETER PROPERTIES
+
+To create the parameters described below, construct a hash table containing the appropriate properties. For information on hash tables, run Get-Help about_Hash_Tables.
+
+INPUTOBJECT <IKustoIdentity>: Identity Parameter
+  [AttachedDatabaseConfigurationName <String>]: The name of the attached database configuration.
+  [ClusterName <String>]: The name of the Kusto cluster.
+  [DataConnectionName <String>]: The name of the data connection.
+  [DatabaseName <String>]: The name of the database in the Kusto cluster.
+  [Id <String>]: Resource identity path
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
+  [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
+  [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
+  [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+.Link
+https://docs.microsoft.com/powershell/module/az.kusto/get-azkustoscript
+#>
+function Get-AzKustoScript {
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IScript])]
+[CmdletBinding(DefaultParameterSetName='List', PositionalBinding=$false)]
+param(
+    [Parameter(ParameterSetName='Get', Mandatory)]
+    [Parameter(ParameterSetName='List', Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the Kusto cluster.
+    ${ClusterName},
+
+    [Parameter(ParameterSetName='Get', Mandatory)]
+    [Parameter(ParameterSetName='List', Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the database in the Kusto cluster.
+    ${DatabaseName},
+
+    [Parameter(ParameterSetName='Get', Mandatory)]
+    [Alias('ScriptName')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the Kusto database script.
+    ${Name},
+
+    [Parameter(ParameterSetName='Get', Mandatory)]
+    [Parameter(ParameterSetName='List', Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the resource group containing the Kusto cluster.
+    ${ResourceGroupName},
+
+    [Parameter(ParameterSetName='Get')]
+    [Parameter(ParameterSetName='List')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.DefaultInfo(Script='(Get-AzContext).Subscription.Id')]
+    [System.String[]]
+    # Gets subscription credentials which uniquely identify Microsoft Azure subscription.
+    # The subscription ID forms part of the URI for every service call.
+    ${SubscriptionId},
+
+    [Parameter(ParameterSetName='GetViaIdentity', Mandatory, ValueFromPipeline)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity]
+    # Identity Parameter
+    # To construct, see NOTES section for INPUTOBJECT properties and create a hash table.
+    ${InputObject},
+
+    [Parameter()]
+    [Alias('AzureRMContext', 'AzureCredential')]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Azure')]
+    [System.Management.Automation.PSObject]
+    # The credentials, account, tenant, and subscription used for communication with Azure.
+    ${DefaultProfile},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Wait for .NET debugger to attach
+    ${Break},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.SendAsyncStep[]]
+    # SendAsync Pipeline Steps to be appended to the front of the pipeline
+    ${HttpPipelineAppend},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.SendAsyncStep[]]
+    # SendAsync Pipeline Steps to be prepended to the front of the pipeline
+    ${HttpPipelinePrepend},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Uri]
+    # The URI for the proxy server to use
+    ${Proxy},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.PSCredential]
+    # Credentials for a proxy server to use for the remote call
+    ${ProxyCredential},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Use the default credentials for the proxy
+    ${ProxyUseDefaultCredentials}
+)
+
+begin {
+    try {
+        $outBuffer = $null
+        if ($PSBoundParameters.TryGetValue('OutBuffer', [ref]$outBuffer)) {
+            $PSBoundParameters['OutBuffer'] = 1
+        }
+        $parameterSet = $PSCmdlet.ParameterSetName
+        $mapping = @{
+            Get = 'Az.Kusto.private\Get-AzKustoScript_Get';
+            GetViaIdentity = 'Az.Kusto.private\Get-AzKustoScript_GetViaIdentity';
+            List = 'Az.Kusto.private\Get-AzKustoScript_List';
+        }
+        if (('Get', 'List') -contains $parameterSet -and -not $PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $PSBoundParameters['SubscriptionId'] = (Get-AzContext).Subscription.Id
+        }
+        $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand(($mapping[$parameterSet]), [System.Management.Automation.CommandTypes]::Cmdlet)
+        $scriptCmd = {& $wrappedCmd @PSBoundParameters}
+        $steppablePipeline = $scriptCmd.GetSteppablePipeline($MyInvocation.CommandOrigin)
+        $steppablePipeline.Begin($PSCmdlet)
+    } catch {
+        throw
+    }
+}
+
+process {
+    try {
+        $steppablePipeline.Process($_)
+    } catch {
+        throw
+    }
+}
+
+end {
+    try {
+        $steppablePipeline.End()
+    } catch {
+        throw
+    }
+}
+}
+
+# ----------------------------------------------------------------------------------
+#
+# Copyright Microsoft Corporation
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ----------------------------------------------------------------------------------
+
+<#
+.Synopsis
 Detaches all followers of a database owned by this cluster.
 .Description
 Detaches all followers of a database owned by this cluster.
@@ -2154,12 +2530,14 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/invoke-azkustodetachclusterfollowerdatabase
+https://docs.microsoft.com/powershell/module/az.kusto/invoke-azkustodetachclusterfollowerdatabase
 #>
 function Invoke-AzKustoDetachClusterFollowerDatabase {
 [OutputType([System.Boolean])]
@@ -2348,12 +2726,14 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/invoke-azkustodiagnoseclustervirtualnetwork
+https://docs.microsoft.com/powershell/module/az.kusto/invoke-azkustodiagnoseclustervirtualnetwork
 #>
 function Invoke-AzKustoDiagnoseClusterVirtualNetwork {
 [OutputType([System.String])]
@@ -2513,12 +2893,12 @@ Name                                 Type                                       
 testnewkustoclusterf/myfollowerconfiguration Microsoft.Kusto/Clusters/AttachedDatabaseConfigurations East US
 
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IAttachedDatabaseConfiguration
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IAttachedDatabaseConfiguration
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/new-azkustoattacheddatabaseconfiguration
+https://docs.microsoft.com/powershell/module/az.kusto/new-azkustoattacheddatabaseconfiguration
 #>
 function New-AzKustoAttachedDatabaseConfiguration {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IAttachedDatabaseConfiguration])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IAttachedDatabaseConfiguration])]
 [CmdletBinding(DefaultParameterSetName='CreateExpanded', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(Mandatory)]
@@ -2572,6 +2952,42 @@ param(
     [System.String]
     # Resource location.
     ${Location},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.String[]]
+    # List of external tables exclude from the follower database
+    ${TableLevelSharingPropertyExternalTablesToExclude},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.String[]]
+    # List of external tables to include in the follower database
+    ${TableLevelSharingPropertyExternalTablesToInclude},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.String[]]
+    # List of materialized views exclude from the follower database
+    ${TableLevelSharingPropertyMaterializedViewsToExclude},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.String[]]
+    # List of materialized views to include in the follower database
+    ${TableLevelSharingPropertyMaterializedViewsToInclude},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.String[]]
+    # List of tables to exclude from the follower database
+    ${TableLevelSharingPropertyTablesToExclude},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.String[]]
+    # List of tables to include in the follower database
+    ${TableLevelSharingPropertyTablesToInclude},
 
     [Parameter()]
     [Alias('AzureRMContext', 'AzureCredential')]
@@ -2699,12 +3115,12 @@ Name                                Type
 testnewkustocluster/kustoprincipal1 Microsoft.Kusto/Clusters/PrincipalAssignments
 
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IClusterPrincipalAssignment
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IClusterPrincipalAssignment
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/new-azkustoclusterprincipalassignment
+https://docs.microsoft.com/powershell/module/az.kusto/new-azkustoclusterprincipalassignment
 #>
 function New-AzKustoClusterPrincipalAssignment {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IClusterPrincipalAssignment])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IClusterPrincipalAssignment])]
 [CmdletBinding(DefaultParameterSetName='CreateExpanded', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(Mandatory)]
@@ -2879,29 +3295,26 @@ Create or update a Kusto cluster.
 .Description
 Create or update a Kusto cluster.
 .Example
-PS C:\> New-AzKustoCluster -ResourceGroupName testrg -Name testnewkustocluster -Location 'East US' -SkuName Standard_D11_v2 -SkuTier Standard
+PS C:\> New-AzKustoCluster -ResourceGroupName testrg -Name testnewkustocluster -Location 'East US' -SkuName Standard_D11_v2 -SkuTier Standard -EnableDoubleEncryption true -EngineType 'V2'
 
 Location Name                Type                     Zone
 -------- ----                ----                     ----
 East US  testnewkustocluster Microsoft.Kusto/Clusters
 
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ICluster
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICluster
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
 To create the parameters described below, construct a hash table containing the appropriate properties. For information on hash tables, run Get-Help about_Hash_Tables.
 
-LANGUAGEEXTENSIONVALUE <ILanguageExtension[]>: The list of language extensions.
-  [Name <LanguageExtensionName?>]: The language extension name.
-
 TRUSTEDEXTERNALTENANT <ITrustedExternalTenant[]>: The cluster's external tenants.
   [Value <String>]: GUID representing an external tenant.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/new-azkustocluster
+https://docs.microsoft.com/powershell/module/az.kusto/new-azkustocluster
 #>
 function New-AzKustoCluster {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ICluster])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICluster])]
 [CmdletBinding(DefaultParameterSetName='CreateExpanded', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(Mandatory)]
@@ -2924,6 +3337,21 @@ param(
     # Gets subscription credentials which uniquely identify Microsoft Azure subscription.
     # The subscription ID forms part of the URI for every service call.
     ${SubscriptionId},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Header')]
+    [System.String]
+    # The ETag of the cluster.
+    # Omit this value to always overwrite the current cluster.
+    # Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes.
+    ${IfMatch},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Header')]
+    [System.String]
+    # Set to '*' to allow a new cluster to be created, but to prevent updating an existing cluster.
+    # Other values will result in a 412 Pre-condition Failed response.
+    ${IfNoneMatch},
 
     [Parameter(Mandatory)]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
@@ -2954,6 +3382,12 @@ param(
     [Parameter()]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
     [System.Management.Automation.SwitchParameter]
+    # A boolean value that indicates if double encryption is enabled.
+    ${EnableDoubleEncryption},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.Management.Automation.SwitchParameter]
     # A boolean value that indicates if the purge operations are enabled.
     ${EnablePurge},
 
@@ -2964,15 +3398,24 @@ param(
     ${EnableStreamingIngest},
 
     [Parameter()]
+    [ArgumentCompleter([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.EngineType])]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.EngineType]
+    # The engine type
+    ${EngineType},
+
+    [Parameter()]
     [ArgumentCompleter([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.IdentityType])]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.IdentityType]
-    # The identity type.
+    # The type of managed identity used.
+    # The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities.
+    # The type 'None' will remove all identities.
     ${IdentityType},
 
     [Parameter()]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.Info(PossibleTypes=([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IIdentityUserAssignedIdentities]))]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.Info(PossibleTypes=([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IIdentityUserAssignedIdentities]))]
     [System.Collections.Hashtable]
     # The list of user identities associated with the Kusto cluster.
     # The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
@@ -2998,10 +3441,9 @@ param(
 
     [Parameter()]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ILanguageExtension[]]
-    # The list of language extensions.
-    # To construct, see NOTES section for LANGUAGEEXTENSIONVALUE properties and create a hash table.
-    ${LanguageExtensionValue},
+    [System.String]
+    # The user assigned identity (ARM resource id) that has access to the key.
+    ${KeyVaultPropertyUserIdentity},
 
     [Parameter()]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
@@ -3042,7 +3484,7 @@ param(
 
     [Parameter()]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ITrustedExternalTenant[]]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ITrustedExternalTenant[]]
     # The cluster's external tenants.
     # To construct, see NOTES section for TRUSTEDEXTERNALTENANT properties and create a hash table.
     ${TrustedExternalTenant},
@@ -3197,12 +3639,12 @@ Name                                                Type
 testnewkustocluster/mykustodatabase/kustoprincipal1 Microsoft.Kusto/Clusters/Databases/PrincipalAssignments
 
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabasePrincipalAssignment
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabasePrincipalAssignment
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/new-azkustodatabaseprincipalassignment
+https://docs.microsoft.com/powershell/module/az.kusto/new-azkustodatabaseprincipalassignment
 #>
 function New-AzKustoDatabasePrincipalAssignment {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabasePrincipalAssignment])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabasePrincipalAssignment])]
 [CmdletBinding(DefaultParameterSetName='CreateExpanded', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(Mandatory)]
@@ -3379,6 +3821,226 @@ end {
 
 <#
 .Synopsis
+Creates a Kusto database script.
+.Description
+Creates a Kusto database script.
+.Example
+PS C:\> {{ Add code here }}
+
+{{ Add output here }}
+.Example
+PS C:\> {{ Add code here }}
+
+{{ Add output here }}
+
+.Inputs
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IScript
+.Outputs
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IScript
+.Notes
+COMPLEX PARAMETER PROPERTIES
+
+To create the parameters described below, construct a hash table containing the appropriate properties. For information on hash tables, run Get-Help about_Hash_Tables.
+
+PARAMETER <IScript>: Class representing a database script.
+  [ContinueOnError <Boolean?>]: Flag that indicates whether to continue if one of the command fails.
+  [ForceUpdateTag <String>]: A unique string. If changed the script will be applied again.
+  [SystemDataCreatedAt <DateTime?>]: The timestamp of resource creation (UTC).
+  [SystemDataCreatedBy <String>]: The identity that created the resource.
+  [SystemDataCreatedByType <CreatedByType?>]: The type of identity that created the resource.
+  [SystemDataLastModifiedAt <DateTime?>]: The timestamp of resource last modification (UTC)
+  [SystemDataLastModifiedBy <String>]: The identity that last modified the resource.
+  [SystemDataLastModifiedByType <CreatedByType?>]: The type of identity that last modified the resource.
+  [Url <String>]: The url to the KQL script blob file.
+  [UrlSasToken <String>]: The SaS token.
+.Link
+https://docs.microsoft.com/powershell/module/az.kusto/new-azkustoscript
+#>
+function New-AzKustoScript {
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IScript])]
+[CmdletBinding(DefaultParameterSetName='CreateExpanded', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
+param(
+    [Parameter(Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the Kusto cluster.
+    ${ClusterName},
+
+    [Parameter(Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the database in the Kusto cluster.
+    ${DatabaseName},
+
+    [Parameter(Mandatory)]
+    [Alias('ScriptName')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the Kusto database script.
+    ${Name},
+
+    [Parameter(Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the resource group containing the Kusto cluster.
+    ${ResourceGroupName},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.DefaultInfo(Script='(Get-AzContext).Subscription.Id')]
+    [System.String]
+    # Gets subscription credentials which uniquely identify Microsoft Azure subscription.
+    # The subscription ID forms part of the URI for every service call.
+    ${SubscriptionId},
+
+    [Parameter(ParameterSetName='Create', Mandatory, ValueFromPipeline)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IScript]
+    # Class representing a database script.
+    # To construct, see NOTES section for PARAMETER properties and create a hash table.
+    ${Parameter},
+
+    [Parameter(ParameterSetName='CreateExpanded')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.Management.Automation.SwitchParameter]
+    # Flag that indicates whether to continue if one of the command fails.
+    ${ContinueOnError},
+
+    [Parameter(ParameterSetName='CreateExpanded')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.String]
+    # A unique string.
+    # If changed the script will be applied again.
+    ${ForceUpdateTag},
+
+    [Parameter(ParameterSetName='CreateExpanded')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.String]
+    # The url to the KQL script blob file.
+    ${ScriptUrl},
+
+    [Parameter(ParameterSetName='CreateExpanded')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.String]
+    # The SaS token.
+    ${ScriptUrlSasToken},
+
+    [Parameter()]
+    [Alias('AzureRMContext', 'AzureCredential')]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Azure')]
+    [System.Management.Automation.PSObject]
+    # The credentials, account, tenant, and subscription used for communication with Azure.
+    ${DefaultProfile},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Run the command as a job
+    ${AsJob},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Wait for .NET debugger to attach
+    ${Break},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.SendAsyncStep[]]
+    # SendAsync Pipeline Steps to be appended to the front of the pipeline
+    ${HttpPipelineAppend},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.SendAsyncStep[]]
+    # SendAsync Pipeline Steps to be prepended to the front of the pipeline
+    ${HttpPipelinePrepend},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Run the command asynchronously
+    ${NoWait},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Uri]
+    # The URI for the proxy server to use
+    ${Proxy},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.PSCredential]
+    # Credentials for a proxy server to use for the remote call
+    ${ProxyCredential},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Use the default credentials for the proxy
+    ${ProxyUseDefaultCredentials}
+)
+
+begin {
+    try {
+        $outBuffer = $null
+        if ($PSBoundParameters.TryGetValue('OutBuffer', [ref]$outBuffer)) {
+            $PSBoundParameters['OutBuffer'] = 1
+        }
+        $parameterSet = $PSCmdlet.ParameterSetName
+        $mapping = @{
+            Create = 'Az.Kusto.private\New-AzKustoScript_Create';
+            CreateExpanded = 'Az.Kusto.private\New-AzKustoScript_CreateExpanded';
+        }
+        if (('Create', 'CreateExpanded') -contains $parameterSet -and -not $PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $PSBoundParameters['SubscriptionId'] = (Get-AzContext).Subscription.Id
+        }
+        $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand(($mapping[$parameterSet]), [System.Management.Automation.CommandTypes]::Cmdlet)
+        $scriptCmd = {& $wrappedCmd @PSBoundParameters}
+        $steppablePipeline = $scriptCmd.GetSteppablePipeline($MyInvocation.CommandOrigin)
+        $steppablePipeline.Begin($PSCmdlet)
+    } catch {
+        throw
+    }
+}
+
+process {
+    try {
+        $steppablePipeline.Process($_)
+    } catch {
+        throw
+    }
+}
+
+end {
+    try {
+        $steppablePipeline.End()
+    } catch {
+        throw
+    }
+}
+}
+
+# ----------------------------------------------------------------------------------
+#
+# Copyright Microsoft Corporation
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ----------------------------------------------------------------------------------
+
+<#
+.Synopsis
 Deletes the attached database configuration with the given name.
 .Description
 Deletes the attached database configuration with the given name.
@@ -3400,12 +4062,14 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/remove-azkustoattacheddatabaseconfiguration
+https://docs.microsoft.com/powershell/module/az.kusto/remove-azkustoattacheddatabaseconfiguration
 #>
 function Remove-AzKustoAttachedDatabaseConfiguration {
 [OutputType([System.Boolean])]
@@ -3588,15 +4252,17 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 
 VALUE <ILanguageExtension[]>: The list of language extensions.
   [Name <LanguageExtensionName?>]: The language extension name.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/remove-azkustoclusterlanguageextension
+https://docs.microsoft.com/powershell/module/az.kusto/remove-azkustoclusterlanguageextension
 #>
 function Remove-AzKustoClusterLanguageExtension {
 [OutputType([System.Boolean])]
@@ -3631,7 +4297,7 @@ param(
 
     [Parameter()]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ILanguageExtension[]]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ILanguageExtension[]]
     # The list of language extensions.
     # To construct, see NOTES section for VALUE properties and create a hash table.
     ${Value},
@@ -3779,12 +4445,14 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/remove-azkustoclusterprincipalassignment
+https://docs.microsoft.com/powershell/module/az.kusto/remove-azkustoclusterprincipalassignment
 #>
 function Remove-AzKustoClusterPrincipalAssignment {
 [OutputType([System.Boolean])]
@@ -3966,12 +4634,14 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/remove-azkustocluster
+https://docs.microsoft.com/powershell/module/az.kusto/remove-azkustocluster
 #>
 function Remove-AzKustoCluster {
 [OutputType([System.Boolean])]
@@ -4148,12 +4818,14 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/remove-azkustodatabaseprincipalassignment
+https://docs.microsoft.com/powershell/module/az.kusto/remove-azkustodatabaseprincipalassignment
 #>
 function Remove-AzKustoDatabasePrincipalAssignment {
 [OutputType([System.Boolean])]
@@ -4333,7 +5005,7 @@ AppId Email                   Fqn                                               
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabasePrincipal
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabasePrincipal
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -4345,9 +5017,11 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 
 VALUE <IDatabasePrincipal[]>: The list of Kusto database principals.
@@ -4358,10 +5032,10 @@ VALUE <IDatabasePrincipal[]>: The list of Kusto database principals.
   [Email <String>]: Database principal email if exists.
   [Fqn <String>]: Database principal fully qualified name.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/remove-azkustodatabaseprincipal
+https://docs.microsoft.com/powershell/module/az.kusto/remove-azkustodatabaseprincipal
 #>
 function Remove-AzKustoDatabasePrincipal {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabasePrincipal])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabasePrincipal])]
 [CmdletBinding(DefaultParameterSetName='RemoveExpanded', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(ParameterSetName='RemoveExpanded', Mandatory)]
@@ -4399,7 +5073,7 @@ param(
 
     [Parameter()]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabasePrincipal[]]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabasePrincipal[]]
     # The list of Kusto database principals.
     # To construct, see NOTES section for VALUE properties and create a hash table.
     ${Value},
@@ -4529,12 +5203,14 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/remove-azkustodatabase
+https://docs.microsoft.com/powershell/module/az.kusto/remove-azkustodatabase
 #>
 function Remove-AzKustoDatabase {
 [OutputType([System.Boolean])]
@@ -4717,12 +5393,14 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/remove-azkustodataconnection
+https://docs.microsoft.com/powershell/module/az.kusto/remove-azkustodataconnection
 #>
 function Remove-AzKustoDataConnection {
 [OutputType([System.Boolean])]
@@ -4890,6 +5568,208 @@ end {
 
 <#
 .Synopsis
+Deletes a Kusto principalAssignment.
+.Description
+Deletes a Kusto principalAssignment.
+.Example
+PS C:\> {{ Add code here }}
+
+{{ Add output here }}
+.Example
+PS C:\> {{ Add code here }}
+
+{{ Add output here }}
+
+.Inputs
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
+.Outputs
+System.Boolean
+.Notes
+COMPLEX PARAMETER PROPERTIES
+
+To create the parameters described below, construct a hash table containing the appropriate properties. For information on hash tables, run Get-Help about_Hash_Tables.
+
+INPUTOBJECT <IKustoIdentity>: Identity Parameter
+  [AttachedDatabaseConfigurationName <String>]: The name of the attached database configuration.
+  [ClusterName <String>]: The name of the Kusto cluster.
+  [DataConnectionName <String>]: The name of the data connection.
+  [DatabaseName <String>]: The name of the database in the Kusto cluster.
+  [Id <String>]: Resource identity path
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
+  [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
+  [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
+  [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+.Link
+https://docs.microsoft.com/powershell/module/az.kusto/remove-azkustoscript
+#>
+function Remove-AzKustoScript {
+[OutputType([System.Boolean])]
+[CmdletBinding(DefaultParameterSetName='Delete', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
+param(
+    [Parameter(ParameterSetName='Delete', Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the Kusto cluster.
+    ${ClusterName},
+
+    [Parameter(ParameterSetName='Delete', Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the database in the Kusto cluster.
+    ${DatabaseName},
+
+    [Parameter(ParameterSetName='Delete', Mandatory)]
+    [Alias('ScriptName')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the Kusto database script.
+    ${Name},
+
+    [Parameter(ParameterSetName='Delete', Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the resource group containing the Kusto cluster.
+    ${ResourceGroupName},
+
+    [Parameter(ParameterSetName='Delete')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.DefaultInfo(Script='(Get-AzContext).Subscription.Id')]
+    [System.String]
+    # Gets subscription credentials which uniquely identify Microsoft Azure subscription.
+    # The subscription ID forms part of the URI for every service call.
+    ${SubscriptionId},
+
+    [Parameter(ParameterSetName='DeleteViaIdentity', Mandatory, ValueFromPipeline)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity]
+    # Identity Parameter
+    # To construct, see NOTES section for INPUTOBJECT properties and create a hash table.
+    ${InputObject},
+
+    [Parameter()]
+    [Alias('AzureRMContext', 'AzureCredential')]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Azure')]
+    [System.Management.Automation.PSObject]
+    # The credentials, account, tenant, and subscription used for communication with Azure.
+    ${DefaultProfile},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Run the command as a job
+    ${AsJob},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Wait for .NET debugger to attach
+    ${Break},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.SendAsyncStep[]]
+    # SendAsync Pipeline Steps to be appended to the front of the pipeline
+    ${HttpPipelineAppend},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.SendAsyncStep[]]
+    # SendAsync Pipeline Steps to be prepended to the front of the pipeline
+    ${HttpPipelinePrepend},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Run the command asynchronously
+    ${NoWait},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Returns true when the command succeeds
+    ${PassThru},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Uri]
+    # The URI for the proxy server to use
+    ${Proxy},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.PSCredential]
+    # Credentials for a proxy server to use for the remote call
+    ${ProxyCredential},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Use the default credentials for the proxy
+    ${ProxyUseDefaultCredentials}
+)
+
+begin {
+    try {
+        $outBuffer = $null
+        if ($PSBoundParameters.TryGetValue('OutBuffer', [ref]$outBuffer)) {
+            $PSBoundParameters['OutBuffer'] = 1
+        }
+        $parameterSet = $PSCmdlet.ParameterSetName
+        $mapping = @{
+            Delete = 'Az.Kusto.private\Remove-AzKustoScript_Delete';
+            DeleteViaIdentity = 'Az.Kusto.private\Remove-AzKustoScript_DeleteViaIdentity';
+        }
+        if (('Delete') -contains $parameterSet -and -not $PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $PSBoundParameters['SubscriptionId'] = (Get-AzContext).Subscription.Id
+        }
+        $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand(($mapping[$parameterSet]), [System.Management.Automation.CommandTypes]::Cmdlet)
+        $scriptCmd = {& $wrappedCmd @PSBoundParameters}
+        $steppablePipeline = $scriptCmd.GetSteppablePipeline($MyInvocation.CommandOrigin)
+        $steppablePipeline.Begin($PSCmdlet)
+    } catch {
+        throw
+    }
+}
+
+process {
+    try {
+        $steppablePipeline.Process($_)
+    } catch {
+        throw
+    }
+}
+
+end {
+    try {
+        $steppablePipeline.End()
+    } catch {
+        throw
+    }
+}
+}
+
+# ----------------------------------------------------------------------------------
+#
+# Copyright Microsoft Corporation
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ----------------------------------------------------------------------------------
+
+<#
+.Synopsis
 Starts a Kusto cluster.
 .Description
 Starts a Kusto cluster.
@@ -4911,12 +5791,14 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/start-azkustocluster
+https://docs.microsoft.com/powershell/module/az.kusto/start-azkustocluster
 #>
 function Start-AzKustoCluster {
 [OutputType([System.Boolean])]
@@ -5093,12 +5975,14 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/stop-azkustocluster
+https://docs.microsoft.com/powershell/module/az.kusto/stop-azkustocluster
 #>
 function Stop-AzKustoCluster {
 [OutputType([System.Boolean])]
@@ -5273,7 +6157,7 @@ Message Name                  NameAvailable Reason
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ICheckNameResult
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICheckNameResult
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -5285,21 +6169,23 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/test-azkustoclusternameavailability
+https://docs.microsoft.com/powershell/module/az.kusto/test-azkustoclusternameavailability
 #>
 function Test-AzKustoClusterNameAvailability {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ICheckNameResult])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICheckNameResult])]
 [CmdletBinding(DefaultParameterSetName='CheckExpanded', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(ParameterSetName='CheckExpanded', Mandatory)]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
     [System.String]
-    # Azure location.
+    # Azure location (region) name.
     ${Location},
 
     [Parameter(ParameterSetName='CheckExpanded')]
@@ -5322,13 +6208,6 @@ param(
     [System.String]
     # Cluster name.
     ${Name},
-
-    [Parameter(Mandatory)]
-    [ArgumentCompleter([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.Type])]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.Type]
-    # The type of resource, Microsoft.Kusto/clusters.
-    ${Type},
 
     [Parameter()]
     [Alias('AzureRMContext', 'AzureCredential')]
@@ -5453,7 +6332,7 @@ Message Name                  NameAvailable Reason
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ICheckNameResult
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICheckNameResult
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -5465,15 +6344,17 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/test-azkustoclusterprincipalassignmentnameavailability
+https://docs.microsoft.com/powershell/module/az.kusto/test-azkustoclusterprincipalassignmentnameavailability
 #>
 function Test-AzKustoClusterPrincipalAssignmentNameAvailability {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ICheckNameResult])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICheckNameResult])]
 [CmdletBinding(DefaultParameterSetName='CheckExpanded', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(ParameterSetName='CheckExpanded', Mandatory)]
@@ -5508,13 +6389,6 @@ param(
     [System.String]
     # Principal Assignment resource name.
     ${Name},
-
-    [Parameter(Mandatory)]
-    [ArgumentCompleter([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.Type])]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.Type]
-    # The type of resource, Microsoft.Kusto/Clusters/principalAssignments.
-    ${Type},
 
     [Parameter()]
     [Alias('AzureRMContext', 'AzureCredential')]
@@ -5639,7 +6513,7 @@ Message Name             NameAvailable Reason
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ICheckNameResult
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICheckNameResult
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -5651,15 +6525,17 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/test-azkustodatabasenameavailability
+https://docs.microsoft.com/powershell/module/az.kusto/test-azkustodatabasenameavailability
 #>
 function Test-AzKustoDatabaseNameAvailability {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ICheckNameResult])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICheckNameResult])]
 [CmdletBinding(DefaultParameterSetName='CheckExpanded', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(ParameterSetName='CheckExpanded', Mandatory)]
@@ -5825,7 +6701,7 @@ Message Name                  NameAvailable Reason
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ICheckNameResult
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICheckNameResult
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -5837,15 +6713,17 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/test-azkustodatabaseprincipalassignmentnameavailability
+https://docs.microsoft.com/powershell/module/az.kusto/test-azkustodatabaseprincipalassignmentnameavailability
 #>
 function Test-AzKustoDatabasePrincipalAssignmentNameAvailability {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ICheckNameResult])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICheckNameResult])]
 [CmdletBinding(DefaultParameterSetName='CheckExpanded', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(ParameterSetName='CheckExpanded', Mandatory)]
@@ -5886,13 +6764,6 @@ param(
     [System.String]
     # Principal Assignment resource name.
     ${Name},
-
-    [Parameter(Mandatory)]
-    [ArgumentCompleter([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.Type])]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.Type]
-    # The type of resource, Microsoft.Kusto/Clusters/Databases/principalAssignments.
-    ${Type},
 
     [Parameter()]
     [Alias('AzureRMContext', 'AzureCredential')]
@@ -6017,7 +6888,7 @@ Message Name             NameAvailable Reason
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ICheckNameResult
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICheckNameResult
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -6029,15 +6900,17 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/test-azkustodataconnectionnameavailability
+https://docs.microsoft.com/powershell/module/az.kusto/test-azkustodataconnectionnameavailability
 #>
 function Test-AzKustoDataConnectionNameAvailability {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ICheckNameResult])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICheckNameResult])]
 [CmdletBinding(DefaultParameterSetName='CheckExpanded', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(ParameterSetName='CheckExpanded', Mandatory)]
@@ -6078,13 +6951,6 @@ param(
     [System.String]
     # Data Connection name.
     ${Name},
-
-    [Parameter(Mandatory)]
-    [ArgumentCompleter([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.Type])]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.Type]
-    # The type of resource, Microsoft.Kusto/Clusters/Databases/dataConnections.
-    ${Type},
 
     [Parameter()]
     [Alias('AzureRMContext', 'AzureCredential')]
@@ -6190,11 +7056,194 @@ end {
 
 <#
 .Synopsis
+Checks that the script name is valid and is not already in use.
+.Description
+Checks that the script name is valid and is not already in use.
+.Example
+PS C:\> {{ Add code here }}
+
+{{ Add output here }}
+.Example
+PS C:\> {{ Add code here }}
+
+{{ Add output here }}
+
+.Inputs
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
+.Outputs
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICheckNameResult
+.Notes
+COMPLEX PARAMETER PROPERTIES
+
+To create the parameters described below, construct a hash table containing the appropriate properties. For information on hash tables, run Get-Help about_Hash_Tables.
+
+INPUTOBJECT <IKustoIdentity>: Identity Parameter
+  [AttachedDatabaseConfigurationName <String>]: The name of the attached database configuration.
+  [ClusterName <String>]: The name of the Kusto cluster.
+  [DataConnectionName <String>]: The name of the data connection.
+  [DatabaseName <String>]: The name of the database in the Kusto cluster.
+  [Id <String>]: Resource identity path
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
+  [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
+  [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
+  [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+.Link
+https://docs.microsoft.com/powershell/module/az.kusto/test-azkustoscriptnameavailability
+#>
+function Test-AzKustoScriptNameAvailability {
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICheckNameResult])]
+[CmdletBinding(DefaultParameterSetName='CheckExpanded', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
+param(
+    [Parameter(ParameterSetName='CheckExpanded', Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the Kusto cluster.
+    ${ClusterName},
+
+    [Parameter(ParameterSetName='CheckExpanded', Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the database in the Kusto cluster.
+    ${DatabaseName},
+
+    [Parameter(ParameterSetName='CheckExpanded', Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the resource group containing the Kusto cluster.
+    ${ResourceGroupName},
+
+    [Parameter(ParameterSetName='CheckExpanded')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.DefaultInfo(Script='(Get-AzContext).Subscription.Id')]
+    [System.String]
+    # Gets subscription credentials which uniquely identify Microsoft Azure subscription.
+    # The subscription ID forms part of the URI for every service call.
+    ${SubscriptionId},
+
+    [Parameter(ParameterSetName='CheckViaIdentityExpanded', Mandatory, ValueFromPipeline)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity]
+    # Identity Parameter
+    # To construct, see NOTES section for INPUTOBJECT properties and create a hash table.
+    ${InputObject},
+
+    [Parameter(Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.String]
+    # Script name.
+    ${Name},
+
+    [Parameter()]
+    [Alias('AzureRMContext', 'AzureCredential')]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Azure')]
+    [System.Management.Automation.PSObject]
+    # The credentials, account, tenant, and subscription used for communication with Azure.
+    ${DefaultProfile},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Wait for .NET debugger to attach
+    ${Break},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.SendAsyncStep[]]
+    # SendAsync Pipeline Steps to be appended to the front of the pipeline
+    ${HttpPipelineAppend},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.SendAsyncStep[]]
+    # SendAsync Pipeline Steps to be prepended to the front of the pipeline
+    ${HttpPipelinePrepend},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Uri]
+    # The URI for the proxy server to use
+    ${Proxy},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.PSCredential]
+    # Credentials for a proxy server to use for the remote call
+    ${ProxyCredential},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Use the default credentials for the proxy
+    ${ProxyUseDefaultCredentials}
+)
+
+begin {
+    try {
+        $outBuffer = $null
+        if ($PSBoundParameters.TryGetValue('OutBuffer', [ref]$outBuffer)) {
+            $PSBoundParameters['OutBuffer'] = 1
+        }
+        $parameterSet = $PSCmdlet.ParameterSetName
+        $mapping = @{
+            CheckExpanded = 'Az.Kusto.private\Test-AzKustoScriptNameAvailability_CheckExpanded';
+            CheckViaIdentityExpanded = 'Az.Kusto.private\Test-AzKustoScriptNameAvailability_CheckViaIdentityExpanded';
+        }
+        if (('CheckExpanded') -contains $parameterSet -and -not $PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $PSBoundParameters['SubscriptionId'] = (Get-AzContext).Subscription.Id
+        }
+        $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand(($mapping[$parameterSet]), [System.Management.Automation.CommandTypes]::Cmdlet)
+        $scriptCmd = {& $wrappedCmd @PSBoundParameters}
+        $steppablePipeline = $scriptCmd.GetSteppablePipeline($MyInvocation.CommandOrigin)
+        $steppablePipeline.Begin($PSCmdlet)
+    } catch {
+        throw
+    }
+}
+
+process {
+    try {
+        $steppablePipeline.Process($_)
+    } catch {
+        throw
+    }
+}
+
+end {
+    try {
+        $steppablePipeline.End()
+    } catch {
+        throw
+    }
+}
+}
+
+# ----------------------------------------------------------------------------------
+#
+# Copyright Microsoft Corporation
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ----------------------------------------------------------------------------------
+
+<#
+.Synopsis
 Update a Kusto cluster.
 .Description
 Update a Kusto cluster.
 .Example
-PS C:\> Update-AzKustoCluster -ResourceGroupName testrg -Name testnewkustocluster -SkuName Standard_D12_v2 -SkuTier Standard
+PS C:\> Update-AzKustoCluster -ResourceGroupName testrg -Name testnewkustocluster -SkuName Standard_D12_v2 -SkuTier Standard -EngineType 'V2'
 
 Location Name                Type                     Zone
 -------- ----                ----                     ----
@@ -6209,7 +7258,7 @@ East US  testnewkustocluster Microsoft.Kusto/Clusters
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ICluster
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICluster
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -6221,21 +7270,20 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-
-LANGUAGEEXTENSIONVALUE <ILanguageExtension[]>: The list of language extensions.
-  [Name <LanguageExtensionName?>]: The language extension name.
 
 TRUSTEDEXTERNALTENANT <ITrustedExternalTenant[]>: The cluster's external tenants.
   [Value <String>]: GUID representing an external tenant.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/update-azkustocluster
+https://docs.microsoft.com/powershell/module/az.kusto/update-azkustocluster
 #>
 function Update-AzKustoCluster {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ICluster])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ICluster])]
 [CmdletBinding(DefaultParameterSetName='UpdateExpanded', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(ParameterSetName='UpdateExpanded', Mandatory)]
@@ -6267,10 +7315,24 @@ param(
     ${InputObject},
 
     [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Header')]
+    [System.String]
+    # The ETag of the cluster.
+    # Omit this value to always overwrite the current cluster.
+    # Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes.
+    ${IfMatch},
+
+    [Parameter()]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
     [System.Management.Automation.SwitchParameter]
     # A boolean value that indicates if the cluster's disks are encrypted.
     ${EnableDiskEncryption},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.Management.Automation.SwitchParameter]
+    # A boolean value that indicates if double encryption is enabled.
+    ${EnableDoubleEncryption},
 
     [Parameter()]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
@@ -6285,15 +7347,24 @@ param(
     ${EnableStreamingIngest},
 
     [Parameter()]
+    [ArgumentCompleter([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.EngineType])]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.EngineType]
+    # The engine type
+    ${EngineType},
+
+    [Parameter()]
     [ArgumentCompleter([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.IdentityType])]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.IdentityType]
-    # The identity type.
+    # The type of managed identity used.
+    # The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities.
+    # The type 'None' will remove all identities.
     ${IdentityType},
 
     [Parameter()]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.Info(PossibleTypes=([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IIdentityUserAssignedIdentities]))]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.Info(PossibleTypes=([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IIdentityUserAssignedIdentities]))]
     [System.Collections.Hashtable]
     # The list of user identities associated with the Kusto cluster.
     # The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
@@ -6319,10 +7390,9 @@ param(
 
     [Parameter()]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ILanguageExtension[]]
-    # The list of language extensions.
-    # To construct, see NOTES section for LANGUAGEEXTENSIONVALUE properties and create a hash table.
-    ${LanguageExtensionValue},
+    [System.String]
+    # The user assigned identity (ARM resource id) that has access to the key.
+    ${KeyVaultPropertyUserIdentity},
 
     [Parameter()]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
@@ -6376,14 +7446,14 @@ param(
 
     [Parameter()]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.Info(PossibleTypes=([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IClusterUpdateTags]))]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.Info(PossibleTypes=([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IClusterUpdateTags]))]
     [System.Collections.Hashtable]
     # Resource tags.
     ${Tag},
 
     [Parameter()]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.ITrustedExternalTenant[]]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.ITrustedExternalTenant[]]
     # The cluster's external tenants.
     # To construct, see NOTES section for TRUSTEDEXTERNALTENANT properties and create a hash table.
     ${TrustedExternalTenant},
@@ -6522,6 +7592,261 @@ end {
 
 <#
 .Synopsis
+Updates a database script.
+.Description
+Updates a database script.
+.Example
+PS C:\> {{ Add code here }}
+
+{{ Add output here }}
+.Example
+PS C:\> {{ Add code here }}
+
+{{ Add output here }}
+
+.Inputs
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IScript
+.Inputs
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
+.Outputs
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IScript
+.Notes
+COMPLEX PARAMETER PROPERTIES
+
+To create the parameters described below, construct a hash table containing the appropriate properties. For information on hash tables, run Get-Help about_Hash_Tables.
+
+INPUTOBJECT <IKustoIdentity>: Identity Parameter
+  [AttachedDatabaseConfigurationName <String>]: The name of the attached database configuration.
+  [ClusterName <String>]: The name of the Kusto cluster.
+  [DataConnectionName <String>]: The name of the data connection.
+  [DatabaseName <String>]: The name of the database in the Kusto cluster.
+  [Id <String>]: Resource identity path
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
+  [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
+  [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
+  [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+
+PARAMETER <IScript>: Class representing a database script.
+  [ContinueOnError <Boolean?>]: Flag that indicates whether to continue if one of the command fails.
+  [ForceUpdateTag <String>]: A unique string. If changed the script will be applied again.
+  [SystemDataCreatedAt <DateTime?>]: The timestamp of resource creation (UTC).
+  [SystemDataCreatedBy <String>]: The identity that created the resource.
+  [SystemDataCreatedByType <CreatedByType?>]: The type of identity that created the resource.
+  [SystemDataLastModifiedAt <DateTime?>]: The timestamp of resource last modification (UTC)
+  [SystemDataLastModifiedBy <String>]: The identity that last modified the resource.
+  [SystemDataLastModifiedByType <CreatedByType?>]: The type of identity that last modified the resource.
+  [Url <String>]: The url to the KQL script blob file.
+  [UrlSasToken <String>]: The SaS token.
+.Link
+https://docs.microsoft.com/powershell/module/az.kusto/update-azkustoscript
+#>
+function Update-AzKustoScript {
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IScript])]
+[CmdletBinding(DefaultParameterSetName='UpdateExpanded', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
+param(
+    [Parameter(ParameterSetName='Update', Mandatory)]
+    [Parameter(ParameterSetName='UpdateExpanded', Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the Kusto cluster.
+    ${ClusterName},
+
+    [Parameter(ParameterSetName='Update', Mandatory)]
+    [Parameter(ParameterSetName='UpdateExpanded', Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the database in the Kusto cluster.
+    ${DatabaseName},
+
+    [Parameter(ParameterSetName='Update', Mandatory)]
+    [Parameter(ParameterSetName='UpdateExpanded', Mandatory)]
+    [Alias('ScriptName')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the Kusto database script.
+    ${Name},
+
+    [Parameter(ParameterSetName='Update', Mandatory)]
+    [Parameter(ParameterSetName='UpdateExpanded', Mandatory)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [System.String]
+    # The name of the resource group containing the Kusto cluster.
+    ${ResourceGroupName},
+
+    [Parameter(ParameterSetName='Update')]
+    [Parameter(ParameterSetName='UpdateExpanded')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.DefaultInfo(Script='(Get-AzContext).Subscription.Id')]
+    [System.String]
+    # Gets subscription credentials which uniquely identify Microsoft Azure subscription.
+    # The subscription ID forms part of the URI for every service call.
+    ${SubscriptionId},
+
+    [Parameter(ParameterSetName='UpdateViaIdentity', Mandatory, ValueFromPipeline)]
+    [Parameter(ParameterSetName='UpdateViaIdentityExpanded', Mandatory, ValueFromPipeline)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Path')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity]
+    # Identity Parameter
+    # To construct, see NOTES section for INPUTOBJECT properties and create a hash table.
+    ${InputObject},
+
+    [Parameter(ParameterSetName='Update', Mandatory, ValueFromPipeline)]
+    [Parameter(ParameterSetName='UpdateViaIdentity', Mandatory, ValueFromPipeline)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IScript]
+    # Class representing a database script.
+    # To construct, see NOTES section for PARAMETER properties and create a hash table.
+    ${Parameter},
+
+    [Parameter(ParameterSetName='UpdateExpanded')]
+    [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.Management.Automation.SwitchParameter]
+    # Flag that indicates whether to continue if one of the command fails.
+    ${ContinueOnError},
+
+    [Parameter(ParameterSetName='UpdateExpanded')]
+    [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.String]
+    # A unique string.
+    # If changed the script will be applied again.
+    ${ForceUpdateTag},
+
+    [Parameter(ParameterSetName='UpdateExpanded')]
+    [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.String]
+    # The url to the KQL script blob file.
+    ${ScriptUrl},
+
+    [Parameter(ParameterSetName='UpdateExpanded')]
+    [Parameter(ParameterSetName='UpdateViaIdentityExpanded')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.String]
+    # The SaS token.
+    ${ScriptUrlSasToken},
+
+    [Parameter()]
+    [Alias('AzureRMContext', 'AzureCredential')]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Azure')]
+    [System.Management.Automation.PSObject]
+    # The credentials, account, tenant, and subscription used for communication with Azure.
+    ${DefaultProfile},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Run the command as a job
+    ${AsJob},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Wait for .NET debugger to attach
+    ${Break},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.SendAsyncStep[]]
+    # SendAsync Pipeline Steps to be appended to the front of the pipeline
+    ${HttpPipelineAppend},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Runtime.SendAsyncStep[]]
+    # SendAsync Pipeline Steps to be prepended to the front of the pipeline
+    ${HttpPipelinePrepend},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Run the command asynchronously
+    ${NoWait},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Uri]
+    # The URI for the proxy server to use
+    ${Proxy},
+
+    [Parameter(DontShow)]
+    [ValidateNotNull()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.PSCredential]
+    # Credentials for a proxy server to use for the remote call
+    ${ProxyCredential},
+
+    [Parameter(DontShow)]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Use the default credentials for the proxy
+    ${ProxyUseDefaultCredentials}
+)
+
+begin {
+    try {
+        $outBuffer = $null
+        if ($PSBoundParameters.TryGetValue('OutBuffer', [ref]$outBuffer)) {
+            $PSBoundParameters['OutBuffer'] = 1
+        }
+        $parameterSet = $PSCmdlet.ParameterSetName
+        $mapping = @{
+            Update = 'Az.Kusto.private\Update-AzKustoScript_Update';
+            UpdateExpanded = 'Az.Kusto.private\Update-AzKustoScript_UpdateExpanded';
+            UpdateViaIdentity = 'Az.Kusto.private\Update-AzKustoScript_UpdateViaIdentity';
+            UpdateViaIdentityExpanded = 'Az.Kusto.private\Update-AzKustoScript_UpdateViaIdentityExpanded';
+        }
+        if (('Update', 'UpdateExpanded') -contains $parameterSet -and -not $PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $PSBoundParameters['SubscriptionId'] = (Get-AzContext).Subscription.Id
+        }
+        $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand(($mapping[$parameterSet]), [System.Management.Automation.CommandTypes]::Cmdlet)
+        $scriptCmd = {& $wrappedCmd @PSBoundParameters}
+        $steppablePipeline = $scriptCmd.GetSteppablePipeline($MyInvocation.CommandOrigin)
+        $steppablePipeline.Begin($PSCmdlet)
+    } catch {
+        throw
+    }
+}
+
+process {
+    try {
+        $steppablePipeline.Process($_)
+    } catch {
+        throw
+    }
+}
+
+end {
+    try {
+        $steppablePipeline.End()
+    } catch {
+        throw
+    }
+}
+}
+
+# ----------------------------------------------------------------------------------
+#
+# Copyright Microsoft Corporation
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ----------------------------------------------------------------------------------
+
+<#
+.Synopsis
 Checks that the data connection parameters are valid.
 .Description
 Checks that the data connection parameters are valid.
@@ -6568,7 +7893,7 @@ event hub resource id and consumer group tuple provided are already used
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDataConnectionValidationResult
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDataConnectionValidationResult
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -6580,15 +7905,17 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/invoke-azkustodataconnectionvalidation
+https://docs.microsoft.com/powershell/module/az.kusto/invoke-azkustodataconnectionvalidation
 #>
 function Invoke-AzKustoDataConnectionValidation {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDataConnectionValidationResult])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDataConnectionValidationResult])]
 [CmdletBinding(DefaultParameterSetName='DataExpandedEventHub', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(ParameterSetName='DataExpandedEventHub', Mandatory)]
@@ -6659,20 +7986,6 @@ param(
     # Resource location.
     ${Location},
 
-    [Parameter()]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.EventGridDataFormat]
-    # The data format of the message.
-    # Optionally the data format can be added to each message.
-    ${DataFormat},
-
-    [Parameter()]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [System.String]
-    # The table where the data should be ingested.
-    # Optionally the table information can be added to each message.
-    ${TableName},
-
     [Parameter(ParameterSetName='DataExpandedEventHub', Mandatory)]
     [Parameter(ParameterSetName='DataExpandedEventGrid', Mandatory)]
     [Parameter(ParameterSetName='DataViaIdentityExpandedEventGrid', Mandatory)]
@@ -6681,6 +7994,13 @@ param(
     [System.String]
     # The resource ID of the event hub to be used to create a data connection / event grid is configured to send events.
     ${EventHubResourceId},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.EventGridDataFormat]
+    # The data format of the message.
+    # Optionally the data format can be added to each message.
+    ${DataFormat},
 
     [Parameter(ParameterSetName='DataExpandedEventHub')]
     [Parameter(ParameterSetName='DataExpandedIotHub')]
@@ -6697,6 +8017,13 @@ param(
     # The mapping rule to be used to ingest the data.
     # Optionally the mapping information can be added to each message.
     ${MappingRuleName},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.String]
+    # The table where the data should be ingested.
+    # Optionally the table information can be added to each message.
+    ${TableName},
 
     [Parameter(ParameterSetName='DataExpandedEventHub')]
     [Parameter(ParameterSetName='DataViaIdentityExpandedEventHub')]
@@ -6725,6 +8052,20 @@ param(
     [System.String]
     # The resource ID of the storage account where the data resides.
     ${StorageAccountResourceId},
+
+    [Parameter(ParameterSetName='UpdateViaIdentityExpandedEventGrid')]
+    [Parameter(ParameterSetName='UpdateExpandedEventGrid')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.BlobStorageEventType]
+    # The name of blob storage event type to process.
+    ${BlobStorageEventType},
+
+    [Parameter(ParameterSetName='UpdateViaIdentityExpandedEventGrid')]
+    [Parameter(ParameterSetName='UpdateExpandedEventGrid')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.Management.Automation.SwitchParameter]
+    # If set to true, indicates that ingestion should ignore the first record of every file.
+    ${IgnoreFirstRecord},
 
     [Parameter()]
     [Alias('AzureRMContext', 'AzureCredential')]
@@ -6788,6 +8129,8 @@ begin {
             DataViaIdentityExpandedIotHub = 'Az.Kusto.custom\Invoke-AzKustoDataConnectionValidation';
             DataViaIdentityExpandedEventGrid = 'Az.Kusto.custom\Invoke-AzKustoDataConnectionValidation';
             DataViaIdentityExpandedEventHub = 'Az.Kusto.custom\Invoke-AzKustoDataConnectionValidation';
+            UpdateViaIdentityExpandedEventGrid = 'Az.Kusto.custom\Invoke-AzKustoDataConnectionValidation';
+            UpdateExpandedEventGrid = 'Az.Kusto.custom\Invoke-AzKustoDataConnectionValidation';
         }
         if (('DataExpandedEventHub', 'DataExpandedIotHub', 'DataExpandedEventGrid') -contains $parameterSet -and -not $PSBoundParameters.ContainsKey('SubscriptionId')) {
             $PSBoundParameters['SubscriptionId'] = (Get-AzContext).Subscription.Id
@@ -6838,19 +8181,21 @@ Creates or updates a database.
 .Description
 Creates or updates a database.
 .Example
-PS C:\> New-AzKustoDatabase -ResourceGroupName testrg -ClusterName testnewkustocluster -Name mykustodatabase -Kind ReadWrite -Location 'East US'
+PS C:\> {{ Add code here }}
 
-Kind      Location Name                                Type
-----      -------- ----                                ----
-ReadWrite East US  testnewkustocluster/mykustodatabase Microsoft.Kusto/Clusters/Databases
+{{ Add output here }}
+.Example
+PS C:\> {{ Add code here }}
+
+{{ Add output here }}
 
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabase
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabase
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/new-azkustodatabase
+https://docs.microsoft.com/powershell/module/az.kusto/new-azkustodatabase
 #>
 function New-AzKustoDatabase {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabase])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabase])]
 [CmdletBinding(PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(Mandatory)]
@@ -7030,7 +8375,7 @@ Kind     Location Name                                             Type
 ----     -------- ----                                             ----
 EventHub East US  testnewkustocluster/mykustodatabase/myeventhubdc Microsoft.Kusto/Clusters/Databases/DataConnections
 .Example
-PS C:\> New-AzKustoDataConnection -ResourceGroupName "testrg" -ClusterName "testnewkustocluster" -DatabaseName "mykustodatabase" -DataConnectionName "myeventgriddc" -Location="East US" -Kind "EventGrid" -EventHubResourceId "/subscriptions/$subscriptionId/resourcegroups/testrg/providers/Microsoft.EventHub/namespaces/myeventhubns/eventhubs/myeventhub" -StorageAccountResourceId $storageAccountResourceId "/subscriptions/$subscriptionId/resourcegroups/testrg/providers/Microsoft.Storage/storageAccounts/mystorage" -DataFormat "JSON" -ConsumerGroup '$Default' -TableName "Events" -MappingRuleName "EventsMapping"
+PS C:\> New-AzKustoDataConnection -ResourceGroupName "testrg" -ClusterName "testnewkustocluster" -DatabaseName "mykustodatabase" -DataConnectionName "myeventgriddc" -Location="East US" -Kind "EventGrid" -EventHubResourceId "/subscriptions/$subscriptionId/resourcegroups/testrg/providers/Microsoft.EventHub/namespaces/myeventhubns/eventhubs/myeventhub" -StorageAccountResourceId $storageAccountResourceId "/subscriptions/$subscriptionId/resourcegroups/testrg/providers/Microsoft.Storage/storageAccounts/mystorage" -DataFormat "JSON" -ConsumerGroup '$Default' -TableName "Events" -MappingRuleName "EventsMapping" -IgnoreFirstRecord "false" -BlobStorageEventType "Microsoft.Storage.BlobRenamed"
 
 Kind      Location Name                                              Type
 ----      -------- ----                                              ----
@@ -7043,12 +8388,12 @@ Kind      Location Name                                        Type
 IotHub East US  testnewkustocluster/mykustodatabase/myiothubdc Microsoft.Kusto/Clusters/Databases/DataConnections
 
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDataConnection
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDataConnection
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/new-azkustodataconnection
+https://docs.microsoft.com/powershell/module/az.kusto/new-azkustodataconnection
 #>
 function New-AzKustoDataConnection {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDataConnection])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDataConnection])]
 [CmdletBinding(DefaultParameterSetName='CreateExpandedEventHub', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(Mandatory)]
@@ -7103,26 +8448,19 @@ param(
     # Resource location.
     ${Location},
 
-    [Parameter()]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.EventGridDataFormat]
-    # The data format of the message.
-    # Optionally the data format can be added to each message.
-    ${DataFormat},
-
-    [Parameter()]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [System.String]
-    # The table where the data should be ingested.
-    # Optionally the table information can be added to each message.
-    ${TableName},
-
     [Parameter(ParameterSetName='CreateExpandedEventHub', Mandatory)]
     [Parameter(ParameterSetName='CreateExpandedEventGrid', Mandatory)]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
     [System.String]
     # The resource ID of the event hub to be used to create a data connection / event grid is configured to send events.
     ${EventHubResourceId},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.EventGridDataFormat]
+    # The data format of the message.
+    # Optionally the data format can be added to each message.
+    ${DataFormat},
 
     [Parameter(ParameterSetName='CreateExpandedEventHub')]
     [Parameter(ParameterSetName='CreateExpandedIotHub')]
@@ -7138,6 +8476,13 @@ param(
     # Optionally the mapping information can be added to each message.
     ${MappingRuleName},
 
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.String]
+    # The table where the data should be ingested.
+    # Optionally the table information can be added to each message.
+    ${TableName},
+
     [Parameter(ParameterSetName='CreateExpandedEventHub')]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.Compression]
@@ -7149,6 +8494,20 @@ param(
     [System.String]
     # The resource ID of the storage account where the data resides.
     ${StorageAccountResourceId},
+
+    [Parameter(ParameterSetName='UpdateViaIdentityExpandedEventGrid')]
+    [Parameter(ParameterSetName='UpdateExpandedEventGrid')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.BlobStorageEventType]
+    # The name of blob storage event type to process.
+    ${BlobStorageEventType},
+
+    [Parameter(ParameterSetName='UpdateViaIdentityExpandedEventGrid')]
+    [Parameter(ParameterSetName='UpdateExpandedEventGrid')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.Management.Automation.SwitchParameter]
+    # If set to true, indicates that ingestion should ignore the first record of every file.
+    ${IgnoreFirstRecord},
 
     [Parameter(ParameterSetName='CreateExpandedIotHub', Mandatory)]
     [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
@@ -7232,9 +8591,11 @@ begin {
         $mapping = @{
             CreateExpandedEventHub = 'Az.Kusto.custom\New-AzKustoDataConnection';
             CreateExpandedEventGrid = 'Az.Kusto.custom\New-AzKustoDataConnection';
+            UpdateViaIdentityExpandedEventGrid = 'Az.Kusto.custom\New-AzKustoDataConnection';
+            UpdateExpandedEventGrid = 'Az.Kusto.custom\New-AzKustoDataConnection';
             CreateExpandedIotHub = 'Az.Kusto.custom\New-AzKustoDataConnection';
         }
-        if (('CreateExpandedEventHub', 'CreateExpandedEventGrid', 'CreateExpandedIotHub') -contains $parameterSet -and -not $PSBoundParameters.ContainsKey('SubscriptionId')) {
+        if (('CreateExpandedEventHub', 'CreateExpandedEventGrid', 'UpdateViaIdentityExpandedEventGrid', 'UpdateExpandedEventGrid', 'CreateExpandedIotHub') -contains $parameterSet -and -not $PSBoundParameters.ContainsKey('SubscriptionId')) {
             $PSBoundParameters['SubscriptionId'] = (Get-AzContext).Subscription.Id
         }
         $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand(($mapping[$parameterSet]), [System.Management.Automation.CommandTypes]::Cmdlet)
@@ -7318,7 +8679,7 @@ ReadOnlyFollowing East US  myfollowercluster/mykustodatabase Microsoft.Kusto/Clu
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabase
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabase
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -7330,15 +8691,17 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/update-azkustodatabase
+https://docs.microsoft.com/powershell/module/az.kusto/update-azkustodatabase
 #>
 function Update-AzKustoDatabase {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDatabase])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDatabase])]
 [CmdletBinding(DefaultParameterSetName='UpdateExpanded', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(ParameterSetName='UpdateExpanded', Mandatory)]
@@ -7562,7 +8925,7 @@ IotHub East US  testnewkustocluster/mykustodatabase/myiothubdc Microsoft.Kusto/C
 .Inputs
 Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.IKustoIdentity
 .Outputs
-Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDataConnection
+Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDataConnection
 .Notes
 COMPLEX PARAMETER PROPERTIES
 
@@ -7574,15 +8937,17 @@ INPUTOBJECT <IKustoIdentity>: Identity Parameter
   [DataConnectionName <String>]: The name of the data connection.
   [DatabaseName <String>]: The name of the database in the Kusto cluster.
   [Id <String>]: Resource identity path
-  [Location <String>]: Azure location.
+  [Location <String>]: Azure location (region) name.
+  [OperationId <String>]: The Guid of the operation ID
   [PrincipalAssignmentName <String>]: The name of the Kusto principalAssignment.
   [ResourceGroupName <String>]: The name of the resource group containing the Kusto cluster.
+  [ScriptName <String>]: The name of the Kusto database script.
   [SubscriptionId <String>]: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.kusto/update-azkustodataconnection
+https://docs.microsoft.com/powershell/module/az.kusto/update-azkustodataconnection
 #>
 function Update-AzKustoDataConnection {
-[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api20200215.IDataConnection])]
+[OutputType([Microsoft.Azure.PowerShell.Cmdlets.Kusto.Models.Api202101.IDataConnection])]
 [CmdletBinding(DefaultParameterSetName='UpdateExpandedEventHub', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
 param(
     [Parameter(ParameterSetName='UpdateExpandedEventHub', Mandatory)]
@@ -7656,20 +9021,6 @@ param(
     # Resource location.
     ${Location},
 
-    [Parameter()]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.EventGridDataFormat]
-    # The data format of the message.
-    # Optionally the data format can be added to each message.
-    ${DataFormat},
-
-    [Parameter()]
-    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
-    [System.String]
-    # The table where the data should be ingested.
-    # Optionally the table information can be added to each message.
-    ${TableName},
-
     [Parameter(ParameterSetName='UpdateExpandedEventHub', Mandatory)]
     [Parameter(ParameterSetName='UpdateExpandedEventGrid', Mandatory)]
     [Parameter(ParameterSetName='UpdateViaIdentityExpandedEventGrid', Mandatory)]
@@ -7678,6 +9029,13 @@ param(
     [System.String]
     # The resource ID of the event hub to be used to create a data connection / event grid is configured to send events.
     ${EventHubResourceId},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.EventGridDataFormat]
+    # The data format of the message.
+    # Optionally the data format can be added to each message.
+    ${DataFormat},
 
     [Parameter(ParameterSetName='UpdateExpandedEventHub')]
     [Parameter(ParameterSetName='UpdateExpandedIotHub')]
@@ -7694,6 +9052,13 @@ param(
     # The mapping rule to be used to ingest the data.
     # Optionally the mapping information can be added to each message.
     ${MappingRuleName},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.String]
+    # The table where the data should be ingested.
+    # Optionally the table information can be added to each message.
+    ${TableName},
 
     [Parameter(ParameterSetName='UpdateExpandedEventHub')]
     [Parameter(ParameterSetName='UpdateViaIdentityExpandedEventHub')]
@@ -7722,6 +9087,20 @@ param(
     [System.String]
     # The resource ID of the storage account where the data resides.
     ${StorageAccountResourceId},
+
+    [Parameter(ParameterSetName='UpdateExpandedEventGrid')]
+    [Parameter(ParameterSetName='UpdateViaIdentityExpandedEventGrid')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Support.BlobStorageEventType]
+    # The name of blob storage event type to process.
+    ${BlobStorageEventType},
+
+    [Parameter(ParameterSetName='UpdateExpandedEventGrid')]
+    [Parameter(ParameterSetName='UpdateViaIdentityExpandedEventGrid')]
+    [Microsoft.Azure.PowerShell.Cmdlets.Kusto.Category('Body')]
+    [System.Management.Automation.SwitchParameter]
+    # If set to true, indicates that ingestion should ignore the first record of every file.
+    ${IgnoreFirstRecord},
 
     [Parameter()]
     [Alias('AzureRMContext', 'AzureCredential')]

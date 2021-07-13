@@ -6,6 +6,7 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>Status of the operation represented by the requested Id.</summary>
     public partial struct PurgeState :
         System.IEquatable<PurgeState>
     {
@@ -20,7 +21,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="PurgeState" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new PurgeState(System.Convert.ToString(value));
+            return new PurgeState(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type PurgeState</summary>

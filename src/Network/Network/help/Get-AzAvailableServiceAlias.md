@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Network.dll-Help.xml
 Module Name: Az.Network
-online version:  https://docs.microsoft.com/en-us/powershell/module/az.network/get-azavailableservicealias
+online version:  https://docs.microsoft.com/powershell/module/az.network/get-azavailableservicealias
 schema: 2.0.0
 ---
 
@@ -23,7 +23,7 @@ The **Get-AzAvailableServiceAlias** cmdlet allows you to retrieve all of the ava
 
 ### Example 1
 ```powershell
-PS C:\> Get-AzAvailableServiceAliases -Location "westus"
+PS C:\> Get-AzAvailableServiceAlias -Location "westus"
 
 Name                         Id                                                                                                                                   Type                                      ResourceName
 ----                         --                                                                                                                                   ----                                      ------------

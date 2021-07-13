@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Monitor.dll-Help.xml
 Module Name: Az.Monitor
 ms.assetid: B5F2388E-0136-4F8A-8577-67CE2A45671E
-online version: https://docs.microsoft.com/en-us/powershell/module/az.monitor/set-azdiagnosticsetting
+online version: https://docs.microsoft.com/powershell/module/az.monitor/set-azdiagnosticsetting
 schema: 2.0.0
 ---
 
@@ -20,8 +20,9 @@ Set-AzDiagnosticSetting -ResourceId <String> [-Name <String>] [-StorageAccountId
  [-Enabled <Boolean>] [-Category <System.Collections.Generic.List`1[System.String]>]
  [-MetricCategory <System.Collections.Generic.List`1[System.String]>]
  [-Timegrain <System.Collections.Generic.List`1[System.String]>] [-RetentionEnabled <Boolean>]
- [-WorkspaceId <String>] [-ExportToResourceSpecific] [-RetentionInDays <Int32>] [-DefaultProfile <IAzureContextContainer>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+ [-WorkspaceId <String>] [-RetentionInDays <Int32>] [-ExportToResourceSpecific] [-EnableLog <Boolean>]
+ [-EnableMetrics <Boolean>] [-DefaultProfile <IAzureContextContainer>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ### NewSetDiagnosticSetting
@@ -124,6 +125,21 @@ PS C:\>Get-AzDiagnosticSetting -ResourceId "Resource01" | Set-AzDiagnosticSettin
 
 This command uses the PowerShell pipeline to set (no change made) a diagnostic setting.
 
+### Example 7: Enable all categories for a subscription
+```powershell
+$list = @()
+Get-AzSubscriptionDiagnosticSettingCategory | ForEach-Object {
+	$list += (New-AzDiagnosticDetailSetting -Log -Category $_.Name -Enabled)
+}
+$DiagnosticSettingName = 'please use your setting name here'
+$SubscriptionId = 'please use your subscription Id here'
+$WorkspaceId = 'please use your workspace Id here'
+$setting = New-AzDiagnosticSetting -Name $DiagnosticSettingName -SubscriptionId $SubscriptionId -WorkspaceId $WorkspaceId -Setting $list
+Set-AzDiagnosticSetting -InputObject $setting
+```
+
+This command enabled all categories of logs for subscription.
+
 ## PARAMETERS
 
 ### -Category
@@ -160,6 +176,36 @@ Accept wildcard characters: False
 ### -Enabled
 Indicates whether to enable diagnostics.
 Specify $True to enable diagnostics, or $False to disable diagnostics.
+
+```yaml
+Type: System.Boolean
+Parameter Sets: OldSetDiagnosticSetting
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -EnableLog
+The value indicating whether the diagnostic logs should be enabled or disabled
+
+```yaml
+Type: System.Boolean
+Parameter Sets: OldSetDiagnosticSetting
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -EnableMetrics
+The value indicating whether the diagnostic metrics should be enabled or disabled
 
 ```yaml
 Type: System.Boolean

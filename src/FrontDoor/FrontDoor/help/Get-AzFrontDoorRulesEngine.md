@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.FrontDoor.dll-Help.xml
 Module Name: Az.FrontDoor
-online version: https://docs.microsoft.com/en-us/powershell/module/az.frontdoor/get-azfrontdoorrulesengine
+online version: https://docs.microsoft.com/powershell/module/az.frontdoor/get-azfrontdoorrulesengine
 schema: 2.0.0
 ---
 
@@ -29,8 +29,8 @@ PS C:\> Get-AzFrontDoorRulesEngine -ResourceGroupName $resourceGroupName -FrontD
 Name         RulesEngineRules
 ----         ----------------
 rulesEngine3 {rules1}
-
 ```
+
 Get specific rules engine configuration.
 
 ### Example 2
@@ -44,6 +44,7 @@ rulesEngine1 {Rule1}
 rulesEngine2 {Rule1}
 rulesEngine3 {rules1}
 ```
+
 Get all rules engine configurations in a front door.
 
 ### Example 3
@@ -57,6 +58,7 @@ At line:1 char:1
 + CategoryInfo          : CloseError: (:) [Get-AzFrontDoorRulesEngine], PSArgumentException
 + FullyQualifiedErrorId : Microsoft.Azure.Commands.FrontDoor.Cmdlets.GetFrontDoorRulesEngine
 ```
+
 Expected output when getting a nonexistent rules engine. 
 
 ## PARAMETERS

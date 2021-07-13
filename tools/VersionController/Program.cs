@@ -8,6 +8,7 @@ using System.Reflection;
 using Tools.Common.Models;
 using VersionController.Models;
 using Tools.Common.Utilities;
+using Tools.Common.Loaders;
 
 namespace VersionController
 {
@@ -38,8 +39,9 @@ namespace VersionController
 
              _rootDirectory = Directory.GetParent(artifactsDirectory).FullName;
             _projectDirectories = new List<string>{ Path.Combine(_rootDirectory, @"src\") }.Where((d) => Directory.Exists(d)).ToList();
-            _outputDirectories = new List<string>{ Path.Combine(_rootDirectory, @"artifacts\Debug\") }.Where((d) => Directory.Exists(d)).ToList();
+            _outputDirectories = new List<string>{ Path.Combine(_rootDirectory, @"artifacts\Release\") }.Where((d) => Directory.Exists(d)).ToList();
 
+            SharedAssemblyLoader.Load(_outputDirectories.FirstOrDefault());
             var exceptionsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Exceptions");
             if (args != null && args.Length > 0)
             {

@@ -31,7 +31,7 @@ PS C:\> New-AzFunctionAppPlan -ResourceGroupName MyResourceGroupName `
 .Outputs
 Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190801.IAppServicePlan
 .Link
-https://docs.microsoft.com/en-us/powershell/module/az.functions/new-azfunctionappplan
+https://docs.microsoft.com/powershell/module/az.functions/new-azfunctionappplan
 #>
 function New-AzFunctionAppPlan {
 [OutputType([Microsoft.Azure.PowerShell.Cmdlets.Functions.Models.Api20190801.IAppServicePlan])]
@@ -67,7 +67,7 @@ param(
     [Microsoft.Azure.PowerShell.Cmdlets.Functions.Category('Body')]
     [System.String]
     # The plan sku.
-    # Valid inputs are: EP1, P2, EP3
+    # Valid inputs are: EP1, EP2, EP3
     ${Sku},
 
     [Parameter()]

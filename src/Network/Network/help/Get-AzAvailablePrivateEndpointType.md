@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Network.dll-Help.xml
 Module Name: Az.Network
-online version: https://docs.microsoft.com/en-us/powershell/module/az.network/get-azavailableprivateendpointtype
+online version: https://docs.microsoft.com/powershell/module/az.network/get-azavailableprivateendpointtype
 schema: 2.0.0
 ---
 
@@ -22,8 +22,8 @@ The **Get-AzAvailablePrivateEndpointType** cmdlet returns all available private 
 
 ## EXAMPLES
 
-### Example
-```
+### Example 1
+```powershell
 Get-AzAvailablePrivateEndpointType -Location eastus
 
 [

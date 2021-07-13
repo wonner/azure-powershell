@@ -30,6 +30,7 @@ using Microsoft.Azure.Commands.ResourceManager.Common.ArgumentCompleters;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.WindowsAzure.Commands.Common.CustomAttributes;
 using Microsoft.WindowsAzure.Commands.Utilities.Common;
+using CM = Microsoft.Azure.Commands.Compute.Models;
 
 namespace Microsoft.Azure.Commands.Compute.Automation
 {
@@ -49,6 +50,11 @@ namespace Microsoft.Azure.Commands.Compute.Automation
             ValueFromPipelineByPropertyName = true)]
         [LocationCompleter("Microsoft.Compute/virtualMachineScaleSets")]
         public string Location { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        public string EdgeZone { get; set; }
 
         [Parameter(
             Mandatory = false,
@@ -241,6 +247,18 @@ namespace Microsoft.Azure.Commands.Compute.Automation
             ValueFromPipelineByPropertyName = true)]
         public string[] IdentityId { get; set; }
 
+        [Parameter(
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        public SwitchParameter EncryptionAtHost { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Specifies the orchestration mode for the virtual machine scale set.")]
+        [PSArgumentCompleter("Uniform", "Flexible")]
+        public string OrchestrationMode { get; set; }
+
         protected override void ProcessRecord()
         {
             if (ShouldProcess("VirtualMachineScaleSet", "New"))
@@ -277,6 +295,9 @@ namespace Microsoft.Azure.Commands.Compute.Automation
 
             // Identity
             VirtualMachineScaleSetIdentity vIdentity = null;
+
+            // ExtendedLocation
+            CM.PSExtendedLocation vExtendedLocation = null;
 
             if (this.IsParameterBound(c => c.SkuName))
             {
@@ -358,16 +379,19 @@ namespace Microsoft.Azure.Commands.Compute.Automation
                 }
                 vUpgradePolicy.RollingUpgradePolicy = this.RollingUpgradePolicy;
             }
-
-            if (vUpgradePolicy == null)
+            
+            if (this.AutoOSUpgrade.IsPresent)
             {
-                vUpgradePolicy = new UpgradePolicy();
+                if (vUpgradePolicy == null)
+                {
+                    vUpgradePolicy = new UpgradePolicy();
+                }
+                if (vUpgradePolicy.AutomaticOSUpgradePolicy == null)
+                {
+                    vUpgradePolicy.AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy();
+                }
+                vUpgradePolicy.AutomaticOSUpgradePolicy.EnableAutomaticOSUpgrade = this.AutoOSUpgrade.IsPresent;
             }
-            if (vUpgradePolicy.AutomaticOSUpgradePolicy == null)
-            {
-                vUpgradePolicy.AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy();
-            }
-            vUpgradePolicy.AutomaticOSUpgradePolicy.EnableAutomaticOSUpgrade = this.AutoOSUpgrade.IsPresent;
 
             if (this.EnableAutomaticRepair.IsPresent)
             {
@@ -376,6 +400,19 @@ namespace Microsoft.Azure.Commands.Compute.Automation
                     vAutomaticRepairsPolicy = new AutomaticRepairsPolicy();
                 }
                 vAutomaticRepairsPolicy.Enabled = this.EnableAutomaticRepair.IsPresent;
+            }
+
+            if (this.EncryptionAtHost.IsPresent)
+            {
+                if (vVirtualMachineProfile == null)
+                {
+                    vVirtualMachineProfile = new PSVirtualMachineScaleSetVMProfile();
+                }
+                if (vVirtualMachineProfile.SecurityProfile == null)
+                {
+                    vVirtualMachineProfile.SecurityProfile = new SecurityProfile();
+                }
+                vVirtualMachineProfile.SecurityProfile.EncryptionAtHost = this.EncryptionAtHost;
             }
 
             if (this.IsParameterBound(c => c.AutomaticRepairGracePeriod))
@@ -598,6 +635,11 @@ namespace Microsoft.Azure.Commands.Compute.Automation
                 }
             }
 
+            if (this.IsParameterBound(c => c.EdgeZone))
+            {
+                vExtendedLocation = new CM.PSExtendedLocation(this.EdgeZone);
+            }
+
             var vVirtualMachineScaleSet = new PSVirtualMachineScaleSet
             {
                 Overprovision = this.IsParameterBound(c => c.Overprovision) ? this.Overprovision : (bool?)null,
@@ -607,6 +649,7 @@ namespace Microsoft.Azure.Commands.Compute.Automation
                 PlatformFaultDomainCount = this.IsParameterBound(c => c.PlatformFaultDomainCount) ? this.PlatformFaultDomainCount : (int?)null,
                 Zones = this.IsParameterBound(c => c.Zone) ? this.Zone : null,
                 Location = this.IsParameterBound(c => c.Location) ? this.Location : null,
+                ExtendedLocation = vExtendedLocation,
                 Tags = this.IsParameterBound(c => c.Tag) ? this.Tag.Cast<DictionaryEntry>().ToDictionary(ht => (string)ht.Key, ht => (string)ht.Value) : null,
                 Sku = vSku,
                 Plan = vPlan,
@@ -617,6 +660,7 @@ namespace Microsoft.Azure.Commands.Compute.Automation
                 AdditionalCapabilities = vAdditionalCapabilities,
                 ScaleInPolicy = vScaleInPolicy,
                 Identity = vIdentity,
+                OrchestrationMode = this.IsParameterBound(c => c.OrchestrationMode) ? this.OrchestrationMode : null
             };
 
             WriteObject(vVirtualMachineScaleSet);

@@ -14,21 +14,15 @@
 
 namespace Microsoft.Azure.Commands.Network
 {
-    using AutoMapper;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Management.Automation;
-    using System.Security;
     using Microsoft.Azure.Commands.Network.Models;
-    using Microsoft.Azure.Commands.ResourceManager.Common.Tags;
-    using Microsoft.Azure.Management.Network;
-    using Microsoft.WindowsAzure.Commands.Common;
-    using MNM = Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Commands.ResourceManager.Common.ArgumentCompleters;
-    using System.Linq;
     using Microsoft.Azure.Management.Internal.Resources.Utilities.Models;
     using Microsoft.WindowsAzure.Commands.Common.CustomAttributes;
+    using MNM = Microsoft.Azure.Management.Network.Models;
 
     [Cmdlet(VerbsCommon.New,
         ResourceManager.Common.AzureRMConstants.AzureRMPrefix + "VirtualHub",
@@ -86,6 +80,8 @@ namespace Microsoft.Azure.Commands.Network
             HelpMessage = "The hub virtual network connections associated with this Virtual Hub.")]
         public PSHubVirtualNetworkConnection[] HubVnetConnection { get; set; }
 
+        public const String RTv1ChangeDesc = "Parameter is being deprecated without being replaced. Use *VHubRouteTable* commands.";
+        [CmdletParameterBreakingChange("RouteTable", ChangeDescription = RTv1ChangeDesc)]
         [Parameter(
             Mandatory = false,
             HelpMessage = "The route table associated with this Virtual Hub.")]
@@ -101,6 +97,15 @@ namespace Microsoft.Azure.Commands.Network
             HelpMessage = "The sku of the Virtual Hub.")]
         [PSArgumentCompleter("Basic", "Standard")]
         public string Sku { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "Preferred Routing Gateway to Route On-Prem traffic from VNET")]
+        [ValidateSet(
+            MNM.PreferredRoutingGateway.ExpressRoute,
+            MNM.PreferredRoutingGateway.VpnGateway,
+            IgnoreCase = true)]
+        public string PreferredRoutingGateway { get; set; }
 
         [Parameter(
             Mandatory = false,
@@ -167,6 +172,15 @@ namespace Microsoft.Azure.Commands.Network
                     if (string.IsNullOrWhiteSpace(this.Sku))
                     {
                         virtualHub.Sku = "Standard";
+                    }
+
+                    if (string.IsNullOrWhiteSpace(this.PreferredRoutingGateway))
+                    {
+                        virtualHub.PreferredRoutingGateway = "ExpressRoute";
+                    }
+                    else
+                    {
+                        virtualHub.PreferredRoutingGateway = this.PreferredRoutingGateway;
                     }
 
                     WriteObject(CreateOrUpdateVirtualHub(

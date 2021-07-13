@@ -64,6 +64,12 @@ namespace Microsoft.Azure.Commands.Compute.Automation
 
         [Parameter(
             Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Sets the edge zone name. If set, the query will be routed to the specified edgezone instead of the main region.")]
+        public string EdgeZone { get; set; }
+
+        [Parameter(
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [PSArgumentCompleter("V1", "V2")]
         public string HyperVGeneration { get; set; }
@@ -87,6 +93,18 @@ namespace Microsoft.Azure.Commands.Compute.Automation
             Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         public string StorageAccountId { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Sets the Purchase Plan for the Snapshot.")]
+        public PSPurchasePlan PurchasePlan { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Specify if Disk Supports Hibernation with $true of $false")]
+        public bool? SupportsHibernation { get; set; }
 
         [Parameter(
             Mandatory = false,
@@ -129,6 +147,17 @@ namespace Microsoft.Azure.Commands.Compute.Automation
         [PSArgumentCompleter("EncryptionAtRestWithPlatformKey", "EncryptionAtRestWithCustomerKey")]
         public string EncryptionType { get; set; }
 
+        [Parameter(
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        public string DiskAccessId { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [PSArgumentCompleter("AllowAll", "AllowPrivate", "DenyAll")]
+        public string NetworkAccessPolicy { get; set; }
+
         protected override void ProcessRecord()
         {
             if (ShouldProcess("Snapshot", "New"))
@@ -150,6 +179,9 @@ namespace Microsoft.Azure.Commands.Compute.Automation
 
             // Encryption
             Encryption vEncryption = null;
+
+            // ExtendedLocation
+            ExtendedLocation vExtendedLocation = null;
 
             if (this.IsParameterBound(c => c.SkuName))
             {
@@ -272,6 +304,11 @@ namespace Microsoft.Azure.Commands.Compute.Automation
                 vEncryption.Type = this.EncryptionType;
             }
 
+            if (this.IsParameterBound(c => c.EdgeZone))
+            {
+                vExtendedLocation = new ExtendedLocation { Name = this.EdgeZone, Type = ExtendedLocationTypes.EdgeZone };
+            }
+
             var vSnapshot = new PSSnapshot
             {
                 OsType = this.IsParameterBound(c => c.OsType) ? this.OsType : (OperatingSystemTypes?)null,
@@ -279,11 +316,16 @@ namespace Microsoft.Azure.Commands.Compute.Automation
                 DiskSizeGB = this.IsParameterBound(c => c.DiskSizeGB) ? this.DiskSizeGB : (int?)null,
                 Incremental = this.Incremental.IsPresent,
                 Location = this.IsParameterBound(c => c.Location) ? this.Location : null,
+                ExtendedLocation = vExtendedLocation,
                 Tags = this.IsParameterBound(c => c.Tag) ? this.Tag.Cast<DictionaryEntry>().ToDictionary(ht => (string)ht.Key, ht => (string)ht.Value) : null,
                 Sku = vSku,
                 CreationData = vCreationData,
                 EncryptionSettingsCollection = vEncryptionSettingsCollection,
                 Encryption = vEncryption,
+                NetworkAccessPolicy = this.IsParameterBound(c => c.NetworkAccessPolicy) ? this.NetworkAccessPolicy : null,
+                DiskAccessId = this.IsParameterBound(c => c.DiskAccessId) ? this.DiskAccessId : null,
+                PurchasePlan = this.IsParameterBound(c => c.PurchasePlan) ? this.PurchasePlan : null,
+                SupportsHibernation = this.IsParameterBound(c => c.SupportsHibernation) ? SupportsHibernation : null
             };
 
             WriteObject(vSnapshot);

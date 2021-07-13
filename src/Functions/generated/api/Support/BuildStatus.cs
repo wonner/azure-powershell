@@ -6,6 +6,7 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>The status of the static site build.</summary>
     public partial struct BuildStatus :
         System.IEquatable<BuildStatus>
     {
@@ -37,7 +38,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="BuildStatus" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new BuildStatus(System.Convert.ToString(value));
+            return new BuildStatus(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type BuildStatus</summary>

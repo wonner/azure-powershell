@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Monitor.dll-Help.xml
 Module Name: Az.Monitor
 ms.assetid: 1CA26790-C791-4BFD-B986-70F28E3B095B
-online version: https://docs.microsoft.com/en-us/powershell/module/az.monitor/get-azactiongroup
+online version: https://docs.microsoft.com/powershell/module/az.monitor/get-azactiongroup
 schema: 2.0.0
 ---
 
@@ -126,4 +126,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 [Set-AzActionGroup](./Set-AzActionGroup.md)
 [Remove-AzActionGroup](./Remove-AzActionGroup.md)
-[New-AzActionGroupReceiver](./AzureRmActionGroupReceiver.md)
+[New-AzActionGroupReceiver](./New-AzActionGroupReceiver.md)

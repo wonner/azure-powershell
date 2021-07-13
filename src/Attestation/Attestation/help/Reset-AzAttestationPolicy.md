@@ -1,7 +1,7 @@
 ---
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Attestation.dll-Help.xml
 Module Name: Az.Attestation
-online version: https://docs.microsoft.com/en-us/powershell/module/az.attestation/reset-azattestationpolicy
+online version: https://docs.microsoft.com/powershell/module/az.attestation/reset-azattestationpolicy
 schema: 2.0.0
 ---
 
@@ -35,6 +35,14 @@ PS C:\> Reset-AzAttestationPolicy -Name pshtest -ResourceGroupName psh-test-rg -
 ```
 
 Reset the policy to the default for the Attestation Provider *pshtest* for Tee type *SgxEnclave*.
+
+### Example 2
+```powershell
+PS C:\> $resetJwt = Get-Content -Path .\reset.policy.txt.signed.txt
+PS C:\> Reset-AzAttestationPolicy -Name pshtest -ResourceGroupName psh-test-rg -Tee SgxEnclave -Policy $resetJwt
+```
+
+If the Attestation Provider *pshtest* is configured to use the isolated trust model, reset the policy to the default for Tee type *SgxEnclave* by including a signed policy.
 
 ## PARAMETERS
 

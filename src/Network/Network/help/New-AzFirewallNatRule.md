@@ -2,7 +2,7 @@
 external help file: Microsoft.Azure.PowerShell.Cmdlets.Network.dll-Help.xml
 Module Name: Az.Network
 ms.assetid: C0E1D4DF-232F-49C6-BE4C-05C8E8038329
-online version: https://docs.microsoft.com/en-us/powershell/module/az.network/new-azfirewallnatrule
+online version: https://docs.microsoft.com/powershell/module/az.network/new-azfirewallnatrule
 schema: 2.0.0
 ---
 
@@ -25,8 +25,8 @@ The **New-AzFirewallNatRule** cmdlet creates a NAT rule for Azure Firewall.
 
 ## EXAMPLES
 
-### 1:  Create a rule to DNAT all TCP traffic from 10.0.0.0/24 with destination 10.1.2.3:80 to destination 10.4.5.6:8080
-```
+### Example 1: Create a rule to DNAT all TCP traffic from 10.0.0.0/24 with destination 10.1.2.3:80 to destination 10.4.5.6:8080
+```powershell
 New-AzFirewallNatRule -Name "dnat-rule" -Protocol "TCP" -SourceAddress "10.0.0.0/24" -DestinationAddress "10.1.2.3" -DestinationPort "80" -TranslatedAddress "10.4.5.6" -TranslatedPort "8080"
 ```
 

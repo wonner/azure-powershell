@@ -6,6 +6,10 @@
 namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
 {
 
+    /// <summary>
+    /// Gets or sets the SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was
+    /// called accountType.
+    /// </summary>
     public partial struct SkuName :
         System.IEquatable<SkuName>
     {
@@ -52,7 +56,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Functions.Support
         /// <param name="value">the value to convert to an instance of <see cref="SkuName" />.</param>
         internal static object CreateFrom(object value)
         {
-            return new SkuName(System.Convert.ToString(value));
+            return new SkuName(global::System.Convert.ToString(value));
         }
 
         /// <summary>Compares values of enum type SkuName</summary>

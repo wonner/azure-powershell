@@ -116,6 +116,14 @@ namespace Commands.Network.Test.ScenarioTests
         [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
         [Trait(Category.Owner, NrpTeamAlias.sdnnrp)]
+        public void TestPublicIpStandardSkuGlobalTier()
+        {
+            TestRunner.RunTestScript("Test-PublicIpAddressCRUD-StandardSkuGlobalTier");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        [Trait(Category.Owner, NrpTeamAlias.sdnnrp)]
         public void TestPublicIpAddressZones()
         {
             TestRunner.RunTestScript("Test-PublicIpAddressZones");
@@ -127,6 +135,13 @@ namespace Commands.Network.Test.ScenarioTests
         public void TestPublicIpAddressCRUDIdleTimeout()
         {
             TestRunner.RunTestScript("Test-PublicIpAddressCRUD-IdleTimeout");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestPublicIpAddressInEdgeZone()
+        {
+            TestRunner.RunTestScript("Test-PublicIpAddressInEdgeZone");
         }
     }
 }
